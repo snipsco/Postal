@@ -1,0 +1,3 @@
+[submodule "Postal/dependencies/libetpan"]
+	path = Postal/dependencies/libetpan
+	url = https://github.com/dinhviethoa/libetpan.git
