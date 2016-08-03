@@ -16,6 +16,7 @@
 		F7DE80131CF363110031E26A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7DE80121CF363110031E26A /* Assets.xcassets */; };
 		F7DE80161CF363110031E26A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7DE80141CF363110031E26A /* LaunchScreen.storyboard */; };
 		F7DE80271CF36C870031E26A /* AddAccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DE80261CF36C870031E26A /* AddAccountTableViewController.swift */; };
+		F7EC542C1D52253C0088983E /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EC542B1D52253C0088983E /* UIViewController+Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,6 +54,7 @@
 		F7DE80151CF363110031E26A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F7DE80171CF363110031E26A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7DE80261CF36C870031E26A /* AddAccountTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountTableViewController.swift; sourceTree = "<group>"; };
+		F7EC542B1D52253C0088983E /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				F7DE80261CF36C870031E26A /* AddAccountTableViewController.swift */,
 				F7A1E12C1CF464D00046C03E /* LoginTableViewController.swift */,
 				F77FEF191D058E310036A9A7 /* MailsTableViewController.swift */,
+				F7EC542B1D52253C0088983E /* UIViewController+Helpers.swift */,
 				F7DE800F1CF363110031E26A /* Main.storyboard */,
 				F7DE80121CF363110031E26A /* Assets.xcassets */,
 				F7DE80141CF363110031E26A /* LaunchScreen.storyboard */,
@@ -181,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7EC542C1D52253C0088983E /* UIViewController+Helpers.swift in Sources */,
 				F77FEF1A1D058E310036A9A7 /* MailsTableViewController.swift in Sources */,
 				F7DE800C1CF363110031E26A /* AppDelegate.swift in Sources */,
 				F7DE80271CF36C870031E26A /* AddAccountTableViewController.swift in Sources */,

@@ -15,7 +15,6 @@ enum MailProvider: Int {
     case yahoo
     case outlook
     case aol
-    case other
     
     var hostname: String {
         switch self {
@@ -24,7 +23,16 @@ enum MailProvider: Int {
         case .yahoo: return "yahoo.com"
         case .outlook: return "outlook.com"
         case .aol: return "aol.com"
-        case .other: return "example.com"
+        }
+    }
+    
+    var preConfiguration: Configuration? {
+        switch self {
+        case .icloud: return .icloud(login: "", password: "")
+        case .google: return .gmail(login: "", password: .plain(""))
+        case .yahoo: return .yahoo(login: "", password: .plain(""))
+        case .outlook: return .outlook(login: "", password: "")
+        case .aol: return .aol(login: "", password: "")
         }
     }
 }

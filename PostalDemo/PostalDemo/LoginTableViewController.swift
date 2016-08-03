@@ -35,7 +35,7 @@ final class LoginTableViewController: UITableViewController {
     @IBOutlet weak var hostnameTextField: UITextField!
     @IBOutlet weak var portTextField: UITextField!
     
-    var provider: MailProvider!
+    var provider: MailProvider?
 }
 
 // MARK: - View lifecycle
@@ -45,7 +45,13 @@ extension LoginTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        emailTextField.placeholder = "example@\(provider.hostname)"
+        if let provider = provider, configuration = provider.preConfiguration {
+            emailTextField.placeholder = "exemple@\(provider.hostname)"
+            hostnameTextField.userInteractionEnabled = false
+            hostnameTextField.text = configuration.hostname
+            portTextField.userInteractionEnabled = false
+            portTextField.text = "\(configuration.port)"
+        }
     }
 }
 
@@ -59,9 +65,7 @@ extension LoginTableViewController {
             do {
                 vc.configuration = try createConfiguration()
             } catch let error as LoginError {
-                let alert = UIAlertController(title: "Error", message: error.description, preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                presentViewController(alert, animated: true, completion: nil)
+                showAlertError("Error login", message: (error as NSError).localizedDescription)
             } catch {
                 fatalError()
             }
@@ -79,23 +83,14 @@ private extension LoginTableViewController {
         guard let email = emailTextField.text where !email.isEmpty else { throw LoginError.badEmail  }
         guard let password = passwordTextField.text where !password.isEmpty else { throw LoginError.badPassword }
         
-        switch provider! {
-        case .icloud:
-            return .icloud(login: email, password: password)
-        case .google:
-            return .gmail(login: email, password: .plain(password))
-        case .yahoo:
-            return .yahoo(login: email, password: .plain(password))
-        case .outlook:
-            return .outlook(login: email, password: password)
-        case .aol:
-            return .aol(login: email, password: password)
-        case .other:
+        if let configuration = provider?.preConfiguration {
+            return Configuration(hostname: configuration.hostname, port: configuration.port, login: email, password: .plain(password), connectionType: configuration.connectionType, checkCertificateEnabled: configuration.checkCertificateEnabled)
+        } else {
             guard let hostname = hostnameTextField.text where !hostname.isEmpty else { throw LoginError.badHostname }
             guard let portText = portTextField.text where !portText.isEmpty else { throw LoginError.badPort }
             guard let port = UInt16(portText) else { throw LoginError.badPort }
-
-            return Configuration(hostname: hostname, port: port, login: email, password: .plain(password), connectionType: .TLS, checkCertificateEnabled: true)
+            
+            return Configuration(hostname: hostname, port: port, login: email, password: .plain(""), connectionType: .tls, checkCertificateEnabled: true)
         }
     }
 }
