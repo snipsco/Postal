@@ -210,7 +210,9 @@ private extension Postal {
                     }
                 }
                 
-                onComplete(nil)
+                dispatch_async(dispatch_get_main_queue()) {
+                    onComplete(nil)
+                }
             } catch let error as E {
                 dispatch_async(dispatch_get_main_queue()) {
                     onComplete(error)

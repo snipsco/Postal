@@ -147,7 +147,7 @@ extension IMAPSession {
     func fetchLast(folder: String, last: UInt, flags: FetchFlag, extraHeaders: Set<String> = [], handler: FetchResult -> Void) throws {
         let info = try select(folder)
         
-        let location = info.messagesCount > last ? info.messagesCount - last + 1 : 0
+        let location = info.messagesCount > last ? info.messagesCount - last + 1 : 1
         let length = info.messagesCount > last ? last : info.messagesCount
         let range = NSRange(location: Int(location), length: Int(length))
         let indexSet = NSIndexSet(indexesInRange: range)
@@ -173,7 +173,6 @@ extension IMAPSession {
 
         let fetchType = flags.unreleasedFetchAttributeList(extraHeaders)
         defer { mailimap_fetch_type_free(fetchType) }
-        
         
         let givenIndexSet: NSIndexSet
         let fetchFunc: (session: UnsafeMutablePointer<mailimap>, set: UnsafeMutablePointer<mailimap_set>, fetch_type: UnsafeMutablePointer<mailimap_fetch_type>, result: UnsafeMutablePointer<UnsafeMutablePointer<clist>>) -> Int32

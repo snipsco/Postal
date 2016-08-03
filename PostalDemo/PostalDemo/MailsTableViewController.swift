@@ -24,25 +24,24 @@ extension MailsTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
+        // Do connection
         postal.connect(timeout: Postal.defaultTimeout, completion: { [weak self] result in
             switch result {
-            case .Success:
-                print("success")
-            case .Failure(let error):
-                print("error: \(error)")
-            }
-            
-            self?.postal.fetchLast("INBOX", last: 50, flags: [ .headers ], onMessage: { message in
-                self?.messages.append(message)
-                
-                }, onComplete: { error in
-                    if let error = error {
-                        print("fetch error: \(error)")
-                        return
-                    }
-
-                    self?.tableView.reloadData()
+            case .Success: // Fetch 50 last mails of the INBOX
+                self?.postal.fetchLast("INBOX", last: 50, flags: [ .fullHeaders ], onMessage: { message in
+                    self?.messages.insert(message, atIndex: 0)
+                    
+                    }, onComplete: { error in
+                        if let error = error {
+                            self?.showAlertError("Fetch error", message: (error as NSError).localizedDescription)
+                        } else {
+                            self?.tableView.reloadData()
+                        }
                 })
+
+            case .Failure(let error):
+                self?.showAlertError("Connection error", message: (error as NSError).localizedDescription)
+            }
         })
     }
 }
@@ -65,4 +64,10 @@ extension MailsTableViewController {
         
         return cell
     }
+}
+
+// MARK: - Helper
+
+private extension MailsTableViewController {
+    
 }

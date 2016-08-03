@@ -153,7 +153,7 @@ final class IMAPSession {
         case .accessToken(let accessToken):
             result = mailimap_oauth2_authenticate(imap, configuration.login, accessToken)
         case .plain(let password):
-            result = mailimap_authenticate(imap, "", configuration.hostname, nil, nil, configuration.login, configuration.login, password, nil)
+            result = mailimap_login(imap, configuration.login, password)
         }
         
         try result.toIMAPError?.enrich { return .loginError(String.fromCString(imap.memory.imap_response) ?? "") }.check()
