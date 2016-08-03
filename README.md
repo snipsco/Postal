@@ -53,7 +53,7 @@ postal.fetchMessages("INBOX", uids: indexset, flags: [ .headers ], onMessage: { 
 
 ### What about Mailcore ?
 
-Postal does not addresses the same goal as MailCore. You can take a look at our toughts in the [TechnicalNotes][] document.
+Postal does not addresses the same goal as MailCore. You can take a look at our thoughts in the [TechnicalNotes][] document.
 
 ### Provider quirks
 
