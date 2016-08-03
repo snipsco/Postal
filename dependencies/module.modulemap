@@ -1,0 +1,6 @@
+module libetpan {
+    header "build/ios/include/libetpan/libetpan.h"
+    header "build/ios/include/libetpan/clist.h"
+
+    export *
+}

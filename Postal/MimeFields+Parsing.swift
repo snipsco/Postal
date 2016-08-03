@@ -1,0 +1,127 @@
+//
+//  The MIT License (MIT)
+//
+//  Copyright (c) 2016 Snips
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+
+import Foundation
+import libetpan
+
+public struct MimeFields {
+    public private(set) var name: String? = nil
+    public private(set) var charset: String? = nil
+    public private(set) var contentType: [MimeType] = []
+    public private(set) var contentId: String? = nil
+    public private(set) var contentDescription: String? = nil
+    public private(set) var contentEncoding: ContentEncoding? = nil
+    public private(set) var contentLocation: String? = nil
+    public private(set) var contentDisposition: ContentDisposition? = nil
+}
+
+// MARK: IMAP Parsing
+
+extension mailimap_body_fields {
+    var parse: MimeFields {
+        var mimeFields = MimeFields()
+        
+        // TODO: bd_size
+        
+        if let list = bd_parameter.optional?.pa_list {
+            for param in sequence(list, of: mailimap_single_body_fld_param.self) {
+                guard let name = String.fromUTF8CString(param.pa_name)?.lowercaseString else { continue }
+                guard let value = String.fromZeroSizedCStringMimeHeader(param.pa_value)?.lowercaseString else { continue }
+                
+                switch name {
+                case "name": mimeFields.name = value
+                case "charset": mimeFields.charset = value
+                default: mimeFields.contentType.append(MimeType(type: name, subtype: value)) // check this
+                }
+            }
+        }
+        
+        if let encoding = bd_encoding.optional {
+            mimeFields.contentEncoding = encoding.parse
+        }
+        
+        if let mimeId = bd_id.optional {
+            var curToken: size_t = 0
+            var contentId: UnsafeMutablePointer<CChar> = nil
+            let result = mailimf_msg_id_parse(bd_id, Int(strlen(bd_id)), &curToken, &contentId)
+            if MAILIMF_NO_ERROR == Int(result) {
+                defer { free(contentId) }
+                if let contentId = String.fromUTF8CString(contentId) {
+                    mimeFields.contentId = contentId
+                }
+            }
+        }
+        if bd_description != nil {
+            if let description = String.fromUTF8CString(bd_description) {
+                mimeFields.contentDescription = description
+            }
+        }
+        
+        return mimeFields
+    }
+}
+
+extension mailimap_body_ext_1part {
+    var parse: MimeFields {
+        
+        var fields = MimeFields()
+        fields.contentLocation = String.fromUTF8CString(bd_loc)
+        fields.contentDisposition = bd_disposition.optional?.parse
+        
+        return fields
+    }
+}
+
+// MARK: IMF Parsing
+
+extension mailmime_single_fields {
+    var parse: MimeFields {
+        let filename = String.fromZeroSizedCStringMimeHeader(fld_disposition_filename)
+        let name = String.fromZeroSizedCStringMimeHeader(fld_content_name)
+        let contentId = String.fromUTF8CString(fld_id)
+        let description  = String.fromUTF8CString(fld_description)
+        let charset = String.fromZeroSizedCStringMimeHeader(fld_content_charset)
+        let loc = String.fromUTF8CString(fld_location)
+        let encoding = fld_encoding.optional?.parse
+        
+        let disposition = fld_disposition.optional?.dsp_type.optional?.parse
+        
+        //let contentType = fld_content.optional?.parse
+        let content = fld_content.optional
+            .map { sequence($0.ct_parameters, of: mailmime_parameter.self) }?
+            .flatMap { $0.parse.map { type, subtype in MimeType(type: type, subtype: subtype) } }
+        
+        var fields = MimeFields()
+        fields.name = filename ?? name
+        fields.contentId = contentId
+        fields.contentDescription = description
+        fields.charset = charset
+        fields.contentLocation = loc
+        fields.contentEncoding = encoding
+        fields.contentDisposition = disposition
+        fields.contentType = content ?? []
+        
+        return fields
+    }
+}

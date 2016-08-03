@@ -1,3 +1,6 @@
+# Tests
+provider_credentials.json
+
 ### OSX ###
 *.DS_Store
 .AppleDouble
@@ -34,6 +37,7 @@ Temporary Items
 
 ## Build generated
 build/
+!dependencies/build
 DerivedData/
 
 ## Various settings
@@ -78,8 +82,7 @@ playground.xcworkspace
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
-# Carthage/Checkouts
-
+Carthage/Checkouts
 Carthage/Build
 
 # fastlane

@@ -1,4 +1,0 @@
-module libetpan [system] {
-    header "libetpan/src/main/libetpan.h"
-    export *
-}

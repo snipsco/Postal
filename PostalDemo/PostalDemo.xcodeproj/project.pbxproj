@@ -1,0 +1,344 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		98F8D3A71CFDBC9200E5ADDC /* Postal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F8D3A31CFDBC2300E5ADDC /* Postal.framework */; };
+		98F8D3A81CFDBC9200E5ADDC /* Postal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 98F8D3A31CFDBC2300E5ADDC /* Postal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F77FEF1A1D058E310036A9A7 /* MailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77FEF191D058E310036A9A7 /* MailsTableViewController.swift */; };
+		F7A1E12D1CF464D00046C03E /* LoginTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A1E12C1CF464D00046C03E /* LoginTableViewController.swift */; };
+		F7DE800C1CF363110031E26A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DE800B1CF363110031E26A /* AppDelegate.swift */; };
+		F7DE80111CF363110031E26A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7DE800F1CF363110031E26A /* Main.storyboard */; };
+		F7DE80131CF363110031E26A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7DE80121CF363110031E26A /* Assets.xcassets */; };
+		F7DE80161CF363110031E26A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7DE80141CF363110031E26A /* LaunchScreen.storyboard */; };
+		F7DE80271CF36C870031E26A /* AddAccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DE80261CF36C870031E26A /* AddAccountTableViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		98F8D39E1CFDBB9D00E5ADDC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				98F8D3A81CFDBC9200E5ADDC /* Postal.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7A1E12A1CF45EC60046C03E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		98F8D39B1CFDBB9D00E5ADDC /* OAuthSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuthSwift.framework; path = ../Carthage/Build/iOS/OAuthSwift.framework; sourceTree = "<group>"; };
+		98F8D3A31CFDBC2300E5ADDC /* Postal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Postal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F77FEF191D058E310036A9A7 /* MailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailsTableViewController.swift; sourceTree = "<group>"; };
+		F7A1E12C1CF464D00046C03E /* LoginTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTableViewController.swift; sourceTree = "<group>"; };
+		F7DE80081CF363110031E26A /* PostalDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostalDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7DE800B1CF363110031E26A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F7DE80101CF363110031E26A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F7DE80121CF363110031E26A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F7DE80151CF363110031E26A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F7DE80171CF363110031E26A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F7DE80261CF36C870031E26A /* AddAccountTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountTableViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F7DE80051CF363110031E26A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98F8D3A71CFDBC9200E5ADDC /* Postal.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F7DE7FFF1CF363110031E26A = {
+			isa = PBXGroup;
+			children = (
+				F7DE800A1CF363110031E26A /* PostalDemo */,
+				F7DE80231CF363480031E26A /* Frameworks */,
+				F7DE80091CF363110031E26A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F7DE80091CF363110031E26A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F7DE80081CF363110031E26A /* PostalDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F7DE800A1CF363110031E26A /* PostalDemo */ = {
+			isa = PBXGroup;
+			children = (
+				F7DE800B1CF363110031E26A /* AppDelegate.swift */,
+				F7DE80261CF36C870031E26A /* AddAccountTableViewController.swift */,
+				F7A1E12C1CF464D00046C03E /* LoginTableViewController.swift */,
+				F77FEF191D058E310036A9A7 /* MailsTableViewController.swift */,
+				F7DE800F1CF363110031E26A /* Main.storyboard */,
+				F7DE80121CF363110031E26A /* Assets.xcassets */,
+				F7DE80141CF363110031E26A /* LaunchScreen.storyboard */,
+				F7DE80171CF363110031E26A /* Info.plist */,
+			);
+			path = PostalDemo;
+			sourceTree = "<group>";
+		};
+		F7DE80231CF363480031E26A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				98F8D3A31CFDBC2300E5ADDC /* Postal.framework */,
+				98F8D39B1CFDBB9D00E5ADDC /* OAuthSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F7DE80071CF363110031E26A /* PostalDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7DE801A1CF363110031E26A /* Build configuration list for PBXNativeTarget "PostalDemo" */;
+			buildPhases = (
+				F7DE80041CF363110031E26A /* Sources */,
+				F7DE80051CF363110031E26A /* Frameworks */,
+				F7DE80061CF363110031E26A /* Resources */,
+				F7A1E12A1CF45EC60046C03E /* CopyFiles */,
+				98F8D39E1CFDBB9D00E5ADDC /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PostalDemo;
+			productName = PostalDemo;
+			productReference = F7DE80081CF363110031E26A /* PostalDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F7DE80001CF363110031E26A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Snips;
+				TargetAttributes = {
+					F7DE80071CF363110031E26A = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = F7DE80031CF363110031E26A /* Build configuration list for PBXProject "PostalDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F7DE7FFF1CF363110031E26A;
+			productRefGroup = F7DE80091CF363110031E26A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F7DE80071CF363110031E26A /* PostalDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F7DE80061CF363110031E26A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7DE80161CF363110031E26A /* LaunchScreen.storyboard in Resources */,
+				F7DE80131CF363110031E26A /* Assets.xcassets in Resources */,
+				F7DE80111CF363110031E26A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F7DE80041CF363110031E26A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F77FEF1A1D058E310036A9A7 /* MailsTableViewController.swift in Sources */,
+				F7DE800C1CF363110031E26A /* AppDelegate.swift in Sources */,
+				F7DE80271CF36C870031E26A /* AddAccountTableViewController.swift in Sources */,
+				F7A1E12D1CF464D00046C03E /* LoginTableViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F7DE800F1CF363110031E26A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F7DE80101CF363110031E26A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F7DE80141CF363110031E26A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F7DE80151CF363110031E26A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F7DE80181CF363110031E26A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F7DE80191CF363110031E26A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F7DE801B1CF363110031E26A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = PostalDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.PostalDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F7DE801C1CF363110031E26A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = PostalDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.PostalDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F7DE80031CF363110031E26A /* Build configuration list for PBXProject "PostalDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7DE80181CF363110031E26A /* Debug */,
+				F7DE80191CF363110031E26A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7DE801A1CF363110031E26A /* Build configuration list for PBXNativeTarget "PostalDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7DE801B1CF363110031E26A /* Debug */,
+				F7DE801C1CF363110031E26A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F7DE80001CF363110031E26A /* Project object */;
+}
