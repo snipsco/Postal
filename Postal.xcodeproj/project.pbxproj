@@ -637,7 +637,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "-letpan";
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
-				PRODUCT_NAME = Postal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/macos/include";
@@ -664,7 +663,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "-letpan";
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
-				PRODUCT_NAME = Postal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/macos/include";
@@ -715,7 +713,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				PRODUCT_NAME = Postal;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -764,7 +762,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
+				PRODUCT_NAME = Postal;
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -796,7 +794,7 @@
 					"-letpan",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
-				PRODUCT_NAME = Postal;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -823,7 +821,7 @@
 					"-letpan",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
-				PRODUCT_NAME = Postal;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -888,6 +886,24 @@
 			buildConfigurations = (
 				98DB00AD1CEC6983003CAABB /* Debug */,
 				98DB00AE1CEC6983003CAABB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F70576611D53790B002FC0E8 /* Build configuration list for PBXNativeTarget "Postal-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F70576621D53790B002FC0E8 /* Debug */,
+				F70576631D53790B002FC0E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F70576711D53792F002FC0E8 /* Build configuration list for PBXNativeTarget "Postal-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F70576721D53792F002FC0E8 /* Debug */,
+				F70576731D53792F002FC0E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
