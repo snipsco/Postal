@@ -86,14 +86,14 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 ## Installation
 
-### Framework with Carthage
+### Carthage
 
 Postal is [Carthage](https://github.com/Carthage/Carthage) compatible.
 
 - Add `github "snipsco/Postal"` to your Cartfile.
 - Run `carthage update`.
 
-### Framework with CocoaPods
+### CocoaPods
 
 Postal also can be used by [CocoaPods](https://cocoapods.org/).
 
@@ -110,7 +110,19 @@ Postal also can be used by [CocoaPods](https://cocoapods.org/).
 	pod 'Postal/ReactiveCocoa'
 	```
 
-- Run `pod install`.
+- Run `pod install`. 
+
+### Manual
+
+1. Add the Postal repository as a [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) of your application’s repository.
+	
+	```bash
+	git submodule add https://github.com/snipsco/Postal.git
+	git submodule update --init --recursive
+	```
+1. Drag and drop `Postal.xcodeproj` and `Carthage/Checkouts/Result/Result.xcodeproj` into your application’s Xcode project or workspace.
+1. On the “General” tab of your application target’s settings, add `Postal.framework` and `Result.framework` to the “Embedded Binaries” section.
+1. If your application target does not contain Swift code at all, you should also set the `EMBEDDED_CONTENT_CONTAINS_SWIFT` build setting to “Yes”.
 
 ## License
 
