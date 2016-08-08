@@ -41,13 +41,22 @@
 		9812C34D1D509DEB00630D46 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C34C1D509DEB00630D46 /* libiconv.tbd */; };
 		9812C34F1D509DF700630D46 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C34E1D509DF700630D46 /* libz.tbd */; };
 		9812C3511D509DFE00630D46 /* libsasl2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C3501D509DFE00630D46 /* libsasl2.tbd */; };
-		98DB00A01CEC6983003CAABB /* Postal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB00951CEC6983003CAABB /* Postal.framework */; };
+		9852BA141D58A5D000EE46E5 /* Postal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; };
+		9852BA151D58A5D000EE46E5 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; };
+		9852BA661D58ACEA00EE46E5 /* Postal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C31C1D50959500630D46 /* Postal.framework */; };
+		9852BA6E1D58ADAF00EE46E5 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; };
+		9852BA721D58ADC800EE46E5 /* Postal.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9852BA731D58ADC800EE46E5 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9852BA741D58ADD400EE46E5 /* IMAPSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */; };
+		9852BA751D58ADD600EE46E5 /* PostalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF41D4BA5DB0083397F /* PostalTests.swift */; };
+		9852BA761D58ADD900EE46E5 /* XCTest+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */; };
+		98C9D4F91D58A4F800635F9F /* Postal.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		98C9D4FA1D58A4F800635F9F /* Result.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		98DB04371CEC7337003CAABB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04361CEC7337003CAABB /* libz.tbd */; };
 		98DB04391CEC7342003CAABB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04381CEC7342003CAABB /* libiconv.tbd */; };
 		F71325661D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F71325671D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F75DD4751D4BAC1500D40E9C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75DD4741D4BAC1500D40E9C /* Result.framework */; };
-		F77FF4EF1D082E870036A9A7 /* Postal.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB00951CEC6983003CAABB /* Postal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F7F03C781D4BA5A90083397F /* Address+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F039F51D4BA5A70083397F /* Address+Parsing.swift */; };
 		F7F03C7A1D4BA5A90083397F /* CertificateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F039F71D4BA5A70083397F /* CertificateUtils.swift */; };
 		F7F03C7B1D4BA5A90083397F /* ContentDisposition+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F039F81D4BA5A70083397F /* ContentDisposition+Parsing.swift */; };
@@ -84,6 +93,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9852BA671D58ACEA00EE46E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98DB008C1CEC6983003CAABB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9812C31B1D50959500630D46;
+			remoteInfo = "Postal-macOS";
+		};
 		98DB00A11CEC6983003CAABB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 98DB008C1CEC6983003CAABB /* Project object */;
@@ -94,13 +110,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F77FF4ED1D082A6E0036A9A7 /* Copy Frameworks */ = {
+		9852BA711D58ADBD00EE46E5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F77FF4EF1D082E870036A9A7 /* Postal.framework in Copy Frameworks */,
+				9852BA721D58ADC800EE46E5 /* Postal.framework in CopyFiles */,
+				9852BA731D58ADC800EE46E5 /* Result.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F77FF4ED1D082A6E0036A9A7 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				98C9D4F91D58A4F800635F9F /* Postal.framework in Copy Frameworks */,
+				98C9D4FA1D58A4F800635F9F /* Result.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +153,10 @@
 		9812C34C1D509DEB00630D46 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
 		9812C34E1D509DF700630D46 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		9812C3501D509DFE00630D46 /* libsasl2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsasl2.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/lib/libsasl2.tbd; sourceTree = DEVELOPER_DIR; };
+		9852BA611D58ACE900EE46E5 /* PostalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9852BA6C1D58AD0E00EE46E5 /* PostalTests-macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PostalTests-macOS.plist"; sourceTree = "<group>"; };
+		98C9D4EF1D58A3C900635F9F /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		98C9D4F71D58A4A000635F9F /* Postal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Postal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98DB00951CEC6983003CAABB /* Postal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Postal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98DB009F1CEC6983003CAABB /* PostalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98DB04361CEC7337003CAABB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -163,7 +195,7 @@
 		F7F03C741D4BA5A90083397F /* Postal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Postal.swift; sourceTree = "<group>"; };
 		F7F03C761D4BA5A90083397F /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPSessionTests.swift; sourceTree = "<group>"; };
-		F7F03EF31D4BA5DB0083397F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F7F03EF31D4BA5DB0083397F /* PostalTests-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PostalTests-iOS.plist"; sourceTree = "<group>"; };
 		F7F03EF41D4BA5DB0083397F /* PostalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalTests.swift; sourceTree = "<group>"; };
 		F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTest+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +209,15 @@
 				9812C34F1D509DF700630D46 /* libz.tbd in Frameworks */,
 				9812C34D1D509DEB00630D46 /* libiconv.tbd in Frameworks */,
 				9812C34A1D509B9100630D46 /* Result.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9852BA5E1D58ACE900EE46E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9852BA661D58ACEA00EE46E5 /* Postal.framework in Frameworks */,
+				9852BA6E1D58ADAF00EE46E5 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,7 +235,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98DB00A01CEC6983003CAABB /* Postal.framework in Frameworks */,
+				9852BA151D58A5D000EE46E5 /* Result.framework in Frameworks */,
+				9852BA141D58A5D000EE46E5 /* Postal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +274,15 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
+		98C9D4DC1D58A20500635F9F /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				98C9D4F71D58A4A000635F9F /* Postal.framework */,
+				98C9D4EF1D58A3C900635F9F /* Result.framework */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
 		98DB008B1CEC6983003CAABB = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +300,7 @@
 				98DB00951CEC6983003CAABB /* Postal.framework */,
 				98DB009F1CEC6983003CAABB /* PostalTests.xctest */,
 				9812C31C1D50959500630D46 /* Postal.framework */,
+				9852BA611D58ACE900EE46E5 /* PostalTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -359,6 +411,7 @@
 		F7F03EF11D4BA5DB0083397F /* PostalTests */ = {
 			isa = PBXGroup;
 			children = (
+				98C9D4DC1D58A20500635F9F /* Libraries */,
 				F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */,
 				F7F03EF41D4BA5DB0083397F /* PostalTests.swift */,
 				F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */,
@@ -370,7 +423,8 @@
 		F7F03EFB1D4BA61E0083397F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F7F03EF31D4BA5DB0083397F /* Info.plist */,
+				9852BA6C1D58AD0E00EE46E5 /* PostalTests-macOS.plist */,
+				F7F03EF31D4BA5DB0083397F /* PostalTests-iOS.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -415,6 +469,25 @@
 			productReference = 9812C31C1D50959500630D46 /* Postal.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		9852BA601D58ACE900EE46E5 /* PostalTests-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9852BA691D58ACEA00EE46E5 /* Build configuration list for PBXNativeTarget "PostalTests-macOS" */;
+			buildPhases = (
+				9852BA5D1D58ACE900EE46E5 /* Sources */,
+				9852BA5E1D58ACE900EE46E5 /* Frameworks */,
+				9852BA5F1D58ACE900EE46E5 /* Resources */,
+				9852BA711D58ADBD00EE46E5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9852BA681D58ACEA00EE46E5 /* PBXTargetDependency */,
+			);
+			name = "PostalTests-macOS";
+			productName = "PostalTests-macOS";
+			productReference = 9852BA611D58ACE900EE46E5 /* PostalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		98DB00941CEC6983003CAABB /* Postal-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98DB00A91CEC6983003CAABB /* Build configuration list for PBXNativeTarget "Postal-iOS" */;
@@ -434,9 +507,9 @@
 			productReference = 98DB00951CEC6983003CAABB /* Postal.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		98DB009E1CEC6983003CAABB /* PostalTests */ = {
+		98DB009E1CEC6983003CAABB /* PostalTests-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98DB00AC1CEC6983003CAABB /* Build configuration list for PBXNativeTarget "PostalTests" */;
+			buildConfigurationList = 98DB00AC1CEC6983003CAABB /* Build configuration list for PBXNativeTarget "PostalTests-iOS" */;
 			buildPhases = (
 				98DB009B1CEC6983003CAABB /* Sources */,
 				98DB009C1CEC6983003CAABB /* Frameworks */,
@@ -448,7 +521,7 @@
 			dependencies = (
 				98DB00A21CEC6983003CAABB /* PBXTargetDependency */,
 			);
-			name = PostalTests;
+			name = "PostalTests-iOS";
 			productName = PostalTests;
 			productReference = 98DB009F1CEC6983003CAABB /* PostalTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -464,6 +537,9 @@
 				ORGANIZATIONNAME = snips;
 				TargetAttributes = {
 					9812C31B1D50959500630D46 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					9852BA601D58ACE900EE46E5 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
 					98DB00941CEC6983003CAABB = {
@@ -489,13 +565,21 @@
 			targets = (
 				98DB00941CEC6983003CAABB /* Postal-iOS */,
 				9812C31B1D50959500630D46 /* Postal-macOS */,
-				98DB009E1CEC6983003CAABB /* PostalTests */,
+				98DB009E1CEC6983003CAABB /* PostalTests-iOS */,
+				9852BA601D58ACE900EE46E5 /* PostalTests-macOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9812C31A1D50959500630D46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9852BA5F1D58ACE900EE46E5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -556,6 +640,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9852BA5D1D58ACE900EE46E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9852BA751D58ADD600EE46E5 /* PostalTests.swift in Sources */,
+				9852BA741D58ADD400EE46E5 /* IMAPSessionTests.swift in Sources */,
+				9852BA761D58ADD900EE46E5 /* XCTest+Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		98DB00901CEC6983003CAABB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -606,6 +700,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9852BA681D58ACEA00EE46E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9812C31B1D50959500630D46 /* Postal-macOS */;
+			targetProxy = 9852BA671D58ACEA00EE46E5 /* PBXContainerItemProxy */;
+		};
 		98DB00A21CEC6983003CAABB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 98DB00941CEC6983003CAABB /* Postal-iOS */;
@@ -632,7 +731,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/dependencies/build/macos/include";
 				INFOPLIST_FILE = "Postal-macOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/dependencies/build/macos/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "-letpan";
@@ -658,7 +757,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/dependencies/build/macos/include";
 				INFOPLIST_FILE = "Postal-macOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/dependencies/build/macos/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "-letpan";
@@ -667,6 +766,36 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/macos/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		9852BA6A1D58ACEA00EE46E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "PostalTests/PostalTests-macOS.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.snips.PostalTests-macOS";
+				PRODUCT_NAME = PostalTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9852BA6B1D58ACEA00EE46E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "PostalTests/PostalTests-macOS.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.snips.PostalTests-macOS";
+				PRODUCT_NAME = PostalTests;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -707,9 +836,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -757,9 +884,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = Postal;
@@ -832,10 +957,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				INFOPLIST_FILE = PostalTests/Info.plist;
+				INFOPLIST_FILE = "PostalTests/PostalTests-iOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.PostalTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PostalTests;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
@@ -843,10 +970,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				INFOPLIST_FILE = PostalTests/Info.plist;
+				INFOPLIST_FILE = "PostalTests/PostalTests-iOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.PostalTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PostalTests;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
@@ -862,6 +991,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		9852BA691D58ACEA00EE46E5 /* Build configuration list for PBXNativeTarget "PostalTests-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9852BA6A1D58ACEA00EE46E5 /* Debug */,
+				9852BA6B1D58ACEA00EE46E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		98DB008F1CEC6983003CAABB /* Build configuration list for PBXProject "Postal" */ = {
 			isa = XCConfigurationList;
@@ -881,29 +1018,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98DB00AC1CEC6983003CAABB /* Build configuration list for PBXNativeTarget "PostalTests" */ = {
+		98DB00AC1CEC6983003CAABB /* Build configuration list for PBXNativeTarget "PostalTests-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98DB00AD1CEC6983003CAABB /* Debug */,
 				98DB00AE1CEC6983003CAABB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F70576611D53790B002FC0E8 /* Build configuration list for PBXNativeTarget "Postal-tvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F70576621D53790B002FC0E8 /* Debug */,
-				F70576631D53790B002FC0E8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F70576711D53792F002FC0E8 /* Build configuration list for PBXNativeTarget "Postal-watchOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F70576721D53792F002FC0E8 /* Debug */,
-				F70576731D53792F002FC0E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -48,7 +48,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "98DB009E1CEC6983003CAABB"
                BuildableName = "PostalTests.xctest"
-               BlueprintName = "PostalTests"
+               BlueprintName = "PostalTests-iOS"
                ReferencedContainer = "container:Postal.xcodeproj">
             </BuildableReference>
          </TestableReference>
