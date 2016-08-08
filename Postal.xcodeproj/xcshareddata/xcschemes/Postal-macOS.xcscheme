@@ -47,7 +47,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9852BA601D58ACE900EE46E5"
-               BuildableName = "PostalTests-macOS.xctest"
+               BuildableName = "PostalTests.xctest"
                BlueprintName = "PostalTests-macOS"
                ReferencedContainer = "container:Postal.xcodeproj">
             </BuildableReference>
