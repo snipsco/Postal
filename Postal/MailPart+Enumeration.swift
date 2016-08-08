@@ -40,26 +40,13 @@ public struct SinglePart {
 
 extension MailPart {
     public var allParts: AnyGenerator<SinglePart> {
-        
-        let current: [SinglePart]
-        let second: AnyGenerator<SinglePart>
-        
         switch self {
         case .single(let id, let mimeType, let mimeFields, let data):
-            current = [ SinglePart(id: id, mimeType: mimeType, mimeFields: mimeFields, data: data) ]
-            second = AnyGenerator { nil }
+            return AnyGenerator(GeneratorOfOne(SinglePart(id: id, mimeType: mimeType, mimeFields: mimeFields, data: data)))
         case .multipart(_, _, let parts):
-            current = []
-            var gen = parts.flatMap { $0.allParts }.generate()
-            second = AnyGenerator { gen.next() }
+            return AnyGenerator(parts.flatMap { $0.allParts }.generate())
         case .message(_, _, let message):
-            current = []
-            second = message.allParts
-        }
-        
-        var first = current.generate()
-        return AnyGenerator {
-            return first.next() ?? second.next()
+            return message.allParts
         }
     }
 }
