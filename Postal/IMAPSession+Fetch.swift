@@ -134,6 +134,7 @@ enum IMAPIndexes {
 }
 
 private class FetchContext {
+    var hasMoreMessage = false
     let handler: (FetchResult -> Void)
     let flags: FetchFlag
 
@@ -164,6 +165,8 @@ extension IMAPSession {
                 let fetchContext = UnsafePointer<FetchContext>(context).memory
                 let builder = FetchResultBuilder(flags: fetchContext.flags)
                 
+                fetchContext.hasMoreMessage = true
+                
                 guard let result = message.optional?.parse(builder) else { return }
                 
                 fetchContext.handler(result)
@@ -187,15 +190,18 @@ extension IMAPSession {
             fetchFunc = mailimap_fetch
         }
 
-        try givenIndexSet.enumerate(batchSize: configuration.batchSize).forEach { indexSet in
-            var results: UnsafeMutablePointer<clist> = nil
-
+        for indexSet in givenIndexSet.enumerate(batchSize: configuration.batchSize) {
+            
             let imapSet = indexSet.unreleasedMailimapSet
             defer { mailimap_set_free(imapSet) }
-
-            try fetchFunc(session: self.imap, set: imapSet, fetch_type: fetchType, result: &results).toIMAPError?.check()
             
+            context.hasMoreMessage = false
+            
+            var results: UnsafeMutablePointer<clist> = nil
+            try fetchFunc(session: self.imap, set: imapSet, fetch_type: fetchType, result: &results).toIMAPError?.check()
             defer { mailimap_fetch_list_free(results) }
+            
+            guard context.hasMoreMessage else { break }
         }
     }
     
@@ -277,21 +283,19 @@ private extension String {
 }
 
 private extension NSIndexSet {
-    func enumerate(batchSize batchSize: Int) -> [NSIndexSet] {
-        var result = [NSIndexSet]()
-        var current = NSMutableIndexSet()
-        
-        enumerateIndexesUsingBlock { index, cancel in
-            if current.count >= batchSize {
-                result.append(current)
-                current = NSMutableIndexSet()
+    func enumerate(batchSize batchSize: Int) -> AnySequence<NSIndexSet> {
+        var indexGenerator = self.generate()
+        let accumulatorGenerator = AnyGenerator<NSIndexSet> {
+            let currentBatch = NSMutableIndexSet()
+            while let nextIndex = indexGenerator.next() where currentBatch.count < batchSize {
+                currentBatch.addIndex(nextIndex)
             }
-            current.addIndex(index)
+            
+            guard currentBatch.count > 0 else { return nil }
+            
+            return currentBatch
         }
         
-        // remainder
-        if current.count > 0 { result.append(current) }
-        
-        return result
+        return AnySequence(accumulatorGenerator)
     }
 }

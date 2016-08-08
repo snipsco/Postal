@@ -93,7 +93,7 @@ extension Configuration {
             password: password,
             connectionType: .tls,
             checkCertificateEnabled: true,
-            batchSize: Int.max,
+            batchSize: 1000,
             spamFolderName: "$Phishing")
     }
 }
@@ -112,7 +112,7 @@ extension Configuration {
             password: password,
             connectionType: .tls,
             checkCertificateEnabled: true,
-            batchSize: Int.max,
+            batchSize: 1000,
             spamFolderName: "$Junk")
     }
 }
@@ -150,7 +150,7 @@ extension Configuration {
             password: .plain(password),
             connectionType: .tls,
             checkCertificateEnabled: true,
-            batchSize: Int.max,
+            batchSize: 1000,
             spamFolderName: "Junk")
     }
 }
@@ -169,7 +169,7 @@ extension Configuration {
             password: .plain(password),
             connectionType: .tls,
             checkCertificateEnabled: true,
-            batchSize: Int.max,
+            batchSize: 1000,
             spamFolderName: "Junk")
     }
 }
