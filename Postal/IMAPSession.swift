@@ -37,6 +37,8 @@ final class IMAPSession {
     private var defaultNamespace: IMAPNamespace? = nil
     private var serverIdentity = IMAPIdentity([:])
     
+    private var selectedFolder: String = ""
+    
     var logger: Logger? {
         didSet {
             if logger != nil {
@@ -147,6 +149,8 @@ final class IMAPSession {
     }
     
     func login() throws {
+        selectedFolder = "" // reset selected folder on login
+        // TODO: maybe create a reset method and find the best time to call it
         let result: Int32
         
         switch configuration.password {
@@ -210,10 +214,14 @@ final class IMAPSession {
     }
     
     func select(folder: String) throws -> IMAPFolderInfo {
-        // needs to be optimized by checking current selected folder
-        try mailimap_select(imap, folder).toIMAPError?.check()
+        if folder != selectedFolder {
+            try mailimap_select(imap, folder).toIMAPError?.check()
+        }
         
         guard let info = imap.optional?.imap_selection_info.optional else { throw IMAPError.nonExistantFolderError.asPostalError }
+        
+        // store last selected folder
+        selectedFolder = folder
         return IMAPFolderInfo(selectionInfo: info)
     }
     
