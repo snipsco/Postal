@@ -43,7 +43,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		98F8D39B1CFDBB9D00E5ADDC /* OAuthSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuthSwift.framework; path = ../Carthage/Build/iOS/OAuthSwift.framework; sourceTree = "<group>"; };
 		98F8D3A31CFDBC2300E5ADDC /* Postal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Postal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F77FEF191D058E310036A9A7 /* MailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailsTableViewController.swift; sourceTree = "<group>"; };
 		F7A1E12C1CF464D00046C03E /* LoginTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTableViewController.swift; sourceTree = "<group>"; };
@@ -106,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				98F8D3A31CFDBC2300E5ADDC /* Postal.framework */,
-				98F8D39B1CFDBB9D00E5ADDC /* OAuthSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

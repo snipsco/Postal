@@ -4,14 +4,16 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "237A99559A8C56DAAEB35237E156C6C784BD33A6" : 0,
     "540EF66E8E241D121274E141C07C6441D7FF115E" : 0,
+    "237A99559A8C56DAAEB35237E156C6C784BD33A6" : 0,
+    "956D2B21DD155C49504BB67697A67F7C5351A353" : 0,
     "9AC09DEB5BB6D967BE557BB595B0C1975E3AA279" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "786C7EAF-6A88-4297-B807-7C4A74F86C31",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "237A99559A8C56DAAEB35237E156C6C784BD33A6" : "..\/..",
     "540EF66E8E241D121274E141C07C6441D7FF115E" : "Postal\/",
+    "237A99559A8C56DAAEB35237E156C6C784BD33A6" : "..\/..",
+    "956D2B21DD155C49504BB67697A67F7C5351A353" : "Postal\/Carthage\/Checkouts\/Result\/",
     "9AC09DEB5BB6D967BE557BB595B0C1975E3AA279" : "Postal\/Postal\/Postal\/dependencies\/libetpan\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Postal",
@@ -27,6 +29,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:snipsco\/Postal.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "540EF66E8E241D121274E141C07C6441D7FF115E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/antitypical\/Result.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "956D2B21DD155C49504BB67697A67F7C5351A353"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/snipsco\/libetpan.git",
