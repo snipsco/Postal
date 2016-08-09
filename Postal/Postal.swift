@@ -25,19 +25,6 @@
 import Foundation
 import Result
 
-protocol PostalErrorType {
-    var asPostalError: PostalError { get }
-}
-
-extension PostalErrorType {
-    func check() throws { throw self.asPostalError }
-}
-
-public enum PostalError: ErrorType {
-    case imapError(IMAPError)
-    case imfError(IMFError)
-}
-
 /// This class is the class where every request will be performed.
 public class Postal {
     private let session: IMAPSession

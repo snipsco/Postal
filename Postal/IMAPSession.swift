@@ -160,7 +160,7 @@ final class IMAPSession {
             result = mailimap_login(imap, configuration.login, password)
         }
         
-        try result.toIMAPError?.enrich { return .loginError(String.fromCString(imap.memory.imap_response) ?? "") }.check()
+        try result.toIMAPError?.enrich { return .login(description: String.fromCString(imap.memory.imap_response) ?? "") }.check()
         
         try checkCapabilities()
     }
@@ -193,7 +193,7 @@ final class IMAPSession {
             
             let initialFolders = makeFolders(sequence(list, of: mailimap_mailbox_list.self))
             
-            guard let initialFolder = initialFolders.first else { throw IMAPError.loginError("").asPostalError }
+            guard let initialFolder = initialFolders.first else { throw IMAPError.login(description: "").asPostalError }
             
             defaultNamespace = IMAPNamespace(items: [ IMAPNamespaceItem(prefix: "", delimiter: initialFolder.delimiter) ])
         }
@@ -218,7 +218,7 @@ final class IMAPSession {
             try mailimap_select(imap, folder).toIMAPError?.check()
         }
         
-        guard let info = imap.optional?.imap_selection_info.optional else { throw IMAPError.nonExistantFolderError.asPostalError }
+        guard let info = imap.optional?.imap_selection_info.optional else { throw IMAPError.nonExistantFolder.asPostalError }
         
         // store last selected folder
         selectedFolder = folder
@@ -256,7 +256,7 @@ final class IMAPSession {
     
     private func checkCertificateIfNeeded() throws -> Bool {
         guard configuration.checkCertificateEnabled else { return true }
-        guard checkCertificate(imap.memory.imap_stream, hostname: configuration.hostname) else { throw IMAPError.certificateError.asPostalError }
+        guard checkCertificate(imap.memory.imap_stream, hostname: configuration.hostname) else { throw IMAPError.certificate.asPostalError }
         return true
     }
 }

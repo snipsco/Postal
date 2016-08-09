@@ -23,9 +23,8 @@
 //
 
 import Foundation
-import libetpan
 
-enum IMAPError {
+public enum PostalError: ErrorType {
     case undefined
     case connection
     case login(description: String)
@@ -34,41 +33,27 @@ enum IMAPError {
     case nonExistantFolder
 }
 
-extension IMAPError: PostalErrorType {
-    var asPostalError: PostalError {
-        switch self {
-        case .undefined: return .undefined
-        case .connection: return .connection
-        case .login(let description): return .login(description: description)
-        case .parse: return .parse
-        case .certificate: return .certificate
-        case .nonExistantFolder: return .nonExistantFolder
-        }
+extension PostalError: Equatable {
+}
+
+public func ==(lhs: PostalError, rhs: PostalError) -> Bool {
+    switch (lhs, rhs) {
+    case (.undefined, .undefined): return true
+    case (.connection, .connection): return true
+    case (.login(_), .login(_)): return true
+    case (.parse, .parse): return true
+    case (.certificate, .certificate): return true
+    case (.nonExistantFolder, .nonExistantFolder): return true
+    default: return false
     }
 }
 
-extension IMAPError {
-    func enrich(@noescape f: () -> IMAPError) -> IMAPError {
-        if case .undefined = self {
-            return f()
-        }
-        return self
-    }
+// MARK: - Internal error management
+
+protocol PostalErrorType {
+    var asPostalError: PostalError { get }
 }
 
-extension Int {
-    var toIMAPError: IMAPError? {
-        switch self {
-        case MAILIMAP_NO_ERROR, MAILIMAP_NO_ERROR_AUTHENTICATED, MAILIMAP_NO_ERROR_NON_AUTHENTICATED: return nil
-        case MAILIMAP_ERROR_STREAM: return .connection
-        case MAILIMAP_ERROR_PARSE: return .parse
-        default: return .undefined
-        }
-    }
-}
-
-extension Int32 {
-    var toIMAPError: IMAPError? {
-        return Int(self).toIMAPError
-    }
+extension PostalErrorType {
+    func check() throws { throw self.asPostalError }
 }
