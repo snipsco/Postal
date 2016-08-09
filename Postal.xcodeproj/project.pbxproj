@@ -61,6 +61,8 @@
 		F71325661D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F71325671D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F75DD4751D4BAC1500D40E9C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75DD4741D4BAC1500D40E9C /* Result.framework */; };
+		F7E884A61D59C7F500D02CC2 /* PostalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E884A51D59C7F500D02CC2 /* PostalError.swift */; };
+		F7E884A71D59C7F500D02CC2 /* PostalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E884A51D59C7F500D02CC2 /* PostalError.swift */; };
 		F7F03C781D4BA5A90083397F /* Address+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F039F51D4BA5A70083397F /* Address+Parsing.swift */; };
 		F7F03C7A1D4BA5A90083397F /* CertificateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F039F71D4BA5A70083397F /* CertificateUtils.swift */; };
 		F7F03C7B1D4BA5A90083397F /* ContentDisposition+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F039F81D4BA5A70083397F /* ContentDisposition+Parsing.swift */; };
@@ -169,6 +171,7 @@
 		98DB04381CEC7342003CAABB /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		F71325651D50CA84005DFC15 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		F75DD4741D4BAC1500D40E9C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7E884A51D59C7F500D02CC2 /* PostalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalError.swift; sourceTree = "<group>"; };
 		F7F039F51D4BA5A70083397F /* Address+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+Parsing.swift"; sourceTree = "<group>"; };
 		F7F039F71D4BA5A70083397F /* CertificateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateUtils.swift; sourceTree = "<group>"; };
 		F7F039F81D4BA5A70083397F /* ContentDisposition+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentDisposition+Parsing.swift"; sourceTree = "<group>"; };
@@ -343,6 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				F7F03C741D4BA5A90083397F /* Postal.swift */,
+				F7E884A51D59C7F500D02CC2 /* PostalError.swift */,
 				F71325651D50CA84005DFC15 /* Configuration.swift */,
 			);
 			name = Postal;
@@ -631,6 +635,7 @@
 				9812C3251D509B5300630D46 /* Logger.swift in Sources */,
 				9812C32E1D509B6400630D46 /* MessageAttribute+Parsing.swift in Sources */,
 				9812C33A1D509B6400630D46 /* IMAPSession+Fetch.swift in Sources */,
+				F7E884A71D59C7F500D02CC2 /* PostalError.swift in Sources */,
 				9812C33B1D509B6400630D46 /* IMAPSession+Search.swift in Sources */,
 				9812C32D1D509B6400630D46 /* Message+Parsing.swift in Sources */,
 				F71325671D50CA84005DFC15 /* Configuration.swift in Sources */,
@@ -678,6 +683,7 @@
 				F7F03C7C1D4BA5A90083397F /* ContentEncoding+Parsing.swift in Sources */,
 				F7F03EAC1D4BA5A90083397F /* Message+Parsing.swift in Sources */,
 				F7F03EAE1D4BA5A90083397F /* MessageFlags+Parsing.swift in Sources */,
+				F7E884A61D59C7F500D02CC2 /* PostalError.swift in Sources */,
 				F7F03EB61D4BA5A90083397F /* Util.swift in Sources */,
 				F7F03C871D4BA5A90083397F /* IMAPSession+Fetch.swift in Sources */,
 				F71325661D50CA84005DFC15 /* Configuration.swift in Sources */,
