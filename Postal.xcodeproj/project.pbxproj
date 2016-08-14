@@ -60,7 +60,9 @@
 		98DB04391CEC7342003CAABB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04381CEC7342003CAABB /* libiconv.tbd */; };
 		F71325661D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F71325671D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
+		F72497431D6228850065D07E /* IMAPSession+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */; };
 		F75DD4751D4BAC1500D40E9C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75DD4741D4BAC1500D40E9C /* Result.framework */; };
+		F773372A1D60FF610015A1D4 /* IMAPSession+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */; };
 		F7E884A61D59C7F500D02CC2 /* PostalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E884A51D59C7F500D02CC2 /* PostalError.swift */; };
 		F7E884A71D59C7F500D02CC2 /* PostalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E884A51D59C7F500D02CC2 /* PostalError.swift */; };
 		F7F03C781D4BA5A90083397F /* Address+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F039F51D4BA5A70083397F /* Address+Parsing.swift */; };
@@ -171,6 +173,7 @@
 		98DB04381CEC7342003CAABB /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		F71325651D50CA84005DFC15 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		F75DD4741D4BAC1500D40E9C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Move.swift"; sourceTree = "<group>"; };
 		F7E884A51D59C7F500D02CC2 /* PostalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalError.swift; sourceTree = "<group>"; };
 		F7F039F51D4BA5A70083397F /* Address+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+Parsing.swift"; sourceTree = "<group>"; };
 		F7F039F71D4BA5A70083397F /* CertificateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateUtils.swift; sourceTree = "<group>"; };
@@ -364,6 +367,7 @@
 				F7F03A031D4BA5A70083397F /* IMAPNamespace.swift */,
 				F7F03A041D4BA5A70083397F /* IMAPSession+Fetch.swift */,
 				F7F03A051D4BA5A70083397F /* IMAPSession+Search.swift */,
+				F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */,
 				F7F03A061D4BA5A70083397F /* IMAPSession.swift */,
 				F7F03C671D4BA5A80083397F /* Logger+IMAP.swift */,
 				F7F03C6A1D4BA5A80083397F /* MailPart+Enumeration.swift */,
@@ -661,6 +665,7 @@
 				9812C3391D509B6400630D46 /* IMAPNamespace.swift in Sources */,
 				9812C3371D509B6400630D46 /* IMAPFolder.swift in Sources */,
 				9812C3361D509B6400630D46 /* IMAPError.swift in Sources */,
+				F72497431D6228850065D07E /* IMAPSession+Move.swift in Sources */,
 				9812C33C1D509B6400630D46 /* IMAPSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -702,6 +707,7 @@
 				F7F03C861D4BA5A90083397F /* IMAPNamespace.swift in Sources */,
 				F7F03EAA1D4BA5A90083397F /* MailPart+Enumeration.swift in Sources */,
 				F7F03C7A1D4BA5A90083397F /* CertificateUtils.swift in Sources */,
+				F773372A1D60FF610015A1D4 /* IMAPSession+Move.swift in Sources */,
 				F7F03C781D4BA5A90083397F /* Address+Parsing.swift in Sources */,
 				F7F03C821D4BA5A90083397F /* IMAPCapability.swift in Sources */,
 				F7F03EAF1D4BA5A90083397F /* MessageHeader+Parsing.swift in Sources */,

@@ -191,7 +191,6 @@ extension IMAPSession {
         }
 
         for indexSet in givenIndexSet.enumerate(batchSize: configuration.batchSize) {
-            
             let imapSet = indexSet.unreleasedMailimapSet
             defer { mailimap_set_free(imapSet) }
             
@@ -279,23 +278,5 @@ private extension String {
         }
         
         return list
-    }
-}
-
-private extension NSIndexSet {
-    func enumerate(batchSize batchSize: Int) -> AnySequence<NSIndexSet> {
-        var indexGenerator = self.generate()
-        let accumulatorGenerator = AnyGenerator<NSIndexSet> {
-            let currentBatch = NSMutableIndexSet()
-            while let nextIndex = indexGenerator.next() where currentBatch.count < batchSize {
-                currentBatch.addIndex(nextIndex)
-            }
-            
-            guard currentBatch.count > 0 else { return nil }
-            
-            return currentBatch
-        }
-        
-        return AnySequence(accumulatorGenerator)
     }
 }
