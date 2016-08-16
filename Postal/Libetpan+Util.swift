@@ -192,3 +192,26 @@ extension mailimap_date_time {
         return dateComponent.date
     }
 }
+
+// MARK: Set
+
+extension mailimap_set {
+    var indexSet: NSIndexSet {
+        return sequence(set_list, of: mailimap_set_item.self).reduce(NSMutableIndexSet()) { combined, item in
+            for i in (item.set_first...item.set_last) {
+                combined.addIndex(Int(i))
+            }
+            return combined
+        }
+    }
+    
+    var array: [Int] {
+        return sequence(set_list, of: mailimap_set_item.self).reduce([Int]()) { combined, item in
+            var result: [Int] = []
+            for i in (item.set_first...item.set_last) {
+                result.append(Int(i))
+            }
+            return combined + result
+        }
+    }
+}

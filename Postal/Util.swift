@@ -112,3 +112,41 @@ extension OptionSetType where Element == Self {
         return "\(self.dynamicType).\(stringFlags.joinWithSeparator(" | "))"
     }
 }
+
+extension NSIndexSet {
+    func enumerate(batchSize batchSize: Int) -> AnySequence<NSIndexSet> {
+        var indexGenerator = self.generate()
+        let accumulatorGenerator = AnyGenerator<NSIndexSet> {
+            let currentBatch = NSMutableIndexSet()
+            while let nextIndex = indexGenerator.next() where currentBatch.count < batchSize {
+                currentBatch.addIndex(nextIndex)
+            }
+            
+            guard currentBatch.count > 0 else { return nil }
+            
+            return currentBatch
+        }
+        
+        return AnySequence(accumulatorGenerator)
+    }
+}
+
+extension Dictionary {
+    init(keys: [Key], values: [Value]) {
+        self.init()
+        
+        for (key, value) in zip(keys, values) {
+            self[key] = value
+        }
+    }
+    
+    mutating func unionInPlace(dictionary: Dictionary) {
+        dictionary.forEach { self.updateValue($1, forKey: $0) }
+    }
+    
+    func union(dictionary: Dictionary) -> Dictionary {
+        var dictionary = dictionary
+        dictionary.unionInPlace(self)
+        return dictionary
+    }
+}

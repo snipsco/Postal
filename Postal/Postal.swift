@@ -175,6 +175,28 @@ public extension Postal {
     }
 }
 
+// MARK: - Messages
+
+public extension Postal {
+    
+    /// Move messages from a given folder to another folder.
+    ///
+    /// - parameters:
+    ///     - fromFolder: The folder where the messages are.
+    ///     - toFolder: The folder where messages will be move.
+    ///     - uids: The message uids to be moved.
+    ///     - completion: The completion handler when the request is finished with or without an error.
+    ///         with the mapping between uids inside the previous folder and the new folder.
+    func moveMessages(fromFolder fromFolder: String, toFolder: String, uids: NSIndexSet, completion: (Result<[Int: Int], PostalError>) -> Void) {
+        assert(!fromFolder.isEmpty, "fromFolder parameter can't be empty")
+        assert(!toFolder.isEmpty, "toFolder parameter can't be empty")
+        
+        doAsync({
+            try self.session.moveMessages(fromFolder: fromFolder, toFolder: toFolder, uids: uids)
+        }, completion: completion)
+    }
+}
+
 //  MARK: - Privates
 
 private extension Postal {
