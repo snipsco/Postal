@@ -28,10 +28,31 @@ import libetpan
 public struct MimeType {
     public let type: String
     public let subtype: String
+    
+    public init(type: String, subtype: String) {
+        self.type = type.lowercaseString
+        self.subtype = subtype.lowercaseString
+    }
+}
+
+extension MimeType: Hashable {
+    public var hashValue: Int {
+        return 31 &* type.hash &+ subtype.hash
+    }
+}
+
+public func ==(lhs: MimeType, rhs: MimeType) -> Bool {
+    return lhs.type == rhs.type && lhs.subtype == rhs.subtype
 }
 
 extension MimeType: CustomStringConvertible {
     public var description: String { return "\(type)/\(subtype)" }
+}
+
+extension MimeType {
+    static var textPlain: MimeType { return MimeType(type: "text", subtype: "plain") }
+    static var textHtml: MimeType { return MimeType(type: "text", subtype: "html") }
+    static var applicationJson: MimeType { return MimeType(type: "application", subtype: "json") }
 }
 
 // MARK: IMAP Parsing
