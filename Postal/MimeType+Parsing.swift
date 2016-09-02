@@ -50,9 +50,9 @@ extension MimeType: CustomStringConvertible {
 }
 
 extension MimeType {
-    static var textPlain: MimeType { return MimeType(type: "text", subtype: "plain") }
-    static var textHtml: MimeType { return MimeType(type: "text", subtype: "html") }
-    static var applicationJson: MimeType { return MimeType(type: "application", subtype: "json") }
+    public static var textPlain: MimeType { return MimeType(type: "text", subtype: "plain") }
+    public static var textHtml: MimeType { return MimeType(type: "text", subtype: "html") }
+    public static var applicationJson: MimeType { return MimeType(type: "application", subtype: "json") }
 }
 
 // MARK: IMAP Parsing
