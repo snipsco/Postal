@@ -53,6 +53,8 @@ extension MimeType {
     public static var textPlain: MimeType { return MimeType(type: "text", subtype: "plain") }
     public static var textHtml: MimeType { return MimeType(type: "text", subtype: "html") }
     public static var applicationJson: MimeType { return MimeType(type: "application", subtype: "json") }
+    public static var imageJpeg: MimeType { return MimeType(type: "image", subtype: "jpeg") }
+    public static var applicationPdf: MimeType { return MimeType(type: "application", subtype: "pdf") }
 }
 
 // MARK: IMAP Parsing
