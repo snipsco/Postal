@@ -49,12 +49,47 @@ extension MimeType: CustomStringConvertible {
     public var description: String { return "\(type)/\(subtype)" }
 }
 
-extension MimeType {
-    public static var textPlain: MimeType { return MimeType(type: "text", subtype: "plain") }
-    public static var textHtml: MimeType { return MimeType(type: "text", subtype: "html") }
-    public static var applicationJson: MimeType { return MimeType(type: "application", subtype: "json") }
-    public static var imageJpeg: MimeType { return MimeType(type: "image", subtype: "jpeg") }
-    public static var applicationPdf: MimeType { return MimeType(type: "application", subtype: "pdf") }
+public extension MimeType {
+    static var applicationJavascript: MimeType { return MimeType(type: "application", subtype: "javascript") }
+    static var applicationOctetStream: MimeType { return MimeType(type: "application", subtype: "octet-stream") }
+    static var applicationOgg: MimeType { return MimeType(type: "application", subtype: "ogg") }
+    static var applicationPdf: MimeType { return MimeType(type: "application", subtype: "pdf") }
+    static var applicationXhtml: MimeType { return MimeType(type: "application", subtype: "xhtml+xml") }
+    static var applicationFlash: MimeType { return MimeType(type: "application", subtype: "x-shockwave-flash") }
+    static var applicationJson: MimeType { return MimeType(type: "application", subtype: "json") }
+    static var applicationXml: MimeType { return MimeType(type: "application", subtype: "xml") }
+    static var applicationZip: MimeType { return MimeType(type: "application", subtype: "zip") }
+    
+    static var audioMpeg: MimeType { return MimeType(type: "audio", subtype: "mpeg") }
+    static var audioMp3: MimeType { return MimeType(type: "audio", subtype: "mp3") }
+    static var audioWma: MimeType { return MimeType(type: "audio", subtype: "x-ms-wma") }
+    static var audioWav: MimeType { return MimeType(type: "audio", subtype: "x-wav") }
+    
+    static var imageGif: MimeType { return MimeType(type: "image", subtype: "jpeg") }
+    static var imageJpeg: MimeType { return MimeType(type: "image", subtype: "jpeg") }
+    static var imagePng: MimeType { return MimeType(type: "image", subtype: "jpeg") }
+    static var imageTiff: MimeType { return MimeType(type: "image", subtype: "jpeg") }
+    static var imageIcon: MimeType { return MimeType(type: "image", subtype: "x-icon") }
+    static var imageSvg: MimeType { return MimeType(type: "image", subtype: "svg+xml") }
+    
+    static var multipartMixed: MimeType { return MimeType(type: "multipart", subtype: "mixed") }
+    static var multipartAlternative: MimeType { return MimeType(type: "multipart", subtype: "alternative") }
+    static var multipartRelated: MimeType { return MimeType(type: "multipart", subtype: "related") }
+    
+    static var textCss: MimeType { return MimeType(type: "text", subtype: "css") }
+    static var textCsv: MimeType { return MimeType(type: "text", subtype: "csv") }
+    static var textHtml: MimeType { return MimeType(type: "text", subtype: "html") }
+    static var textJavascript: MimeType { return MimeType(type: "text", subtype: "javascript") }
+    static var textPlain: MimeType { return MimeType(type: "text", subtype: "plain") }
+    static var textXml: MimeType { return MimeType(type: "text", subtype: "xml") }
+    
+    static var videoMpeg: MimeType { return MimeType(type: "video", subtype: "mpeg") }
+    static var videoMp4: MimeType { return MimeType(type: "video", subtype: "mp4") }
+    static var videoQuicktime: MimeType { return MimeType(type: "video", subtype: "quicktime") }
+    static var videoWmv: MimeType { return MimeType(type: "video", subtype: "x-ms-wmv") }
+    static var videoAvi: MimeType { return MimeType(type: "video", subtype: "x-msvideo") }
+    static var videoFlv: MimeType { return MimeType(type: "video", subtype: "x-flv") }
+    static var videoWebm: MimeType { return MimeType(type: "video", subtype: "webm") }
 }
 
 // MARK: IMAP Parsing
