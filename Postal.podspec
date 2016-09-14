@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Postal'
-  s.version = '0.2.0'
+  s.version = '0.3.0'
   s.summary = 'A swift framework for working with emails.'
   s.description = 'A Swift framework for working with emails. Simple and quick to use. Built on top of libetpan.'
   s.homepage = 'https://github.com/snipsco/Postal'
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
 
-  s.source = { :git => 'https://github.com/snipsco/Postal.git', :tag => s.version.to_s }
+  s.source = { :git => 'https://github.com/snipsco/Postal.git', :tag => 'v' + s.version.to_s }
   
   s.default_subspec = 'Core'
 
