@@ -60,6 +60,8 @@
 		98C9D4FA1D58A4F800635F9F /* Result.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		98DB04371CEC7337003CAABB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04361CEC7337003CAABB /* libz.tbd */; };
 		98DB04391CEC7342003CAABB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04381CEC7342003CAABB /* libiconv.tbd */; };
+		F7039DAB1D92B23200132867 /* LibetpanConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */; };
+		F7039DAC1D92B23200132867 /* LibetpanConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */; };
 		F71325661D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F71325671D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F72497431D6228850065D07E /* IMAPSession+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */; };
@@ -174,6 +176,7 @@
 		98DB009F1CEC6983003CAABB /* PostalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98DB04361CEC7337003CAABB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		98DB04381CEC7342003CAABB /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibetpanConversionTests.swift; sourceTree = "<group>"; };
 		F71325651D50CA84005DFC15 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		F75DD4741D4BAC1500D40E9C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Move.swift"; sourceTree = "<group>"; };
@@ -449,6 +452,7 @@
 				981EAE691D58DA85004DB7EC /* Resources */,
 				98C9D4DC1D58A20500635F9F /* Libraries */,
 				F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */,
+				F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */,
 				F7F03EF41D4BA5DB0083397F /* PostalTests.swift */,
 				F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */,
 				F7F03EFB1D4BA61E0083397F /* Supporting Files */,
@@ -689,6 +693,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7039DAC1D92B23200132867 /* LibetpanConversionTests.swift in Sources */,
 				9852BA751D58ADD600EE46E5 /* PostalTests.swift in Sources */,
 				9852BA741D58ADD400EE46E5 /* IMAPSessionTests.swift in Sources */,
 				9852BA761D58ADD900EE46E5 /* XCTest+Utils.swift in Sources */,
@@ -739,6 +744,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7039DAB1D92B23200132867 /* LibetpanConversionTests.swift in Sources */,
 				F7F03EF81D4BA5DB0083397F /* PostalTests.swift in Sources */,
 				F7F03EF61D4BA5DB0083397F /* IMAPSessionTests.swift in Sources */,
 				F7F03EF91D4BA5DB0083397F /* XCTest+Utils.swift in Sources */,
@@ -786,7 +792,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
 			};
 			name = Debug;
 		};
@@ -812,7 +818,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
@@ -831,6 +837,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.snips.PostalTests-macOS";
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
 			};
 			name = Debug;
 		};
@@ -844,6 +851,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.snips.PostalTests-macOS";
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
 			};
 			name = Release;
 		};
@@ -889,6 +897,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Postal;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -936,6 +945,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = Postal;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -970,7 +980,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/ios/include";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
 			};
@@ -999,7 +1009,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/ios/include";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 2.3;
 			};
@@ -1015,6 +1025,7 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
@@ -1029,6 +1040,7 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 2.3;
 			};
