@@ -179,30 +179,30 @@
 		F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibetpanConversionTests.swift; sourceTree = "<group>"; };
 		F71325651D50CA84005DFC15 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		F75DD4741D4BAC1500D40E9C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Move.swift"; sourceTree = "<group>"; };
+		F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "IMAPSession+Move.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7E884A51D59C7F500D02CC2 /* PostalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalError.swift; sourceTree = "<group>"; };
-		F7F039F51D4BA5A70083397F /* Address+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+Parsing.swift"; sourceTree = "<group>"; };
+		F7F039F51D4BA5A70083397F /* Address+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Address+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F039F71D4BA5A70083397F /* CertificateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateUtils.swift; sourceTree = "<group>"; };
-		F7F039F81D4BA5A70083397F /* ContentDisposition+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentDisposition+Parsing.swift"; sourceTree = "<group>"; };
+		F7F039F81D4BA5A70083397F /* ContentDisposition+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "ContentDisposition+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F039F91D4BA5A70083397F /* ContentEncoding+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentEncoding+Parsing.swift"; sourceTree = "<group>"; };
-		F7F039FB1D4BA5A70083397F /* Extension+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Parsing.swift"; sourceTree = "<group>"; };
+		F7F039FB1D4BA5A70083397F /* Extension+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Extension+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F039FC1D4BA5A70083397F /* FetchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchResult.swift; sourceTree = "<group>"; };
 		F7F039FF1D4BA5A70083397F /* IMAPCapability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPCapability.swift; sourceTree = "<group>"; };
 		F7F03A001D4BA5A70083397F /* IMAPError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPError.swift; sourceTree = "<group>"; };
-		F7F03A011D4BA5A70083397F /* IMAPFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPFolder.swift; sourceTree = "<group>"; };
+		F7F03A011D4BA5A70083397F /* IMAPFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IMAPFolder.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03A021D4BA5A70083397F /* IMAPIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPIdentity.swift; sourceTree = "<group>"; };
 		F7F03A031D4BA5A70083397F /* IMAPNamespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPNamespace.swift; sourceTree = "<group>"; };
-		F7F03A041D4BA5A70083397F /* IMAPSession+Fetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Fetch.swift"; sourceTree = "<group>"; };
+		F7F03A041D4BA5A70083397F /* IMAPSession+Fetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "IMAPSession+Fetch.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03A051D4BA5A70083397F /* IMAPSession+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Search.swift"; sourceTree = "<group>"; };
-		F7F03A061D4BA5A70083397F /* IMAPSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPSession.swift; sourceTree = "<group>"; };
+		F7F03A061D4BA5A70083397F /* IMAPSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IMAPSession.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03A071D4BA5A70083397F /* IMFError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMFError.swift; sourceTree = "<group>"; };
 		F7F03A081D4BA5A70083397F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Postal-iOS/Info.plist"; sourceTree = "<group>"; };
-		F7F03C661D4BA5A80083397F /* Libetpan+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Libetpan+Util.swift"; sourceTree = "<group>"; };
+		F7F03C661D4BA5A80083397F /* Libetpan+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Libetpan+Util.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03C671D4BA5A80083397F /* Logger+IMAP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+IMAP.swift"; sourceTree = "<group>"; };
 		F7F03C681D4BA5A80083397F /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		F7F03C691D4BA5A80083397F /* MailData+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MailData+Decode.swift"; sourceTree = "<group>"; };
+		F7F03C691D4BA5A80083397F /* MailData+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "MailData+Decode.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03C6A1D4BA5A80083397F /* MailPart+Enumeration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MailPart+Enumeration.swift"; sourceTree = "<group>"; };
-		F7F03C6B1D4BA5A80083397F /* MailPart+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MailPart+Parsing.swift"; sourceTree = "<group>"; };
+		F7F03C6B1D4BA5A80083397F /* MailPart+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "MailPart+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03C6C1D4BA5A80083397F /* Message+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+Parsing.swift"; sourceTree = "<group>"; };
 		F7F03C6D1D4BA5A80083397F /* MessageAttribute+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageAttribute+Parsing.swift"; sourceTree = "<group>"; };
 		F7F03C6E1D4BA5A80083397F /* MessageFlags+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageFlags+Parsing.swift"; sourceTree = "<group>"; };
@@ -578,9 +578,11 @@
 				TargetAttributes = {
 					9812C31B1D50959500630D46 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					9852BA601D58ACE900EE46E5 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					98DB00941CEC6983003CAABB = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -793,6 +795,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -820,6 +823,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -838,6 +842,7 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -852,6 +857,7 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -982,7 +988,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1011,7 +1017,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1026,7 +1032,7 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1042,7 +1048,7 @@
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

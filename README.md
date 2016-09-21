@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/snipsco/Postal.svg?branch=master)](https://travis-ci.org/snipsco/Postal)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Pods](https://img.shields.io/badge/Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org/) 
-[![Swift 2.3.x](https://img.shields.io/badge/Swift-2.3.x-orange.svg?style=flat)](https://swift.org/)
+[![Swift 3.0.x](https://img.shields.io/badge/Swift-3.0.x-orange.svg?style=flat)](https://swift.org/)
 ![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS-lightgrey.svg?style=flat)
 
 Postal is a swift framework providing simple access to common email providers.
@@ -16,12 +16,12 @@ Postal is a swift framework providing simple access to common email providers.
 ```swift
 let postal = Postal(configuration: .icloud(login: "myemail@icloud.com", password: "mypassword"))
 postal.connect { result in
-		switch result {
-		case .Success:
-		    print("success")
-		case .Failure(let error):
-		    print("error: \(error)")
-		}
+	switch result {
+	case .success:
+	    print("success")
+	case .failure(let error):
+	    print("error: \(error)")
+	}
 }
 ```
 
@@ -31,9 +31,9 @@ postal.connect { result in
 let filter = .subject(value: "Foobar") && .from(value: "foo@bar.com")
 postal.search("INBOX", filter: filter) { result in
 	switch result {
-	case .Success(let indexes):
+	case .success(let indexes):
 	    print("success: \(indexes)")
-	case .Failure(let error):
+	case .failure(let error):
 	    print("error: \(error)")
 	}
 }
@@ -80,7 +80,7 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 ## Requirements
 
-- Swift 2.2.x / Xcode 7.3 | Swift 2.3.x / Xcode 8
+- Xcode 8
 - OS X 10.10 or later
 - iOS 8.0 or later
 

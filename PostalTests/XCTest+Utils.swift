@@ -25,19 +25,19 @@
 import XCTest
 
 extension XCTestCase {
-    static func jsonFromFile(filename: String) -> [String: AnyObject] {
-        let jsonPath = NSBundle(forClass: self).pathForResource(filename, ofType: "json")
-        let jsonData = NSData(contentsOfFile: jsonPath!)
-        return try! NSJSONSerialization.JSONObjectWithData(jsonData!, options: []) as! [String: AnyObject]
+    static func jsonFromFile(_ filename: String) -> [String: AnyObject] {
+        let jsonPath = Bundle(for: self).path(forResource: filename, ofType: "json")
+        let jsonData = try? Data(contentsOf: URL(fileURLWithPath: jsonPath!))
+        return try! JSONSerialization.jsonObject(with: jsonData!, options: []) as! [String: AnyObject]
     }
 
-    static func jsonArrayFromFile(filename: String) -> [[String: AnyObject]] {
-        let jsonPath = NSBundle(forClass: self).pathForResource(filename, ofType: "json")
-        let jsonData = NSData(contentsOfFile: jsonPath!)
-        return try! NSJSONSerialization.JSONObjectWithData(jsonData!, options: []) as! [[String: AnyObject]]
+    static func jsonArrayFromFile(_ filename: String) -> [[String: AnyObject]] {
+        let jsonPath = Bundle(for: self).path(forResource: filename, ofType: "json")
+        let jsonData = try? Data(contentsOf: URL(fileURLWithPath: jsonPath!))
+        return try! JSONSerialization.jsonObject(with: jsonData!, options: []) as! [[String: AnyObject]]
     }
     
-    static func credentialsFor(provider: String) -> (email: String, password: String) {
+    static func credentialsFor(_ provider: String) -> (email: String, password: String) {
         let json = jsonFromFile("provider_credentials")
         
         guard let providerInfo = json[provider] as? [String: String] else { fatalError("\(provider) isn't in provider.json") }

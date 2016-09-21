@@ -49,18 +49,21 @@ extension mailimap_extension_data {
     var parse: MessageExtension? {
         switch ext_extension {
         case &mailimap_extension_condstore:
-            let modSeq = UnsafePointer<mailimap_condstore_fetch_mod_resp>(ext_data).memory.cs_modseq_value
+            let modSeq = ext_data.assumingMemoryBound(to: mailimap_condstore_fetch_mod_resp.self).pointee.cs_modseq_value
+            
             return .modSeq(modSeq)
         case &mailimap_extension_xgmlabels:
-            let labelList = UnsafePointer<mailimap_msg_att_xgmlabels>(ext_data).memory.att_labels
-            let labels = pointerSequence(labelList, of: CChar.self)
-                .flatMap(String.fromUTF8CString)
+            guard let labelList = ext_data.assumingMemoryBound(to: mailimap_msg_att_xgmlabels.self).pointee.att_labels else { return nil }
+            let labels = pointerSequence(labelList, of: CChar.self).flatMap(String.fromUTF8CString)
+
             return labels.count > 0 ? .gmailLabels(labels) : nil
         case &mailimap_extension_xgmthrid:
-            let threadId = UnsafePointer<UInt64>(ext_data).memory
+            let threadId = ext_data.assumingMemoryBound(to: UInt64.self).pointee
+            
             return .gmailThreadId(threadId)
         case &mailimap_extension_xgmmsgid:
-            let msgId = UnsafePointer<UInt64>(ext_data).memory
+            let msgId = ext_data.assumingMemoryBound(to: UInt64.self).pointee
+            
             return .gmailMessageId(msgId)
         default:
             return nil

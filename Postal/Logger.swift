@@ -65,6 +65,6 @@ extension ConnectionLogType: CustomStringConvertible {
         case .errorReceived: content = "errorReceived"
         case .errorSent: content = "errorSent"
         }
-        return "\(self.dynamicType).\(content)"
+        return "\(type(of: self)).\(content)"
     }
 }

@@ -26,37 +26,29 @@ import Foundation
 import libetpan
 import Security
 
-func checkCertificate(stream: UnsafeMutablePointer<mailstream>, hostname: String) -> Bool {
-    var cCerts = mailstream_get_certificate_chain(stream)
+func checkCertificate(_ stream: UnsafeMutablePointer<mailstream>, hostname: String) -> Bool {
+    let cCerts = mailstream_get_certificate_chain(stream)
     defer { mailstream_certificate_chain_free(cCerts) }
-    guard cCerts.optional != nil else {
+    guard let actualCCerts = cCerts else {
         print("warning: No certificate chain retrieved")
         return false
     }
     
-    let certificates = sequence(cCerts, of: MMAPString.self)
-        .map { CFDataCreate(nil, UnsafePointer($0.str), $0.len) }
+    let certificates = sequence(actualCCerts, of: MMAPString.self)
+        .map { mmapString in
+            mmapString.str.withMemoryRebound(to: UInt8.self, capacity: 1, { CFDataCreate(nil, $0, mmapString.len) })
+        }
         .flatMap { SecCertificateCreateWithData(nil, $0) }
     
-    let policy = SecPolicyCreateSSL(true, hostname)
+    let policy = SecPolicyCreateSSL(true, hostname as CFString)
     var trustCallback: SecTrust?
-    guard noErr == SecTrustCreateWithCertificates(certificates, policy, &trustCallback) else { return false }
+    guard noErr == SecTrustCreateWithCertificates(certificates as CFTypeRef, policy, &trustCallback) else { return false }
     guard let trust = trustCallback else { return false }
     
-    #if swift(>=2.3)
-        var trustResult: SecTrustResultType = .Invalid
-        guard noErr == SecTrustEvaluate(trust, &trustResult) else { return false }
-        switch trustResult {
-        case .Unspecified, .Proceed: return true
-        default: return false
-        }
-    #else
-        var trustResult: SecTrustResultType = UInt32(kSecTrustResultInvalid)
-        guard noErr == SecTrustEvaluate(trust, &trustResult) else { return false }
-        
-        switch Int(trustResult) {
-        case kSecTrustResultUnspecified, kSecTrustResultProceed: return true
-        default: return false
-        }
-    #endif
+    var trustResult: SecTrustResultType = .invalid
+    guard noErr == SecTrustEvaluate(trust, &trustResult) else { return false }
+    switch trustResult {
+    case .unspecified, .proceed: return true
+    default: return false
+    }
 }

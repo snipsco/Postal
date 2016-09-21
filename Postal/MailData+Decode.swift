@@ -26,9 +26,9 @@ import Foundation
 import libetpan
 
 extension MailData {
-    public var decodedData: NSData {
+    public var decodedData: Data {
         switch encoding {
-        case .encoding7Bit, .encoding8Bit, .binary, .other: return rawData
+        case .encoding7Bit, .encoding8Bit, .binary, .other: return rawData as Data
         case .base64: return rawData.base64Decoded
         case .quotedPrintable: return rawData.quotedPrintableDecoded
         case .uuEncoding: return rawData.uudecoded
@@ -36,126 +36,139 @@ extension MailData {
     }
 }
 
-extension NSData {
-    var base64Decoded: NSData {
+extension Data {
+    var base64Decoded: Data {
         return decodeWithMechanism(MAILMIME_MECHANISM_BASE64, partial: false).decoded
     }
     
-    var quotedPrintableDecoded: NSData {
+    var quotedPrintableDecoded: Data {
         return decodeWithMechanism(MAILMIME_MECHANISM_QUOTED_PRINTABLE, partial: false).decoded
     }
     
-    func decodeWithMechanism(mechanism: Int, partial: Bool) -> (decoded: NSData, remaining: NSData?) {
+    func decodeWithMechanism(_ mechanism: Int, partial: Bool) -> (decoded: Data, remaining: Data?) {
         var curToken: size_t = 0
-        var decodedBytes: UnsafeMutablePointer<Int8> = nil
+        var decodedBytes: UnsafeMutablePointer<Int8>? = nil
         var decodedLength: Int = 0
         let decodeFunc = partial ? mailmime_part_parse_partial : mailmime_part_parse
-        decodeFunc(UnsafePointer<Int8>(bytes), length, &curToken, Int32(mechanism), &decodedBytes, &decodedLength)
-        let decodedData = NSData(bytesNoCopy: decodedBytes, length: decodedLength) { (pointer, length) in
-            free(pointer)
+        
+        let _ = withUnsafeBytes { (bytes: UnsafePointer<Int8>) in
+            decodeFunc(bytes, count, &curToken, Int32(mechanism), &decodedBytes, &decodedLength)
         }
         
-        let remaining: NSData?
-        if decodedLength < length {
-            remaining = NSData(bytes: bytes + curToken, length: length - curToken)
+        let decodedData = Data(bytesNoCopy: UnsafeMutableRawPointer(decodedBytes!), count: decodedLength, deallocator: .free)
+        
+        let remaining: Data?
+        if decodedLength < count {
+            remaining = withUnsafeBytes { bytes in
+               Data(bytes: UnsafeRawPointer(bytes + curToken), count: count - curToken)
+            }
         } else {
             remaining = nil
         }
         return (decoded: decodedData, remaining: remaining)
     }
     
-    var uudecoded: NSData {
+    var uudecoded: Data {
         return uudecode(partial: false).decoded
     }
     
-    func uudecode(partial partial: Bool) -> (decoded: NSData, remaining: NSData?) {
-        var currentPosition = UnsafePointer<CChar>(bytes)
-        let accumulator = NSMutableData()
-        
-        while true {
-            let (data, next) = getLine(currentPosition)
-        
-            if let next = next { // line is complete
-                accumulator.appendData(data.uudecodedLine)
-                currentPosition = next
-            } else { // no new line
-                if !partial { // not partial, just decode remaining bytes
-                    accumulator.appendData(data.uudecodedLine)
-                    return (decoded: accumulator, remaining: nil)
-                } else { // partial, return remaining bytes as remaining
-                    let remainingBytesCopy = NSData(bytes: data.bytes, length: data.length) // force copy of remaining data
-                    return (decoded: accumulator, remaining: remainingBytesCopy)
+    func uudecode(partial: Bool) -> (decoded: Data, remaining: Data?) {
+        return withUnsafeBytes { (bytes: UnsafePointer<Int8>) in
+            var currentPosition = bytes
+            let accumulator = NSMutableData()
+            
+            while true {
+                let (data, next) = getLine(currentPosition)
+            
+                if let next = next { // line is complete
+                    accumulator.append(data.uudecodedLine)
+                    currentPosition = next
+                } else { // no new line
+                    if !partial { // not partial, just decode remaining bytes
+                        accumulator.append(data.uudecodedLine)
+                        return (decoded: accumulator as Data, remaining: nil)
+                    } else { // partial, return remaining bytes as remaining
+                        let remainingBytesCopy: Data = data.withUnsafeBytes { (bytes: UnsafePointer<Int8>) in
+                            return Data(bytes: bytes, count: data.count) // force copy of remaining data
+                        }
+                        return (decoded: accumulator as Data, remaining: remainingBytesCopy)
+                    }
                 }
             }
         }
     }
     
-    var uudecodedLine: NSData {
-        var current = UnsafePointer<Int8>(bytes)
-        let end = current + length
-        let leadingCount = Int((current[0] & 0x7f) - 0x20)
-        current += 1
-        
-        if leadingCount < 0 { // don't process lines without leading count character
-            return NSData()
-        }
-        
-        if strncasecmp(UnsafePointer<CChar>(bytes), "begin ", 6) == 0 || strncasecmp(UnsafePointer<CChar>(bytes), "end", 3) == 0 {
-            return NSData()
-        }
-        
-        let decoded = NSMutableData(capacity: leadingCount)! // if we can't allocate it, let's better crash
-        
-        var buf = [Int8](count: 3, repeatedValue: 0)
-        while current < end && decoded.length < leadingCount {
-            var v = 0
-            (0..<4).forEach { _ in // pack decoded bytes in the int
-                let c = current.memory
-                current += 1
-                v = v << 6 | ((c - 0x20) & 0x3F)
+    var uudecodedLine: Data {
+        return withUnsafeBytes { (bytes: UnsafePointer<Int8>) in
+            var current = bytes
+            let end = current + count
+            let leadingCount = Int((current[0] & 0x7f) - 0x20)
+            current += 1
+            
+            if leadingCount < 0 { // don't process lines without leading count character
+                return Data()
             }
             
-            for i in 2.stride(through: 0, by: -1) { // unpack the int in buf
-                buf[i] = Int8(v & 0xFF)
-                v = v >> 8
+            if strncasecmp(UnsafePointer<CChar>(bytes), "begin ", 6) == 0 || strncasecmp(UnsafePointer<CChar>(bytes), "end", 3) == 0 {
+                return Data()
             }
             
-            decoded.appendBytes(&buf, length: buf.count)
+            let decoded = NSMutableData(capacity: leadingCount)! // if we can't allocate it, let's better crash
+            
+            var buf = [Int8](repeating: 0, count: 3)
+            while current < end && decoded.length < leadingCount {
+                var v: Int8 = 0
+                (0..<4).forEach { _ in // pack decoded bytes in the int
+                    let c = current.pointee
+                    current += 1
+                    v = v << 6 | ((c - 0x20) & 0x3F)
+                }
+                
+                for i in stride(from: 2, through: 0, by: -1) { // unpack the int in buf
+                    buf[i] = v & 0xF
+                    v = v >> 8
+                }
+                
+                decoded.append(&buf, length: buf.count)
+            }
+            
+            return decoded as Data
         }
-        
-        return decoded
     }
     
-    func getLine(from: UnsafePointer<CChar>) -> (data: NSData, next: UnsafePointer<CChar>?) {
-        let from = UnsafeMutablePointer<CChar>(from)
-        let bufferStart = UnsafeMutablePointer<CChar>(bytes)
-        
-        assert(from >= bufferStart && from - bufferStart <= length)
-        
-        let cr: CChar = 13 //"\r".utf8.first!
-        let lf: CChar = 10 //"\n".utf8.first!
-        
-        var lineStart = UnsafeMutablePointer<CChar>(from)
-        
-        // skip eols at the beginning
-        while (lineStart - bufferStart < length) && (lineStart.memory == cr || lineStart.memory == lf) {
-            lineStart += 1
-        }
-        
-        let remainingLength = length - (lineStart - bufferStart)
-        var lineSize: size_t = 0
-        while lineSize < remainingLength {
-            if lineStart[lineSize] == cr || lineStart[lineSize] == lf {
-                // found eol
-                let data = NSData(bytesNoCopy: lineStart, length: lineSize, freeWhenDone: false)
-                let next = UnsafePointer<CChar>(lineStart+lineSize+1)
-                return (data: data, next: next)
-            } else {
-                lineSize += 1
+    func getLine(_ from: UnsafePointer<CChar>) -> (data: Data, next: UnsafePointer<CChar>?) {
+        return withUnsafeBytes { (bytes: UnsafePointer<Int8>) in
+            let from = UnsafeMutablePointer(mutating: from)
+            let bufferStart = UnsafeMutablePointer(mutating: bytes)
+            
+            assert(from >= bufferStart && from - bufferStart <= count)
+            
+            let cr: CChar = 13 //"\r".utf8.first!
+            let lf: CChar = 10 //"\n".utf8.first!
+            
+            var lineStart = UnsafeMutablePointer<CChar>(from)
+            
+            // skip eols at the beginning
+            while (lineStart - bufferStart < count) && (lineStart.pointee == cr || lineStart.pointee == lf) {
+                lineStart += 1
             }
+            
+            let remainingLength = count - (lineStart - bufferStart)
+            var lineSize: size_t = 0
+            while lineSize < remainingLength {
+                if lineStart[lineSize] == cr || lineStart[lineSize] == lf {
+                    // found eol
+                    let data = Data(bytesNoCopy: lineStart, count: lineSize, deallocator: .none)
+                    let next = UnsafePointer<CChar>(lineStart+lineSize+1)
+                    return (data: data, next: next)
+                } else {
+                    lineSize += 1
+                }
+            }
+            
+            let data = Data(bytesNoCopy: lineStart, count: lineSize - 1, deallocator: .none)
+            return (data: data, next: nil)
         }
         
-        let data = NSData(bytesNoCopy: lineStart, length: lineSize - 1, freeWhenDone: false)
-        return (data: data, next: nil)
     }
 }

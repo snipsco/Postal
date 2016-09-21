@@ -35,8 +35,8 @@ public enum SearchKind {
     case subject(value: String)
     case content(value: String)
     case body(value: String)
-    case uids(uids: NSIndexSet)
-    case numbers(numbers: NSIndexSet)
+    case uids(uids: IndexSet)
+    case numbers(numbers: IndexSet)
     case header(header: String, value: String)
     case read
     case unread
@@ -48,12 +48,12 @@ public enum SearchKind {
     case undraft
     case deleted
     case spam
-    case beforeDate(date: NSDate)
-    case onDate(date: NSDate)
-    case sinceDate(date: NSDate)
-    case beforeReceivedDate(date: NSDate)
-    case onReceivedDate(date: NSDate)
-    case sinceReceivedDate(date: NSDate)
+    case beforeDate(date: Date)
+    case onDate(date: Date)
+    case sinceDate(date: Date)
+    case beforeReceivedDate(date: Date)
+    case onReceivedDate(date: Date)
+    case sinceReceivedDate(date: Date)
     case sizeLarger(size: uint)
     case sizeSmaller(size: uint)
     case gmailThreadId(id: uint)
@@ -124,7 +124,7 @@ extension SearchFilter: CustomStringConvertible {
 // MARK: Libetpan conformance
 
 private extension SearchKind {
-    func unreleasedImapSearchKey(configuration: Configuration) -> UnsafeMutablePointer<mailimap_search_key> {
+    func unreleasedImapSearchKey(_ configuration: Configuration) -> UnsafeMutablePointer<mailimap_search_key> {
         switch self {
         case .all:                              return mailimap_search_key_new_all()
         case .from(let value):                  return mailimap_search_key_new_from(value.unreleasedUTF8CString)
@@ -184,7 +184,7 @@ private extension SearchKind {
 }
 
 private extension SearchFilter {
-    func unreleasedImapSearchKey(configuration: Configuration) -> UnsafeMutablePointer<mailimap_search_key> {
+    func unreleasedImapSearchKey(_ configuration: Configuration) -> UnsafeMutablePointer<mailimap_search_key> {
         switch self {
         case .and(let lhs, let rhs): 	return mailimap_search_key_new_multiple([ lhs, rhs ].unreleasedClist { $0.unreleasedImapSearchKey(configuration) })
         case .or(let lhs, let rhs):     return mailimap_search_key_new_or(lhs.unreleasedImapSearchKey(configuration), rhs.unreleasedImapSearchKey(configuration))
@@ -239,18 +239,19 @@ public prefix func !(rhs: SearchKind) -> SearchFilter {
 // MARK: - IMAPSession+Search
 
 extension IMAPSession {
-    func search(folder: String, filter: SearchKind) throws -> NSIndexSet {
+    
+    func search(_ folder: String, filter: SearchKind) throws -> IndexSet {
         return try search(folder, filter: .base(filter))
     }
     
-    func search(folder: String, filter: SearchFilter) throws -> NSIndexSet {
+    func search(_ folder: String, filter: SearchFilter) throws -> IndexSet {
         let key = filter.unreleasedImapSearchKey(configuration)
         defer { mailimap_search_key_free(key) }
         
         try select(folder)
         
         let charset = "utf-8"
-        var resultList: UnsafeMutablePointer<clist> = nil
+        var resultList: UnsafeMutablePointer<clist>? = nil
         
         if capabilities.contains(.LiteralPlus) {
             try mailimap_uid_search_literalplus(imap, charset, key, &resultList).toIMAPError?.asPostalError.check()
@@ -259,11 +260,13 @@ extension IMAPSession {
         }
         defer { mailimap_search_result_free(resultList) }
         
-        let result = sequence(resultList, of: UInt32.self).reduce(NSMutableIndexSet()) { combined, uid in
-            combined.addIndex(Int(uid))
+        guard let actualResultList = resultList else { return IndexSet() }
+        
+        let result = sequence(actualResultList, of: UInt32.self).reduce(NSMutableIndexSet()) { combined, uid in
+            combined.add(Int(uid))
             return combined
         }
         
-        return NSIndexSet(indexSet: result)
+        return IndexSet(result)
     }
 }

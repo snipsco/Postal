@@ -13,8 +13,8 @@ import Result
 class MailsTableViewController: UITableViewController {
     var configuration: Configuration!
     
-    private lazy var postal: Postal = Postal(configuration: self.configuration)
-    private var messages: [FetchResult] = []
+    fileprivate lazy var postal: Postal = Postal(configuration: self.configuration)
+    fileprivate var messages: [FetchResult] = []
 }
 
 // MARK: - View lifecycle
@@ -27,9 +27,9 @@ extension MailsTableViewController {
         // Do connection
         postal.connect(timeout: Postal.defaultTimeout, completion: { [weak self] result in
             switch result {
-            case .Success: // Fetch 50 last mails of the INBOX
+            case .success: // Fetch 50 last mails of the INBOX
                 self?.postal.fetchLast("INBOX", last: 50, flags: [ .fullHeaders ], onMessage: { message in
-                    self?.messages.insert(message, atIndex: 0)
+                    self?.messages.insert(message, at: 0)
                     
                     }, onComplete: { error in
                         if let error = error {
@@ -39,7 +39,7 @@ extension MailsTableViewController {
                         }
                 })
 
-            case .Failure(let error):
+            case .failure(let error):
                 self?.showAlertError("Connection error", message: (error as NSError).localizedDescription)
             }
         })
@@ -50,12 +50,12 @@ extension MailsTableViewController {
 
 extension MailsTableViewController {
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MailTableViewCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MailTableViewCell", for: indexPath)
 
         let message = messages[indexPath.row]
         

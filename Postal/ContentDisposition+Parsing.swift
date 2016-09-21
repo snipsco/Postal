@@ -36,13 +36,13 @@ public enum ContentDisposition {
 
 extension mailimap_body_fld_dsp {
     var parse: ContentDisposition? {
-        
-        let list = dsp_attributes.optional?.pa_list ?? nil
+        guard let list = dsp_attributes?.pointee.pa_list else { return nil }
+
         let attributes = sequence(list, of: mailimap_single_body_fld_param.self).flatMap { $0.parse }
         
-        switch String.fromUTF8CString(dsp_type)?.lowercaseString {
-        case .Some("inline"): return .inline(attributes)
-        case .Some("attachment"): return .attachment(attributes)
+        switch String.fromUTF8CString(dsp_type)?.lowercased() {
+        case .some("inline"): return .inline(attributes)
+        case .some("attachment"): return .attachment(attributes)
         default: return nil
         }
     }
@@ -50,7 +50,7 @@ extension mailimap_body_fld_dsp {
 
 extension mailimap_single_body_fld_param {
     var parse: ContentDispositionAttribute? {
-        guard let name = String.fromUTF8CString(pa_name)?.lowercaseString else { return nil }
+        guard let name = String.fromUTF8CString(pa_name)?.lowercased() else { return nil }
         let value = String.fromZeroSizedCStringMimeHeader(pa_value) ?? ""
         return (name: name, value: value)
     }

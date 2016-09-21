@@ -85,7 +85,7 @@ extension Configuration {
     /// - parameters:
     ///     - login: The login of the user.
     ///     - password: The credential of the connection.
-    public static func gmail(login login: String, password: PasswordType) -> Configuration {
+    public static func gmail(login: String, password: PasswordType) -> Configuration {
         return Configuration(
             hostname: "imap.gmail.com",
             port: 993,
@@ -104,7 +104,7 @@ extension Configuration {
     /// - parameters:
     ///     - login: The login of the user.
     ///     - password: The credential of the connection.
-    public static func yahoo(login login: String, password: PasswordType) -> Configuration {
+    public static func yahoo(login: String, password: PasswordType) -> Configuration {
         return Configuration(
             hostname: "imap.mail.yahoo.com",
             port: 993,
@@ -123,7 +123,7 @@ extension Configuration {
     /// - parameters:
     ///     - login: The login of the user.
     ///     - password: The credential of the connection.
-    public static func icloud(login login: String, password: String) -> Configuration {
+    public static func icloud(login: String, password: String) -> Configuration {
         return Configuration(
             hostname: "imap.mail.me.com",
             port: 993,
@@ -142,7 +142,7 @@ extension Configuration {
     /// - parameters:
     ///     - login: The login of the user.
     ///     - password: The credential of the connection.
-    public static func outlook(login login: String, password: String) -> Configuration {
+    public static func outlook(login: String, password: String) -> Configuration {
         return Configuration(
             hostname: "imap-mail.outlook.com",
             port: 993,
@@ -161,7 +161,7 @@ extension Configuration {
     /// - parameters:
     ///     - login: The login of the user.
     ///     - password: The credential of the connection.
-    public static func aol(login login: String, password: String) -> Configuration {
+    public static func aol(login: String, password: String) -> Configuration {
         return Configuration(
             hostname: "imap.aol.com",
             port: 993,

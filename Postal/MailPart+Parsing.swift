@@ -32,10 +32,10 @@ public indirect enum MailPart {
 }
 
 public struct MailData {
-    public let rawData: NSData
+    public let rawData: Data
     public let encoding: ContentEncoding
     
-    public init(rawData: NSData, encoding: ContentEncoding) {
+    public init(rawData: Data, encoding: ContentEncoding) {
         self.rawData = rawData
         self.encoding = encoding
     }
@@ -54,10 +54,10 @@ extension MailPart: CustomStringConvertible {
 // MARK: IMAP Parsing
 
 extension mailimap_body {
-    func parse(idPrefix: String) -> MailPart? {
+    func parse(_ idPrefix: String) -> MailPart? {
         switch Int(bd_type) {
-        case MAILIMAP_BODY_1PART: return bd_data.bd_body_1part.optional?.parse(idPrefix)
-        case MAILIMAP_BODY_MPART: return bd_data.bd_body_mpart.optional?.parse(idPrefix)
+        case MAILIMAP_BODY_1PART: return bd_data.bd_body_1part?.pointee.parse(idPrefix)
+        case MAILIMAP_BODY_MPART: return bd_data.bd_body_mpart?.pointee.parse(idPrefix)
         default: return nil
         }
     }
@@ -65,13 +65,13 @@ extension mailimap_body {
 
 // multiPart
 extension mailimap_body_type_mpart {
-    func parse(idPrefix: String) -> MailPart? {
-        let parts = sequence(bd_list, of: mailimap_body.self).enumerate().flatMap { index, subPart in
+    func parse(_ idPrefix: String) -> MailPart? {
+        let parts = sequence(bd_list, of: mailimap_body.self).enumerated().flatMap { index, subPart in
             subPart.parse(idPrefix.byAppendingPartId(index + 1))
         }
         
         guard let subtype = String.fromUTF8CString(bd_media_subtype) else { return nil }
-        let mimeType = MimeType(type: "multipart", subtype: subtype.lowercaseString)
+        let mimeType = MimeType(type: "multipart", subtype: subtype.lowercased())
         
         return .multipart(id: idPrefix, mimeType: mimeType, parts: parts)
     }
@@ -79,16 +79,16 @@ extension mailimap_body_type_mpart {
 
 // singlePart
 extension mailimap_body_type_1part {
-    func parse(idPrefix: String) -> MailPart? {
-        let extensions = bd_ext_1part.optional?.parse
+    func parse(_ idPrefix: String) -> MailPart? {
+        let extensions = bd_ext_1part?.pointee.parse
         
         switch Int(bd_type) {
         case MAILIMAP_BODY_TYPE_1PART_BASIC:
-            return bd_data.bd_type_basic.optional?.parse(idPrefix, extensions: extensions)
+            return bd_data.bd_type_basic?.pointee.parse(idPrefix, extensions: extensions)
         case MAILIMAP_BODY_TYPE_1PART_MSG:
-            return bd_data.bd_type_msg.optional?.parse(idPrefix)
+            return bd_data.bd_type_msg?.pointee.parse(idPrefix)
         case MAILIMAP_BODY_TYPE_1PART_TEXT:
-            return bd_data.bd_type_text.optional?.parse(idPrefix, extensions: extensions)
+            return bd_data.bd_type_text?.pointee.parse(idPrefix, extensions: extensions)
         default: return nil
         }
     }
@@ -97,9 +97,16 @@ extension mailimap_body_type_1part {
 // single part data
 
 extension MimeFields {
-    static func merge(first: MimeFields?, _ second: MimeFields?) -> MimeFields? {
-        if let first = first, second = second {
-            return MimeFields(name: first.name ?? second.name, charset: first.charset ?? second.charset, contentType: first.contentType ?? second.contentType, contentId: first.contentId ?? second.contentId, contentDescription: first.contentDescription ?? second.contentDescription, contentEncoding: first.contentEncoding ?? second.contentEncoding, contentLocation: first.contentLocation ?? second.contentLocation, contentDisposition: first.contentDisposition ?? second.contentDisposition)
+    static func merge(_ first: MimeFields?, _ second: MimeFields?) -> MimeFields? {
+        if let first = first, let second = second {
+            return MimeFields(name: first.name ?? second.name,
+                              charset: first.charset ?? second.charset,
+                              contentType: !first.contentType.isEmpty ? first.contentType : second.contentType,
+                              contentId: first.contentId ?? second.contentId,
+                              contentDescription: first.contentDescription ?? second.contentDescription,
+                              contentEncoding: first.contentEncoding ?? second.contentEncoding,
+                              contentLocation: first.contentLocation ?? second.contentLocation,
+                              contentDisposition: first.contentDisposition ?? second.contentDisposition)
         } else {
             return first ?? second
         }
@@ -107,29 +114,26 @@ extension MimeFields {
 }
 
 extension mailimap_body_type_basic {
-    func parse(idPrefix: String, extensions: MimeFields?) -> MailPart? {
-        guard let mimeType = bd_media_basic.optional?.parse,
-            bodyFields = MimeFields.merge(extensions, bd_fields.optional?.parse) else { return nil }
+    func parse(_ idPrefix: String, extensions: MimeFields?) -> MailPart? {
+        guard let mimeType = bd_media_basic?.pointee.parse,
+            let bodyFields = MimeFields.merge(extensions, bd_fields?.pointee.parse) else { return nil }
         return .single(id: idPrefix.firstPartId, mimeType: mimeType, mimeFields: bodyFields, data: nil)
     }
 }
 
 extension mailimap_body_type_msg {
-    func parse(idPrefix: String) -> MailPart? {
-        guard let header = bd_envelope.optional?.parse,
-            //fields = bd_fields.optional?.parse,
-            message = bd_body.optional?.parse(idPrefix.isEmpty ? "1" : idPrefix) else { return nil }
-        
-        //let mimeType = MimeType(type: "message", subtype: "rfc822")
+    func parse(_ idPrefix: String) -> MailPart? {
+        guard let header = bd_envelope?.pointee.parse,
+            let message = bd_body?.pointee.parse(idPrefix.isEmpty ? "1" : idPrefix) else { return nil }
         
         return .message(id: idPrefix, header: header, message: message)
     }
 }
 
 extension mailimap_body_type_text {
-    func parse(idPrefix: String, extensions: MimeFields?) -> MailPart? {
-        guard let subtype = String.fromUTF8CString(bd_media_text)?.lowercaseString,
-            fields = MimeFields.merge(extensions, bd_fields.optional?.parse) else { return nil }
+    func parse(_ idPrefix: String, extensions: MimeFields?) -> MailPart? {
+        guard let subtype = String.fromUTF8CString(bd_media_text)?.lowercased(),
+            let fields = MimeFields.merge(extensions, bd_fields?.pointee.parse) else { return nil }
         
         let mimeType = MimeType(type: "text", subtype: subtype)
         
@@ -140,17 +144,17 @@ extension mailimap_body_type_text {
 // MARK: IMF Parsing
 
 extension mailmime {
-    func parse(idPrefix: String) -> MailPart? {
+    func parse(_ idPrefix: String) -> MailPart? {
         switch Int(mm_type) {
         case MAILMIME_SINGLE:
             var singleFields = mailmime_single_fields()
             mailmime_single_fields_init(&singleFields, mm_mime_fields, mm_content_type)
 
-            guard let rawData = mm_data.mm_single.optional?.parse else { return nil }
-            guard let mimeType = mm_content_type.optional?.parse else { return nil }
+            guard let rawData = mm_data.mm_single?.pointee.parse else { return nil }
+            guard let mimeType = mm_content_type?.pointee.parse else { return nil }
 
-            let fieldsEnc = singleFields.fld_encoding.optional?.parse
-            let dtEnc = (mm_data.mm_single.optional?.dt_encoding).map { ContentEncoding(rawValue: Int($0)) }
+            let fieldsEnc = singleFields.fld_encoding?.pointee.parse
+            let dtEnc = (mm_data.mm_single?.pointee.dt_encoding).map { ContentEncoding(rawValue: Int($0)) }
             guard let encoding = fieldsEnc ?? dtEnc else { return nil }
             
             let fields = singleFields.parse
@@ -159,8 +163,8 @@ extension mailmime {
             return .single(id: idPrefix.firstPartId, mimeType: mimeType, mimeFields: fields, data: data)
             
         case MAILMIME_MULTIPLE:
-            guard let mimeType = mm_content_type.optional?.parse else { return nil }
-            let parts = sequence(mm_data.mm_multipart.mm_mp_list, of: mailmime.self).enumerate().flatMap { index, subPart in
+            guard let mimeType = mm_content_type?.pointee.parse else { return nil }
+            let parts = sequence(mm_data.mm_multipart.mm_mp_list, of: mailmime.self).enumerated().flatMap { index, subPart in
                 subPart.parse(idPrefix.byAppendingPartId(index + 1))
             }
             
@@ -168,13 +172,13 @@ extension mailmime {
             
         case MAILMIME_MESSAGE:
             
-            guard let message = mm_data.mm_message.mm_msg_mime.optional?.parse(idPrefix.firstPartId) else { return nil }
+            guard let message = mm_data.mm_message.mm_msg_mime?.pointee.parse(idPrefix.firstPartId) else { return nil }
             
             var singleFields = mailimf_single_fields()
             mailimf_single_fields_init(&singleFields, mm_data.mm_message.mm_fields)
             
             var messageHeader = singleFields.parse
-            messageHeader?.customHeaders.appendContentsOf(mm_data.mm_message.mm_fields.optional?.parseOptionalFields ?? [])
+            messageHeader?.customHeaders.append(contentsOf: mm_data.mm_message.mm_fields?.pointee.parseOptionalFields ?? [])
             
             return .message(id: idPrefix, header: messageHeader, message: message)
         default: return nil
@@ -183,15 +187,15 @@ extension mailmime {
 }
 
 extension mailmime_data {
-    var parse: NSData {
-        return NSData(bytes: dt_data.dt_text.dt_data, length: dt_data.dt_text.dt_length)
+    var parse: Data {
+        return Data(bytes: UnsafeRawPointer(dt_data.dt_text.dt_data), count: dt_data.dt_text.dt_length)
     }
 }
 
 extension mailmime_parameter {
     var parse: CustomHeader? {
         guard let name = String.fromUTF8CString(pa_name),
-            value = String.fromUTF8CString(pa_value) else { return nil }
+            let value = String.fromUTF8CString(pa_value) else { return nil }
         return (name, value)
     }
 }
@@ -200,7 +204,7 @@ extension mailimf_fields {
     var parseOptionalFields: [CustomHeader] {
         return sequence(fld_list, of: mailimf_field.self).flatMap { (field: mailimf_field) -> CustomHeader? in
             if Int(field.fld_type) != MAILIMF_FIELD_OPTIONAL_FIELD { return nil }
-            return field.fld_data.fld_optional_field.optional?.parse
+            return field.fld_data.fld_optional_field?.pointee.parse
         }
     }
 }

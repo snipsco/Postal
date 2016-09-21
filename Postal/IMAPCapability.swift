@@ -24,7 +24,7 @@
 
 import Foundation
 
-struct IMAPCapability: OptionSetType {
+struct IMAPCapability: OptionSet {
     let rawValue: Int64
     init(rawValue: Int64) { self.rawValue = rawValue }
     

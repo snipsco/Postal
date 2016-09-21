@@ -25,4 +25,4 @@
 import Foundation
 import libetpan
 
-typealias IMAPLogger = @convention(c) (UnsafeMutablePointer<mailimap>, Int32, UnsafePointer<Int8>, Int, UnsafeMutablePointer<Void>) -> Void
+typealias IMAPLogger = @convention(c) (UnsafeMutablePointer<mailimap>?, Int32, UnsafePointer<CChar>?, Int, UnsafeMutableRawPointer?) -> Void

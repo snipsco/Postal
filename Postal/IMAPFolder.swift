@@ -74,7 +74,7 @@ extension IMAPFolderInfo: CustomStringConvertible {
 
 // MARK: -
 
-public struct FolderFlag: OptionSetType {
+public struct FolderFlag: OptionSet {
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
@@ -96,7 +96,7 @@ public struct FolderFlag: OptionSetType {
 }
 
 extension FolderFlag {
-    init(flags: UnsafePointer<mailimap_mbx_list_flags>) {
+    init(flags: UnsafePointer<mailimap_mbx_list_flags>?) {
         guard flags != nil else {
             rawValue = 0
             return
@@ -104,11 +104,11 @@ extension FolderFlag {
         
         var finalFlags: FolderFlag = .None
         
-        if Int(flags.memory.mbf_type) == MAILIMAP_MBX_LIST_FLAGS_SFLAG {
-            switch Int(flags.memory.mbf_sflag) {
-            case MAILIMAP_MBX_LIST_SFLAG_MARKED: finalFlags.unionInPlace(.Marked)
-            case MAILIMAP_MBX_LIST_SFLAG_NOSELECT: finalFlags.unionInPlace(.NoSelect)
-            case MAILIMAP_MBX_LIST_SFLAG_UNMARKED: finalFlags.unionInPlace(.Unmarked)
+        if Int((flags?.pointee.mbf_type)!) == MAILIMAP_MBX_LIST_FLAGS_SFLAG {
+            switch Int((flags?.pointee.mbf_sflag)!) {
+            case MAILIMAP_MBX_LIST_SFLAG_MARKED: finalFlags.formUnion(.Marked)
+            case MAILIMAP_MBX_LIST_SFLAG_NOSELECT: finalFlags.formUnion(.NoSelect)
+            case MAILIMAP_MBX_LIST_SFLAG_UNMARKED: finalFlags.formUnion(.Unmarked)
             default: break
             }
         }
@@ -128,16 +128,20 @@ extension FolderFlag {
             ("Flagged",   .Starred)
         ]
         
-        for oflag in sequence(flags.memory.mbf_oflags, of: mailimap_mbx_list_oflag.self) {
-            switch Int(oflag.of_type) {
-            case MAILIMAP_MBX_LIST_OFLAG_NOINFERIORS: finalFlags.unionInPlace(.NoInferiors)
-            case MAILIMAP_MBX_LIST_OFLAG_FLAG_EXT:
-                if let ext = String.fromCString(oflag.of_flag_ext)?.lowercaseString {
+        if let oFlags = flags?.pointee.mbf_oflags {
+            for oflag in sequence(oFlags, of: mailimap_mbx_list_oflag.self) {
+                switch Int(oflag.of_type) {
+                case MAILIMAP_MBX_LIST_OFLAG_NOINFERIORS: finalFlags.formUnion(.NoInferiors)
+                case MAILIMAP_MBX_LIST_OFLAG_FLAG_EXT:
+                    let ext = String(cString: oflag.of_flag_ext).lowercased()
+
                     keywordFlag.forEach { flagString, flag in
-                        if flagString.lowercaseString == ext { finalFlags.unionInPlace(flag) }
+                        if flagString.lowercased() == ext {
+                            finalFlags.formUnion(flag)
+                        }
                     }
+                default: break
                 }
-            default: break
             }
         }
         

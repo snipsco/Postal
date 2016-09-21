@@ -32,9 +32,9 @@ struct IMAPNamespaceItem {
 
 extension IMAPNamespaceItem {
     init?(namespaceInfo: mailimap_namespace_info) {
-        guard let prefix = String.fromCString(namespaceInfo.ns_prefix) else { return nil }
+        guard let prefix = String.fromUTF8CString(namespaceInfo.ns_prefix) else { return nil }
         let delimStr = [ namespaceInfo.ns_delimiter, 0 ]
-        guard let delimiter = String.fromCString(delimStr) else { return nil }
+        guard let delimiter = String.fromUTF8CString(delimStr) else { return nil }
         
         self.init(prefix: prefix, delimiter: delimiter)
     }

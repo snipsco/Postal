@@ -50,9 +50,9 @@ extension mailimap_address {
         
         let email: String
         switch (mailbox, hostName) {
-        case (.Some(let mbox), .Some(let host)): email = "\(mbox)@\(host)"
-        case (.None, .Some(let host)): email = "@\(host)"
-        case (.Some(let mbox), .None): email = mbox
+        case (.some(let mbox), .some(let host)): email = "\(mbox)@\(host)"
+        case (.none, .some(let host)): email = "@\(host)"
+        case (.some(let mbox), .none): email = mbox
         default: return nil
         }
         
@@ -65,8 +65,8 @@ extension mailimap_address {
 extension mailimf_address {
     var parse: [Address] {
         switch Int(ad_type) {
-        case MAILIMF_ADDRESS_MAILBOX: return [ ad_data.ad_mailbox.optional?.parse ].flatMap { $0 }
-        case MAILIMF_ADDRESS_GROUP: return ad_data.ad_group.optional?.grp_mb_list.optional?.parse.flatMap { $0 } ?? []
+        case MAILIMF_ADDRESS_MAILBOX: return [ ad_data.ad_mailbox?.pointee.parse ].flatMap { $0 }
+        case MAILIMF_ADDRESS_GROUP: return ad_data.ad_group?.pointee.grp_mb_list?.pointee.parse.flatMap { $0 } ?? []
         default: return []
         }
     }

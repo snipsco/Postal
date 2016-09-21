@@ -60,8 +60,8 @@ class PostalTests: XCTestCase {
 
 private extension PostalTests {
     
-    func doConnection(configuration: Configuration) {
-        let expectation = expectationWithDescription("connection and login success to provider")
+    func doConnection(_ configuration: Configuration) {
+        let expectation = self.expectation(description: "connection and login success to provider")
         
         let postal = Postal(configuration: configuration)
         postal.connect {
@@ -69,6 +69,6 @@ private extension PostalTests {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

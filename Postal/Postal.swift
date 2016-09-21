@@ -26,13 +26,13 @@ import Foundation
 import Result
 
 /// This class is the class where every request will be performed.
-public class Postal {
-    private let session: IMAPSession
-    private let queue: NSOperationQueue
-    private let configuration: Configuration
+open class Postal {
+    fileprivate let session: IMAPSession
+    fileprivate let queue: OperationQueue
+    fileprivate let configuration: Configuration
 
     /// Setting this variable will allow user to access to the internal logger.
-    public var logger: Logger? {
+    open var logger: Logger? {
         set { session.logger = newValue }
         get { return session.logger }
     }
@@ -42,27 +42,27 @@ public class Postal {
     /// - parameters
     ///     - configuration: The configuration of the new connection.
     public init(configuration: Configuration) {
-        let providerName = "\(configuration)".lowercaseString
-        queue = NSOperationQueue()
+        let providerName = "\(configuration)".lowercased()
+        queue = OperationQueue()
         queue.name = "com.postal.\(providerName)"
-        queue.qualityOfService = .Utility
+        queue.qualityOfService = .utility
         queue.maxConcurrentOperationCount = 1
         self.configuration = configuration
         session = IMAPSession(configuration: configuration)
     }
 }
 
-//  MARK: - Connection
+// MARK: - Connection
 
 public extension Postal {
-    public static let defaultTimeout: NSTimeInterval = 30
+    public static let defaultTimeout: TimeInterval = 30
     
     /// Attemps a connection to the server
     ///
     /// - parameters:
     ///     - timeout: A timeout for performing requests. If a request is not completed within the specified interval, the request is canceled and the completionHandler is called with an error.
     ///     - completion: The completion handler to call when the connection is done, or an error occurs. This handler is executed on the main queue.
-    func connect(timeout timeout: NSTimeInterval = Postal.defaultTimeout, completion: (Result<Void, PostalError>) -> ()) {
+    func connect(timeout: TimeInterval = Postal.defaultTimeout, completion: @escaping (Result<Void, PostalError>) -> ()) {
         doAsync({
             try self.session.connect(timeout: timeout)
             try self.session.login()
@@ -71,7 +71,7 @@ public extension Postal {
     }
 }
 
-//  MARK: - Folders
+// MARK: - Folders
 
 public extension Postal {
     
@@ -79,14 +79,14 @@ public extension Postal {
     ///
     /// - parameters:
     ///     - completion: The completion handler to call when the request succeed or failed.
-    func listFolders(completion: (Result<[Folder], PostalError>) -> ()) {
+    func listFolders(_ completion: @escaping (Result<[Folder], PostalError>) -> ()) {
         doAsync({
             try self.session.listFolders()
         }, completion: completion)
     }
 }
 
-//  MARK: - Fetchers
+// MARK: - Fetchers
 
 public extension Postal {
 
@@ -99,10 +99,10 @@ public extension Postal {
     ///     - extraHeaders: A set of extra headers for the request
     ///     - onMessage: The completion handler called when a new message is received.
     ///     - onComplete: The completion handler when the request is finished with or without an error.
-    func fetchLast(folder: String, last: UInt, flags: FetchFlag, extraHeaders: Set<String> = [], onMessage: (FetchResult) -> Void, onComplete: (PostalError?) -> Void) {
+    func fetchLast(_ folder: String, last: UInt, flags: FetchFlag, extraHeaders: Set<String> = [], onMessage: @escaping (FetchResult) -> Void, onComplete: @escaping (PostalError?) -> Void) {
         assert(!folder.isEmpty, "folder parameter can't be empty")
         
-        iterateAsync({ handler in try self.session.fetchLast(folder, last: last, flags: flags, extraHeaders: extraHeaders, handler: handler) },
+        iterateAsync({ try self.session.fetchLast(folder, last: last, flags: flags, extraHeaders: extraHeaders, handler: $0) },
             onItem: onMessage,
             onComplete: onComplete)
     }
@@ -116,10 +116,10 @@ public extension Postal {
     ///     - extraHeaders: A set of extra headers for the request
     ///     - onMessage: The completion handler called when a new message is received.
     ///     - onComplete: The completion handler when the request is finished with or without an error.
-    func fetchMessages(folder: String, uids: NSIndexSet, flags: FetchFlag, extraHeaders: Set<String> = [], onMessage: (FetchResult) -> Void, onComplete: (PostalError?) -> Void) {
+    func fetchMessages(_ folder: String, uids: IndexSet, flags: FetchFlag, extraHeaders: Set<String> = [], onMessage: @escaping (FetchResult) -> Void, onComplete: @escaping (PostalError?) -> Void) {
         assert(!folder.isEmpty, "folder parameter can't be empty")
 
-        iterateAsync({ handler in try self.session.fetchMessages(folder, set: .uid(uids), flags: flags, extraHeaders: extraHeaders, handler: handler) },
+        iterateAsync({ try self.session.fetchMessages(folder, set: .uid(uids), flags: flags, extraHeaders: extraHeaders, handler: $0) },
                      onItem: onMessage,
                      onComplete: onComplete)
     }
@@ -132,17 +132,17 @@ public extension Postal {
     ///     - partId: The partId you want to fetch
     ///     - onAttachment: The completion handler called when an attachment was found.
     ///     - onComplete: The completion handler when the request is finished with or without an error.
-    func fetchAttachments(folder: String, uid: UInt, partId: String, onAttachment: (MailData) -> Void, onComplete: (PostalError?) -> Void) {
+    func fetchAttachments(_ folder: String, uid: UInt, partId: String, onAttachment: @escaping (MailData) -> Void, onComplete: @escaping (PostalError?) -> Void) {
         assert(!folder.isEmpty, "folder parameter can't be empty")
         assert(!partId.isEmpty, "partId parameter can't be empty")
 
-        iterateAsync({ handler in try self.session.fetchParts(folder, uid: uid, partId: partId, handler:handler) },
+        iterateAsync({ try self.session.fetchParts(folder, uid: uid, partId: partId, handler: $0) },
                      onItem: onAttachment,
                      onComplete: onComplete)
     }
 }
 
-//  MARK: - Search
+// MARK: - Search
 
 public extension Postal {
 
@@ -152,7 +152,7 @@ public extension Postal {
     ///     - folder: The folder where the search will be performed.
     ///     - filter: The filter
     ///     - completion: The completion handler when the request is finished with or without an error.
-    func search(folder: String, filter: SearchKind, completion: (Result<NSIndexSet, PostalError>) -> Void) {
+    func search(_ folder: String, filter: SearchKind, completion: @escaping (Result<IndexSet, PostalError>) -> Void) {
         assert(!folder.isEmpty, "folder parameter can't be empty")
         
         doAsync({
@@ -166,7 +166,7 @@ public extension Postal {
     ///     - folder: The folder where the search will be performed.
     ///     - filter: The filter
     ///     - completion: The completion handler when the request is finished with or without an error.
-    func search(folder: String, filter: SearchFilter, completion: (Result<NSIndexSet, PostalError>) -> Void) {
+    func search(_ folder: String, filter: SearchFilter, completion: @escaping (Result<IndexSet, PostalError>) -> Void) {
         assert(!folder.isEmpty, "folder parameter can't be empty")
         
         doAsync({
@@ -187,7 +187,7 @@ public extension Postal {
     ///     - uids: The message uids to be moved.
     ///     - completion: The completion handler when the request is finished with or without an error.
     ///         with the mapping between uids inside the previous folder and the new folder.
-    func moveMessages(fromFolder fromFolder: String, toFolder: String, uids: NSIndexSet, completion: (Result<[Int: Int], PostalError>) -> Void) {
+    func moveMessages(fromFolder: String, toFolder: String, uids: IndexSet, completion: @escaping (Result<[Int: Int], PostalError>) -> Void) {
         assert(!fromFolder.isEmpty, "fromFolder parameter can't be empty")
         assert(!toFolder.isEmpty, "toFolder parameter can't be empty")
         
@@ -197,33 +197,33 @@ public extension Postal {
     }
 }
 
-//  MARK: - Privates
+// MARK: - Privates
 
 private extension Postal {
     
-    func doAsync<T, E: ErrorType>(f: () throws -> T, completion: (Result<T, E>) -> Void) {
-        queue.addOperationWithBlock {
+    func doAsync<T, E: Error>(_ f: @escaping () throws -> T, completion: @escaping (Result<T, E>) -> Void) {
+        queue.addOperation {
             let result = Result<T, E>(attempt: f)
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 completion(result)
             }
         }
     }
     
-    func iterateAsync<T, E: ErrorType>(f: (T -> Void) throws -> Void, onItem: (T) -> Void, onComplete: (E?) -> Void) {
-        queue.addOperationWithBlock {
+    func iterateAsync<T, E: Error>(_ f: @escaping (@escaping (T) -> Void) throws -> Void, onItem: @escaping (T) -> Void, onComplete: @escaping (E?) -> Void) {
+        queue.addOperation {
             do {
                 try f() { item in
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         onItem(item)
                     }
                 }
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     onComplete(nil)
                 }
             } catch let error as E {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     onComplete(error)
                 }
             } catch {
