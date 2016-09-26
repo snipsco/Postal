@@ -107,10 +107,6 @@ final class IMAPSession {
         let identifier = "\(configuration.login)@\(configuration.hostname):\(configuration.port)"
         mailstream_low_set_identifier(low, identifier.unreleasedUTF8CString)
         
-        if let welcome = String.fromUTF8CString(imap.pointee.imap_response) {
-            print("Welcome : \(welcome)")
-        }
-        
         try checkCapabilities()
     }
     
