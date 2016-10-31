@@ -30,8 +30,8 @@ public struct MimeType {
     public let subtype: String
     
     public init(type: String, subtype: String) {
-        self.type = type.lowercaseString
-        self.subtype = subtype.lowercaseString
+        self.type = type.lowercased()
+        self.subtype = subtype.lowercased()
     }
 }
 
@@ -96,7 +96,7 @@ public extension MimeType {
 
 extension mailimap_media_basic {
     var parse: MimeType? {
-        guard let subtype = String.fromCString(med_subtype)?.lowercaseString else { return nil }
+        let subtype = String(cString: med_subtype).lowercased()
         switch Int(med_type) {
         case MAILIMAP_MEDIA_BASIC_APPLICATION: return MimeType(type: "application", subtype: subtype)
         case MAILIMAP_MEDIA_BASIC_AUDIO: return MimeType(type: "audio", subtype: subtype)
@@ -113,8 +113,8 @@ extension mailimap_media_basic {
 
 extension mailmime_content {
     var parse: MimeType {
-        let type: String = ct_type.optional?.parse ?? "unknown"
-        let subtype = String.fromUTF8CString(ct_subtype)?.lowercaseString ?? "unknown"
+        let type: String = ct_type?.pointee.parse ?? "unknown"
+        let subtype = String.fromUTF8CString(ct_subtype)?.lowercased() ?? "unknown"
         return MimeType(type: type, subtype: subtype)
     }
 }
@@ -122,8 +122,8 @@ extension mailmime_content {
 extension mailmime_type {
     var parse: String? {
         switch Int(tp_type) {
-        case MAILMIME_TYPE_DISCRETE_TYPE: return tp_data.tp_discrete_type.optional?.parse
-        case MAILMIME_TYPE_COMPOSITE_TYPE: return tp_data.tp_composite_type.optional?.parse
+        case MAILMIME_TYPE_DISCRETE_TYPE: return tp_data.tp_discrete_type?.pointee.parse
+        case MAILMIME_TYPE_COMPOSITE_TYPE: return tp_data.tp_composite_type?.pointee.parse
         default: return nil
         }
     }
@@ -134,7 +134,7 @@ extension mailmime_composite_type {
         switch Int(ct_type) {
         case MAILMIME_COMPOSITE_TYPE_MESSAGE: return "message"
         case MAILMIME_COMPOSITE_TYPE_MULTIPART: return "multipart"
-        case MAILMIME_COMPOSITE_TYPE_EXTENSION: return String.fromUTF8CString(ct_token)?.lowercaseString
+        case MAILMIME_COMPOSITE_TYPE_EXTENSION: return String.fromUTF8CString(ct_token)?.lowercased()
         default: return nil
         }
     }
@@ -148,7 +148,7 @@ extension mailmime_discrete_type {
         case MAILMIME_DISCRETE_TYPE_AUDIO: return "audio"
         case MAILMIME_DISCRETE_TYPE_VIDEO: return "video"
         case MAILMIME_DISCRETE_TYPE_APPLICATION: return "application"
-        case MAILMIME_DISCRETE_TYPE_EXTENSION: return String.fromUTF8CString(dt_extension)?.lowercaseString
+        case MAILMIME_DISCRETE_TYPE_EXTENSION: return String.fromUTF8CString(dt_extension)?.lowercased()
         default: return nil
         }
     }

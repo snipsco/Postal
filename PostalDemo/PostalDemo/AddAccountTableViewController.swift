@@ -38,7 +38,7 @@ enum MailProvider: Int {
 }
 
 final class AddAccountTableViewController: UITableViewController {
-    private let loginSegueIdentifier = "loginSegue"    
+    fileprivate let loginSegueIdentifier = "loginSegue"    
 }
 
 // MARK: - View lifecycle
@@ -55,9 +55,9 @@ extension AddAccountTableViewController {
 
 extension AddAccountTableViewController {
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch (segue.identifier, segue.destinationViewController, sender) {
-        case (.Some(loginSegueIdentifier), let vc as LoginTableViewController, let provider as Int):
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch (segue.identifier, segue.destination, sender) {
+        case (.some(loginSegueIdentifier), let vc as LoginTableViewController, let provider as Int):
             vc.provider = MailProvider(rawValue: provider)
         default: break
         }
@@ -68,12 +68,12 @@ extension AddAccountTableViewController {
 
 extension AddAccountTableViewController {
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let provider = MailProvider(rawValue: indexPath.row) else { fatalError("Unknown provider") }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let provider = MailProvider(rawValue: (indexPath as NSIndexPath).row) else { fatalError("Unknown provider") }
         print("selected provider: \(provider)")
         
-        performSegueWithIdentifier(loginSegueIdentifier, sender: provider.rawValue)
+        performSegue(withIdentifier: loginSegueIdentifier, sender: provider.rawValue)
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

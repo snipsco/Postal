@@ -33,7 +33,7 @@ enum MessageAttribute {
     case bodyStructure(MailPart)
     case rfc822(Int)
     case ext(MessageExtension)
-    case internalDate(NSDate)
+    case internalDate(Date)
 }
 
 extension MessageAttribute: CustomStringConvertible {
@@ -52,7 +52,7 @@ extension MessageAttribute: CustomStringConvertible {
 }
 
 extension mailimap_msg_att {
-    func parse(builder: FetchResultBuilder) -> FetchResult? {
+    func parse(_ builder: FetchResultBuilder) -> FetchResult? {
         sequence(att_list, of: mailimap_msg_att_item.self).forEach { item in
             guard let parsed = item.parse else { return }
             builder.addParsedAttribute(parsed)
@@ -66,11 +66,11 @@ extension mailimap_msg_att_item {
     var parse: MessageAttribute? {
         switch Int(att_type) {
         case MAILIMAP_MSG_ATT_ITEM_DYNAMIC:
-            return att_data.att_dyn.optional?.parse
+            return att_data.att_dyn?.pointee.parse
         case MAILIMAP_MSG_ATT_ITEM_STATIC:
-            return att_data.att_static.optional?.parse
+            return att_data.att_static?.pointee.parse
         case MAILIMAP_MSG_ATT_ITEM_EXTENSION:
-            return att_data.att_extension_data.optional?.parse.map { .ext($0) }
+            return att_data.att_extension_data?.pointee.parse.map { .ext($0) }
         default: return nil
         }
     }
@@ -82,16 +82,16 @@ extension mailimap_msg_att_static {
         case MAILIMAP_MSG_ATT_UID:
             return .uid(UInt(att_data.att_uid))
         case MAILIMAP_MSG_ATT_ENVELOPE:
-            return att_data.att_env.optional?.parse.map { .envelope($0) }
+            return att_data.att_env?.pointee.parse.map { .envelope($0) }
         case MAILIMAP_MSG_ATT_BODY_SECTION:
-            let bodySection = att_data.att_body_section.optional?.parse("")
+            let bodySection = att_data.att_body_section?.pointee.parse("")
             return bodySection.map { .bodySection($0) }
         case MAILIMAP_MSG_ATT_BODYSTRUCTURE:
-            return att_data.att_body.optional?.parse("").map { .bodyStructure($0) }
+            return att_data.att_body?.pointee.parse("").map { .bodyStructure($0) }
         case MAILIMAP_MSG_ATT_RFC822_SIZE:
             return .rfc822(Int(att_data.att_rfc822_size))
         case MAILIMAP_MSG_ATT_INTERNALDATE:
-            return att_data.att_internal_date.optional.flatMap { $0.date }.map { .internalDate($0) }
+            return att_data.att_internal_date?.pointee.date.flatMap { .internalDate($0) }
         default: return nil
         }
     }
@@ -99,11 +99,11 @@ extension mailimap_msg_att_static {
 
 extension mailimap_msg_att_dynamic {
     var parse: MessageAttribute? {
-        guard att_list.optional != nil else { return nil }
+        guard att_list?.pointee != nil else { return nil }
         
         let flags: MessageFlag = sequence(att_list, of: mailimap_flag_fetch.self).reduce([]) { combined, flagFetch in
             guard flagFetch.fl_type != Int32(MAILIMAP_FLAG_FETCH_OTHER) else { return combined }
-            guard let flag = flagFetch.fl_flag.optional else { return combined }
+            guard let flag = flagFetch.fl_flag?.pointee else { return combined }
             
             return [ combined, flag.toMessageFlag ]
         }

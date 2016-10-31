@@ -71,7 +71,7 @@ extension ContentEncoding: CustomStringConvertible {
 
 extension mailimap_body_fld_enc {
     var parse: ContentEncoding {
-        if let value = String.fromUTF8CString(enc_value)?.lowercaseString where Int(enc_type) == MAILIMAP_BODY_FLD_ENC_OTHER {
+        if let value = String.fromUTF8CString(enc_value)?.lowercased() , Int(enc_type) == MAILIMAP_BODY_FLD_ENC_OTHER {
             if value == "x-uuencode" || value == "uuencode" {
                 return .uuEncoding
             }
@@ -93,7 +93,7 @@ extension mailmime_mechanism {
         case MAILMIME_MECHANISM_QUOTED_PRINTABLE: return .quotedPrintable
         case MAILMIME_MECHANISM_BASE64: return .base64
         case MAILMIME_MECHANISM_TOKEN:
-            if String.fromUTF8CString(enc_token)?.lowercaseString == "x-uuencode" { return .uuEncoding }
+            if String.fromUTF8CString(enc_token)?.lowercased() == "x-uuencode" { return .uuEncoding }
             return .encoding8Bit
         default: return .other
         }

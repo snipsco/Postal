@@ -25,7 +25,7 @@
 import Foundation
 import libetpan
 
-public struct MessageFlag: OptionSetType {
+public struct MessageFlag: OptionSet {
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
@@ -69,7 +69,7 @@ extension mailimap_flag {
         case MAILIMAP_FLAG_SEEN: return .seen
         case MAILIMAP_FLAG_DRAFT: return .draft
         case MAILIMAP_FLAG_KEYWORD:
-            switch String.fromUTF8CString(fl_data.fl_keyword)?.lowercaseString ?? "" {
+            switch String.fromUTF8CString(fl_data.fl_keyword)?.lowercased() ?? "" {
             case "$Forwarded": return .forwarded
             case "$MDNSent": return .MDNSent
             case "$SubmitPending": return .submitPending

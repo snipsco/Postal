@@ -26,14 +26,14 @@ import Foundation
 import libetpan
 
 public struct MimeFields {
-    public private(set) var name: String? = nil
-    public private(set) var charset: String? = nil
-    public private(set) var contentType: [MimeType] = []
-    public private(set) var contentId: String? = nil
-    public private(set) var contentDescription: String? = nil
-    public private(set) var contentEncoding: ContentEncoding? = nil
-    public private(set) var contentLocation: String? = nil
-    public private(set) var contentDisposition: ContentDisposition? = nil
+    public fileprivate(set) var name: String? = nil
+    public fileprivate(set) var charset: String? = nil
+    public fileprivate(set) var contentType: [MimeType] = []
+    public fileprivate(set) var contentId: String? = nil
+    public fileprivate(set) var contentDescription: String? = nil
+    public fileprivate(set) var contentEncoding: ContentEncoding? = nil
+    public fileprivate(set) var contentLocation: String? = nil
+    public fileprivate(set) var contentDisposition: ContentDisposition? = nil
 }
 
 // MARK: IMAP Parsing
@@ -44,10 +44,10 @@ extension mailimap_body_fields {
         
         // TODO: bd_size
         
-        if let list = bd_parameter.optional?.pa_list {
+        if let list = bd_parameter?.pointee.pa_list {
             for param in sequence(list, of: mailimap_single_body_fld_param.self) {
-                guard let name = String.fromUTF8CString(param.pa_name)?.lowercaseString else { continue }
-                guard let value = String.fromZeroSizedCStringMimeHeader(param.pa_value)?.lowercaseString else { continue }
+                guard let name = String.fromUTF8CString(param.pa_name)?.lowercased() else { continue }
+                guard let value = String.fromZeroSizedCStringMimeHeader(param.pa_value)?.lowercased() else { continue }
                 
                 switch name {
                 case "name": mimeFields.name = value
@@ -57,16 +57,17 @@ extension mailimap_body_fields {
             }
         }
         
-        if let encoding = bd_encoding.optional {
+        if let encoding = bd_encoding?.pointee {
             mimeFields.contentEncoding = encoding.parse
         }
         
-        if let mimeId = bd_id.optional {
+        if let mimeId = bd_id?.pointee {
             var curToken: size_t = 0
-            var contentId: UnsafeMutablePointer<CChar> = nil
+            var contentId: UnsafeMutablePointer<CChar>? = nil
             let result = mailimf_msg_id_parse(bd_id, Int(strlen(bd_id)), &curToken, &contentId)
-            if MAILIMF_NO_ERROR == Int(result) {
+            if let contentId = contentId, MAILIMF_NO_ERROR == Int(result) {
                 defer { free(contentId) }
+                
                 if let contentId = String.fromUTF8CString(contentId) {
                     mimeFields.contentId = contentId
                 }
@@ -87,7 +88,7 @@ extension mailimap_body_ext_1part {
         
         var fields = MimeFields()
         fields.contentLocation = String.fromUTF8CString(bd_loc)
-        fields.contentDisposition = bd_disposition.optional?.parse
+        fields.contentDisposition = bd_disposition?.pointee.parse
         
         return fields
     }
@@ -99,19 +100,26 @@ extension mailmime_single_fields {
     var parse: MimeFields {
         let filename = String.fromZeroSizedCStringMimeHeader(fld_disposition_filename)
         let name = String.fromZeroSizedCStringMimeHeader(fld_content_name)
-        let contentId = String.fromUTF8CString(fld_id)
-        let description  = String.fromUTF8CString(fld_description)
+        let contentId = fld_id != nil ? String.fromUTF8CString(fld_id) : nil
+        let description  = fld_description != nil ? String.fromUTF8CString(fld_description) : nil
         let charset = String.fromZeroSizedCStringMimeHeader(fld_content_charset)
-        let loc = String.fromUTF8CString(fld_location)
-        let encoding = fld_encoding.optional?.parse
+        let loc = fld_location != nil ? String.fromUTF8CString(fld_location) : nil
+        let encoding = fld_encoding?.pointee.parse
         
-        let disposition = fld_disposition.optional?.dsp_type.optional?.parse
+        let disposition = fld_disposition?.pointee.dsp_type?.pointee.parse
         
-        //let contentType = fld_content.optional?.parse
-        let content = fld_content.optional
-            .map { sequence($0.ct_parameters, of: mailmime_parameter.self) }?
-            .flatMap { $0.parse.map { type, subtype in MimeType(type: type, subtype: subtype) } }
-        
+        let content: [MimeType]
+        if let parameters = fld_content?.pointee.ct_parameters {
+            content = sequence(parameters, of: mailmime_parameter.self)
+                .flatMap { parameter in
+                    parameter.parse.map { type, subtype in
+                        MimeType(type: type, subtype: subtype)
+                    }
+                }
+        } else {
+            content = []
+        }
+
         var fields = MimeFields()
         fields.name = filename ?? name
         fields.contentId = contentId
@@ -120,7 +128,7 @@ extension mailmime_single_fields {
         fields.contentLocation = loc
         fields.contentEncoding = encoding
         fields.contentDisposition = disposition
-        fields.contentType = content ?? []
+        fields.contentType = content
         
         return fields
     }

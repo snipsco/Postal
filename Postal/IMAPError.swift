@@ -48,7 +48,7 @@ extension IMAPError: PostalErrorType {
 }
 
 extension IMAPError {
-    func enrich(@noescape f: () -> IMAPError) -> IMAPError {
+    func enrich(_ f: () -> IMAPError) -> IMAPError {
         if case .undefined = self {
             return f()
         }

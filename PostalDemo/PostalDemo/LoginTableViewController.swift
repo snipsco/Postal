@@ -9,7 +9,7 @@
 import UIKit
 import Postal
 
-enum LoginError: ErrorType {
+enum LoginError: Error {
     case badEmail
     case badPassword
     case badHostname
@@ -28,7 +28,7 @@ extension LoginError: CustomStringConvertible {
 }
 
 final class LoginTableViewController: UITableViewController {
-    private let mailsSegueIdentifier = "mailsSegue"
+    fileprivate let mailsSegueIdentifier = "mailsSegue"
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -45,11 +45,11 @@ extension LoginTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let provider = provider, configuration = provider.preConfiguration {
+        if let provider = provider, let configuration = provider.preConfiguration {
             emailTextField.placeholder = "exemple@\(provider.hostname)"
-            hostnameTextField.userInteractionEnabled = false
+            hostnameTextField.isUserInteractionEnabled = false
             hostnameTextField.text = configuration.hostname
-            portTextField.userInteractionEnabled = false
+            portTextField.isUserInteractionEnabled = false
             portTextField.text = "\(configuration.port)"
         }
     }
@@ -59,9 +59,9 @@ extension LoginTableViewController {
 
 extension LoginTableViewController {
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch (segue.identifier, segue.destinationViewController) {
-        case (.Some(mailsSegueIdentifier), let vc as MailsTableViewController):
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch (segue.identifier, segue.destination) {
+        case (.some(mailsSegueIdentifier), let vc as MailsTableViewController):
             do {
                 vc.configuration = try createConfiguration()
             } catch let error as LoginError {
@@ -80,14 +80,14 @@ extension LoginTableViewController {
 private extension LoginTableViewController {
     
     func createConfiguration() throws -> Configuration {
-        guard let email = emailTextField.text where !email.isEmpty else { throw LoginError.badEmail  }
-        guard let password = passwordTextField.text where !password.isEmpty else { throw LoginError.badPassword }
+        guard let email = emailTextField.text , !email.isEmpty else { throw LoginError.badEmail  }
+        guard let password = passwordTextField.text , !password.isEmpty else { throw LoginError.badPassword }
         
         if let configuration = provider?.preConfiguration {
             return Configuration(hostname: configuration.hostname, port: configuration.port, login: email, password: .plain(password), connectionType: configuration.connectionType, checkCertificateEnabled: configuration.checkCertificateEnabled)
         } else {
-            guard let hostname = hostnameTextField.text where !hostname.isEmpty else { throw LoginError.badHostname }
-            guard let portText = portTextField.text where !portText.isEmpty else { throw LoginError.badPort }
+            guard let hostname = hostnameTextField.text , !hostname.isEmpty else { throw LoginError.badHostname }
+            guard let portText = portTextField.text , !portText.isEmpty else { throw LoginError.badPort }
             guard let port = UInt16(portText) else { throw LoginError.badPort }
             
             return Configuration(hostname: hostname, port: port, login: email, password: .plain(""), connectionType: .tls, checkCertificateEnabled: true)

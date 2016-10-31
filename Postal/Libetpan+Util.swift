@@ -26,19 +26,18 @@ import Foundation
 import libetpan
 
 extension String {
-    static func fromZeroSizedCStringMimeHeader(bytes: UnsafeMutablePointer<Int8>) -> String? {
+    static func fromZeroSizedCStringMimeHeader(_ bytes: UnsafeMutablePointer<Int8>?) -> String? {
         guard bytes != nil else { return nil }
         
         let length = Int(strlen(bytes))
         return fromCStringMimeHeader(bytes, length: length)
     }
     
-    static func fromCStringMimeHeader(bytes: UnsafeMutablePointer<Int8>, length: Int) -> String? {
+    static func fromCStringMimeHeader(_ bytes: UnsafeMutablePointer<Int8>?, length: Int) -> String? {
         let DEFAULT_INCOMING_CHARSET = "iso-8859-1"
         let DEFAULT_DISPLAY_CHARSET = "utf-8"
         
-        guard bytes != nil else { return nil }
-        if bytes[0] == 0 { return nil }
+        guard let bytes = bytes, bytes[0] != 0 else { return nil }
         
         var hasEncoding = false
         if strstr(bytes, "=?") != nil {
@@ -51,86 +50,87 @@ extension String {
             return String.stringFromCStringDetectingEncoding(bytes, length: length)?.string
         }
         
-        var decoded: UnsafeMutablePointer<CChar> = nil
+        var decoded: UnsafeMutablePointer<CChar>? = nil
         var cur_token: size_t = 0
         mailmime_encoded_phrase_parse(DEFAULT_INCOMING_CHARSET, bytes, Int(strlen(bytes)), &cur_token, DEFAULT_DISPLAY_CHARSET, &decoded)
         defer { free(decoded) }
         
-        if decoded != nil {
-            return String.fromUTF8CString(decoded)
-        }
-        return nil
+        guard let actuallyDecoded = decoded else { return nil }
+
+        return String.fromUTF8CString(actuallyDecoded)
     }
 }
 
 // MARK: Sequences
 
-extension SequenceType {
-    func unreleasedClist<T>(@noescape transferOwnership: (Generator.Element) -> UnsafeMutablePointer<T>) -> UnsafeMutablePointer<clist> {
+extension Sequence {
+    func unreleasedClist<T>(_ transferOwnership: (Iterator.Element) -> UnsafeMutablePointer<T>) -> UnsafeMutablePointer<clist> {
         let list = clist_new()
         map(transferOwnership).forEach { (item: UnsafeMutablePointer<T>) in
             clist_append(list, item)
         }
-        return list
+        return list!
     }
 }
 
-private func pointerListGenerator<Element>(unsafeList list: UnsafePointer<clist>, of: Element.Type) -> AnyGenerator<UnsafePointer<Element>> {
-    var current = list.optional?.first.optional
-    return AnyGenerator<UnsafePointer<Element>> {
+private func pointerListGenerator<Element>(unsafeList list: UnsafePointer<clist>, of: Element.Type) -> AnyIterator<UnsafePointer<Element>> {
+    var current = list.pointee.first?.pointee
+    return AnyIterator<UnsafePointer<Element>> {
         while current != nil && current?.data == nil { // while data is unavailable skip to next
-            current = current?.next.optional
+            current = current?.next?.pointee
         }
         guard let cur = current else { return nil } // if iterator is nil, list is over, just finish
-        defer { current = current?.next.optional } // after returning move current to next
-        return UnsafePointer<Element>(cur.data) // return current data as Element (unsafe: type cannot be checked because of C)
+        defer { current = current?.next?.pointee } // after returning move current to next
+        return UnsafePointer<Element>(cur.data.assumingMemoryBound(to: Element.self)) // return current data as Element (unsafe: type cannot be checked because of C)
     }
 }
 
-private func listGenerator<Element>(unsafeList list: UnsafePointer<clist>, of: Element.Type) -> AnyGenerator<Element> {
+private func listGenerator<Element>(unsafeList list: UnsafePointer<clist>, of: Element.Type) -> AnyIterator<Element> {
     let gen = pointerListGenerator(unsafeList: list, of: of)
-    return AnyGenerator {
-        return gen.next()?.memory
+    return AnyIterator {
+        return gen.next()?.pointee
     }
 }
 
-private func arrayGenerator<Element>(unsafeArray array: UnsafePointer<carray>, of: Element.Type) -> AnyGenerator<Element> {
+private func arrayGenerator<Element>(unsafeArray array: UnsafePointer<carray>, of: Element.Type) -> AnyIterator<Element> {
     var idx: UInt32 = 0
     let len = carray_count(array)
-    return AnyGenerator {
+    return AnyIterator {
         guard idx < len else { return nil }
         defer { idx = idx + 1 }
-        return UnsafePointer<Element>(carray_get(array, idx)).memory
+        return carray_get(array, idx).assumingMemoryBound(to: Element.self).pointee
     }
 }
 
-func sequence<Element>(unsafeList: UnsafePointer<clist>, of: Element.Type) -> AnySequence<Element> {
+func sequence<Element>(_ unsafeList: UnsafePointer<clist>, of: Element.Type) -> AnySequence<Element> {
     return AnySequence { return listGenerator(unsafeList: unsafeList, of: of) }
 }
 
-func pointerSequence<Element>(unsafeList: UnsafePointer<clist>, of: Element.Type) -> AnySequence<UnsafePointer<Element>> {
+func pointerSequence<Element>(_ unsafeList: UnsafePointer<clist>, of: Element.Type) -> AnySequence<UnsafePointer<Element>> {
     return AnySequence { return pointerListGenerator(unsafeList: unsafeList, of: of) }
 }
 
-func sequence<Element>(unsafeArray: UnsafePointer<carray>, of: Element.Type) -> AnySequence<Element> {
+func sequence<Element>(_ unsafeArray: UnsafePointer<carray>, of: Element.Type) -> AnySequence<Element> {
     return AnySequence { return arrayGenerator(unsafeArray: unsafeArray, of: of) }
 }
 
 // MARK: Dates
 
-extension NSDate {
-    var unreleasedMailimapDate: UnsafeMutablePointer<mailimap_date> {
-        guard let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian) else { return nil }
-        let components = calendar.components([ .Year, .Month, .Day ], fromDate: self)
+extension Date {
+    var unreleasedMailimapDate: UnsafeMutablePointer<mailimap_date>? {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = calendar.dateComponents([ .year, .month, .day ], from: self)
         
-        return mailimap_date_new(Int32(components.day), Int32(components.month), Int32(components.year))
+        guard let day = components.day, let month = components.month, let year = components.year else { return nil }
+        
+        return mailimap_date_new(Int32(day), Int32(month), Int32(year))
     }
 }
 
 extension mailimf_date_time {
-    var date: NSDate? {
-        let dateComponent = NSDateComponents()
-        dateComponent.calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+    var date: Date? {
+        var dateComponent = DateComponents()
+        dateComponent.calendar = Calendar(identifier: .gregorian)
         dateComponent.second = Int(dt_sec)
         dateComponent.minute = Int(dt_min)
         dateComponent.hour = Int(dt_min)
@@ -154,16 +154,16 @@ extension mailimf_date_time {
             zoneHour = Int(-((-dt_zone) / 100))
             zoneMin = Int(-((-dt_zone) % 100))
         }
-        dateComponent.timeZone = NSTimeZone(forSecondsFromGMT: zoneHour * 3600 + zoneMin * 60)
+        dateComponent.timeZone = TimeZone(secondsFromGMT: zoneHour * 3600 + zoneMin * 60)
         
         return dateComponent.date
     }
 }
 
 extension mailimap_date_time {
-    var date: NSDate? {
-        let dateComponent = NSDateComponents()
-        dateComponent.calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+    var date: Date? {
+        var dateComponent = DateComponents()
+        dateComponent.calendar = Calendar(identifier: .gregorian)
         dateComponent.second = Int(dt_sec)
         dateComponent.minute = Int(dt_min)
         dateComponent.hour = Int(dt_min)
@@ -187,7 +187,7 @@ extension mailimap_date_time {
             zoneHour = Int(-((-dt_zone) / 100))
             zoneMin = Int(-((-dt_zone) % 100))
         }
-        dateComponent.timeZone = NSTimeZone(forSecondsFromGMT: zoneHour * 3600 + zoneMin * 60)
+        dateComponent.timeZone = TimeZone(secondsFromGMT: zoneHour * 3600 + zoneMin * 60)
         
         return dateComponent.date
     }
@@ -196,22 +196,29 @@ extension mailimap_date_time {
 // MARK: Set
 
 extension mailimap_set {
-    var indexSet: NSIndexSet {
-        return sequence(set_list, of: mailimap_set_item.self).reduce(NSMutableIndexSet()) { combined, item in
-            for i in (item.set_first...item.set_last) {
-                combined.addIndex(Int(i))
+    var indexSet: IndexSet {
+        var result: IndexSet = IndexSet()
+        
+        sequence(set_list, of: mailimap_set_item.self)
+            .map { (item: mailimap_set_item) -> CountableRange<Int> in
+                return Int(item.set_first)..<Int(item.set_last)
             }
-            return combined
-        }
+            .forEach { (range: CountableRange<Int>) in
+                result.insert(integersIn: range)
+            }
+        return result
     }
     
     var array: [Int] {
-        return sequence(set_list, of: mailimap_set_item.self).reduce([Int]()) { combined, item in
-            var result: [Int] = []
-            for i in (item.set_first...item.set_last) {
-                result.append(Int(i))
+        var result: [Int] = []
+        
+        sequence(set_list, of: mailimap_set_item.self)
+            .map { (item: mailimap_set_item) -> CountableRange<Int> in
+                return Int(item.set_first)..<Int(item.set_last)
             }
-            return combined + result
-        }
+            .forEach { (range: CountableRange<Int>) in
+                result.append(contentsOf: range)
+            }
+        return result
     }
 }

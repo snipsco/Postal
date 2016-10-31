@@ -25,7 +25,7 @@
 import Foundation
 import libetpan
 
-public struct FetchFlag: OptionSetType {
+public struct FetchFlag: OptionSet {
     public let rawValue: Int
     
     public init(rawValue: Int) { self.rawValue = rawValue }
@@ -64,8 +64,8 @@ extension FetchFlag: CustomStringConvertible {
 }
 
 private extension FetchFlag {
-    func unreleasedFetchAttributeList(extraHeaders: Set<String>) -> UnsafeMutablePointer<mailimap_fetch_type> {
-        typealias CreateAttribute = () -> UnsafeMutablePointer<mailimap_fetch_att>
+    func unreleasedFetchAttributeList(_ extraHeaders: Set<String>) -> UnsafeMutablePointer<mailimap_fetch_type> {
+        typealias CreateAttribute = () -> UnsafeMutablePointer<mailimap_fetch_att>!
         
         let flags: [(FetchFlag, CreateAttribute)] = [
             (.uid,              mailimap_fetch_att_new_uid),
@@ -90,11 +90,11 @@ private extension FetchFlag {
         var headerList = Set<String>(extraHeaders)
         // TODO: Embed headerList in the FetchFlag type instead
         if contains(.fullHeaders) {
-            headerList.unionInPlace([ "Date", "Subject", "From", "Sender", "Reply-To", "To", "Cc", "Message-ID", "References", "In-Reply-To" ])
+            headerList.formUnion([ "Date", "Subject", "From", "Sender", "Reply-To", "To", "Cc", "Message-ID", "References", "In-Reply-To" ])
         }
         if contains(.headers) {
-            headerList.unionInPlace([ "References" ])
-            if contains(.headerSubject) { headerList.unionInPlace( [ "Subject" ]) }
+            headerList.formUnion([ "References" ])
+            if contains(.headerSubject) { headerList.formUnion( [ "Subject" ]) }
         }
         if !headerList.isEmpty {
             let cHeaderList = headerList.unreleasedClist { $0.unreleasedUTF8CString } // ownership of elements seems transfered to list
@@ -110,18 +110,24 @@ private extension FetchFlag {
             mailimap_fetch_type_new_fetch_att_list_add(list, bodyAttr)
         }
         
-        return list
+        return list!
     }
 }
 
-extension NSIndexSet {
+extension IndexSet {
+    var mailimapSet: mailimap_set {
+        let imapSet = unreleasedMailimapSet
+        defer { mailimap_set_free(imapSet) }
+        return imapSet.pointee
+    }
+    
     var unreleasedMailimapSet: UnsafeMutablePointer<mailimap_set> {
         let result: UnsafeMutablePointer<mailimap_set> = mailimap_set_new_empty()
         
-        enumerateRangesUsingBlock { range, _ in
-            let safeLocation = UInt32(min(range.location, Int(Int32.max)))
-            let safeLength = UInt32(min(range.location + range.length - 1, Int(Int32.max-1)))
-            
+        rangeView.forEach { (range) in
+            let safeLocation = UInt32(truncatingBitPattern: range.startIndex)
+            let safeLength = UInt32(truncatingBitPattern: range.upperBound)
+
             mailimap_set_add_interval(result, safeLocation, safeLength)
         }
         return result
@@ -129,45 +135,45 @@ extension NSIndexSet {
 }
 
 enum IMAPIndexes {
-    case uid(NSIndexSet)
-    case indexes(NSIndexSet)
+    case uid(IndexSet)
+    case indexes(IndexSet)
 }
 
 private class FetchContext {
     var hasMoreMessage = false
-    let handler: (FetchResult -> Void)
+    let handler: ((FetchResult) -> Void)
     let flags: FetchFlag
 
-    init(flags: FetchFlag, handler: (FetchResult -> Void)) {
+    init(flags: FetchFlag, handler: @escaping ((FetchResult) -> Void)) {
         self.flags = flags
         self.handler = handler
     }
 }
 
 extension IMAPSession {
-    func fetchLast(folder: String, last: UInt, flags: FetchFlag, extraHeaders: Set<String> = [], handler: FetchResult -> Void) throws {
+    func fetchLast(_ folder: String, last: UInt, flags: FetchFlag, extraHeaders: Set<String> = [], handler: @escaping (FetchResult) -> Void) throws {
         let info = try select(folder)
         
-        let location = info.messagesCount > last ? info.messagesCount - last + 1 : 1
-        let length = info.messagesCount > last ? last : info.messagesCount
-        let range = NSRange(location: Int(location), length: Int(length))
-        let indexSet = NSIndexSet(indexesInRange: range)
+        let location: Int = Int(info.messagesCount > last ? ((Int(info.messagesCount) - Int(last)) + 1) : 1)
+        let length: Int = Int(info.messagesCount > last ? last : info.messagesCount)
         
-        try fetchMessages(folder, set: IMAPIndexes.indexes(indexSet), flags: flags, extraHeaders: extraHeaders, handler: handler)
+        let indexSet = IndexSet(location..<(location+length))
+        
+        try fetchMessages(folder, set: .indexes(indexSet), flags: flags, extraHeaders: extraHeaders, handler: handler)
     }
     
-    func fetchMessages(folder: String, set: IMAPIndexes, flags: FetchFlag, extraHeaders: Set<String> = [], handler: FetchResult -> Void) throws {
+    func fetchMessages(_ folder: String, set: IMAPIndexes, flags: FetchFlag, extraHeaders: Set<String> = [], handler: @escaping (FetchResult) -> Void) throws {
         let info = try select(folder)
         
         var context = FetchContext(flags: flags, handler: handler)
         mailimap_set_msg_att_handler(imap, { message, context in
             autoreleasepool {
-                let fetchContext = UnsafePointer<FetchContext>(context).memory
+                guard let fetchContext = context?.assumingMemoryBound(to: FetchContext.self).pointee else { return }
                 let builder = FetchResultBuilder(flags: fetchContext.flags)
                 
                 fetchContext.hasMoreMessage = true
                 
-                guard let result = message.optional?.parse(builder) else { return }
+                guard let result = message?.pointee.parse(builder) else { return }
                 
                 fetchContext.handler(result)
             }
@@ -177,8 +183,10 @@ extension IMAPSession {
         let fetchType = flags.unreleasedFetchAttributeList(extraHeaders)
         defer { mailimap_fetch_type_free(fetchType) }
         
-        let givenIndexSet: NSIndexSet
-        let fetchFunc: (session: UnsafeMutablePointer<mailimap>, set: UnsafeMutablePointer<mailimap_set>, fetch_type: UnsafeMutablePointer<mailimap_fetch_type>, result: UnsafeMutablePointer<UnsafeMutablePointer<clist>>) -> Int32
+        let givenIndexSet: IndexSet
+        
+        typealias FetchFunc = (UnsafeMutablePointer<mailimap>, UnsafeMutablePointer<mailimap_set>, UnsafeMutablePointer<mailimap_fetch_type>, UnsafeMutablePointer<UnsafeMutablePointer<clist>?>) -> Int32
+        let fetchFunc: FetchFunc
         
         switch set {
         case .uid(let indexSet):
@@ -196,8 +204,8 @@ extension IMAPSession {
             
             context.hasMoreMessage = false
             
-            var results: UnsafeMutablePointer<clist> = nil
-            try fetchFunc(session: self.imap, set: imapSet, fetch_type: fetchType, result: &results).toIMAPError?.check()
+            var results: UnsafeMutablePointer<clist>? = nil
+            try fetchFunc(self.imap, imapSet, fetchType, &results).toIMAPError?.check()
             defer { mailimap_fetch_list_free(results) }
             
             guard context.hasMoreMessage else { break }
@@ -205,7 +213,7 @@ extension IMAPSession {
     }
     
     // fetch a set of attachments from an email with given uid
-    func fetchParts(folder: String, uid: UInt, partId: String, handler: (MailData) -> Void) throws {
+    func fetchParts(_ folder: String, uid: UInt, partId: String, handler: @escaping (MailData) -> Void) throws {
         let info = try select(folder)
         
         // create body peek sections for part ids
@@ -226,10 +234,11 @@ extension IMAPSession {
         
         mailimap_set_msg_att_handler(imap, { message, context in
             autoreleasepool {
-                let fetchContext = UnsafePointer<FetchContext>(context).memory
+                guard let fetchContext = context?.assumingMemoryBound(to: FetchContext.self).pointee else { return }
+                
                 let builder = FetchResultBuilder(flags: fetchContext.flags)
                 
-                guard let result = message.optional?.parse(builder) else { return }
+                guard let result = message?.pointee.parse(builder) else { return }
                 
                 fetchContext.handler(result)
             }
@@ -237,43 +246,43 @@ extension IMAPSession {
         defer { mailimap_set_msg_att_handler(imap, nil, nil) }
         
         // create a set of email to fetch attachment from with the unique uid we have
-        let indexSet = NSIndexSet(index: Int(uid))
+        let indexSet = IndexSet(integer: Int(uid))
         let imapSet = indexSet.unreleasedMailimapSet
         defer { mailimap_set_free(imapSet) }
         
         // fetch
-        var results: UnsafeMutablePointer<clist> = nil
+        var results: UnsafeMutablePointer<clist>? = nil
         try mailimap_uid_fetch(imap, imapSet, attList, &results).toIMAPError?.check()
         defer { mailimap_fetch_list_free(results) }
     }
 }
 
 extension MailPart {
-    func idHierarchy(tabs: Int) -> String {
-        let tabString = String(count: tabs, repeatedValue: Character("\t"))
+    func idHierarchy(_ tabs: Int) -> String {
+        let tabString = String(repeating: "\t", count: tabs)
         switch self {
-        case single(let id, _, _, _): return "\(tabString)\(id)"
-        case multipart(let id, _, let parts):
-            let elements = parts.map { $0.idHierarchy(tabs+1) }.joinWithSeparator("\n")
+        case .single(let id, _, _, _): return "\(tabString)\(id)"
+        case .multipart(let id, _, let parts):
+            let elements = parts.map { $0.idHierarchy(tabs+1) }.joined(separator: "\n")
             return "\(tabString)\(id)\n\(elements)"
-        case message(let id, _, let msg):
+        case .message(let id, _, let msg):
             return "\(tabString)\(id)\n\(msg.idHierarchy(tabs+1))"
         }
     }
 }
 
 private extension String {
-     var unreleasedPartIdList: UnsafeMutablePointer<clist> {
+     var unreleasedPartIdList: UnsafeMutablePointer<clist>? {
         var partIdList = [UInt32]()
-        for str in componentsSeparatedByString(".") {
+        for str in components(separatedBy: ".") {
             guard let id = UInt32(str) else { return nil }
             partIdList.append(id)
         }
         
         let list = clist_new()
         partIdList.forEach { id in
-            let idPtr = UnsafeMutablePointer<UInt32>(malloc(sizeof(UInt32.self)))
-            idPtr.memory = id
+            let idPtr: UnsafeMutablePointer<UInt32> = .allocate(capacity: 1)
+            idPtr.pointee = id
             clist_append(list, idPtr)
         }
         

@@ -27,14 +27,7 @@ import XCTest
 
 class IMAPSessionTests: XCTestCase {
 
-    private var imapSession: IMAPSession!
-    private var token: dispatch_once_t = 0
-
-    override func setUp() {
-        super.setUp()
-        
-        // Connect to server only once
-        dispatch_once(&token) {
+    private lazy var __once: () = {
             let credential = PostalTests.credentialsFor("gmail")
             let configuration = Configuration.gmail(login: credential.email, password: .plain(credential.password))
             
@@ -48,7 +41,16 @@ class IMAPSessionTests: XCTestCase {
                 print("ERROR: \(error)")
                 XCTAssert(false)
             }
-        }
+        }()
+
+    fileprivate var imapSession: IMAPSession!
+    fileprivate var token: Int = 0
+
+    override func setUp() {
+        super.setUp()
+        
+        // Connect to server only once
+        _ = self.__once
     }
 }
 
@@ -74,11 +76,10 @@ extension IMAPSessionTests {
 extension IMAPSessionTests {
 
     func test_fetch_ten_first_messages() throws {
-        let range = NSRange(location: 1, length: 10)
-        let indexSet = NSIndexSet(indexesInRange: range)
+        let indexSet = IndexSet(1..<10)
         
         var results = [FetchResult]()
-        try imapSession.fetchMessages("INBOX", set: IMAPIndexes.indexes(indexSet), flags: []) { results.append($0) }
+        try imapSession.fetchMessages("INBOX", set: .indexes(indexSet), flags: []) { results.append($0) }
         
         print("10 first messages:");
         results.forEach { print("\t\($0)") }
@@ -93,19 +94,14 @@ extension IMAPSessionTests {
         print("10 last messages:");
         results.forEach { print("\t\($0)") }
         
-        try imapSession.fetchParts("INBOX", uid: 32, partId: "2") { fetchResult in
-            // noop
-        }
-        
         XCTAssertEqual(results.count, 10, "should have retrieved the 10 last messages")
     }
 
-    func test_fetch_all_messages() throws {
-        let range = NSRange(location: 1, length: Int.max - 1)
-        let indexSet = NSIndexSet(indexesInRange: range)
+    func no_test_fetch_all_messages() throws {
+        let indexSet = IndexSet(0..<Int.max)
 
         var results = [FetchResult]()
-        try imapSession.fetchMessages("INBOX", set: IMAPIndexes.indexes(indexSet), flags: [ .fullHeaders ]) { results.append($0) }
+        try imapSession.fetchMessages("INBOX", set: .indexes(indexSet), flags: [ .fullHeaders ]) { results.append($0) }
         
         print("every messages:");
         results.forEach { print("\t\($0)") }
@@ -115,11 +111,10 @@ extension IMAPSessionTests {
     
     func test_fetch_ten_next_messages_from_a_given_uid() throws {
         let uid = 11
-        let range = NSRange(location: uid, length: 10) // ten next uids from given uid
-        let indexSet = NSIndexSet(indexesInRange: range)
+        let indexSet = IndexSet(uid...uid+10)
         
         var results = [FetchResult]()
-        try imapSession.fetchMessages("INBOX", set: IMAPIndexes.uid(indexSet), flags: []) { results.append($0) }
+        try imapSession.fetchMessages("INBOX", set: .uid(indexSet), flags: []) { results.append($0) }
         
         print("10 next uids from id #\(uid):");
         results.forEach { print("\t\($0)") }
@@ -140,7 +135,7 @@ extension IMAPSessionTests {
         print("result: \(res)")
 
         XCTAssertEqual(res.count, 1, "should have retrieved the welcome mail of Google")
-        XCTAssert(res.containsIndex(3), "should have retrieved the welcome mail of Google")
+        XCTAssert(res.contains(3), "should have retrieved the welcome mail of Google")
     }
 
     func test_search_subject_or_cc_fields() throws {
@@ -150,7 +145,7 @@ extension IMAPSessionTests {
         print("result: \(res)")
         
         XCTAssertEqual(res.count, 1, "should have retrieved the welcome mail of Google")
-        XCTAssert(res.containsIndex(3), "should have retrieved the welcome mail of Google")
+        XCTAssert(res.contains(3), "should have retrieved the welcome mail of Google")
     }
     
     func test_search_not_subject_and_cc() throws {

@@ -26,20 +26,20 @@ import Foundation
 
 /// The result of a fetch
 public struct FetchResult {
-    public private(set) var uid: UInt = 0
-    public private(set) var header: MessageHeader? = nil
-    public private(set) var flags: MessageFlag = []
-    public private(set) var body: MailPart?
-    public private(set) var rfc822Size: Int = 0
-    public private(set) var internalDate: NSDate? = nil
+    public fileprivate(set) var uid: UInt = 0
+    public fileprivate(set) var header: MessageHeader? = nil
+    public fileprivate(set) var flags: MessageFlag = []
+    public fileprivate(set) var body: MailPart?
+    public fileprivate(set) var rfc822Size: Int = 0
+    public fileprivate(set) var internalDate: Date? = nil
     
     // MARK: Gmail specific
     
-    public private(set) var gmailThreadId: UInt64? = nil
-    public private(set) var gmailMessageId: UInt64? = nil
-    public private(set) var gmailLabels: [String]? = nil
+    public fileprivate(set) var gmailThreadId: UInt64? = nil
+    public fileprivate(set) var gmailMessageId: UInt64? = nil
+    public fileprivate(set) var gmailLabels: [String]? = nil
     
-    public init(uid: UInt, header: MessageHeader?, flags: MessageFlag, body: MailPart?, rfc822Size: Int, internalDate: NSDate?, gmailThreadId: UInt64?, gmailMessageId: UInt64?, gmailLabels: [String]?) {
+    public init(uid: UInt, header: MessageHeader?, flags: MessageFlag, body: MailPart?, rfc822Size: Int, internalDate: Date?, gmailThreadId: UInt64?, gmailMessageId: UInt64?, gmailLabels: [String]?) {
         self.uid = uid
         self.header = header
         self.flags = flags
@@ -87,14 +87,14 @@ struct FetchResultBuilder {
                 case .modSeq:
                     break
                 }
-            case .internalDate(let date): builtResult.internalDate = date
+            case .internalDate(let date): builtResult.internalDate = date as Date
             }
         }
         
         _build = { return hasUid ? builtResult: nil }
     }
     
-    func addParsedAttribute(attribute: MessageAttribute) {
+    func addParsedAttribute(_ attribute: MessageAttribute) {
         _addParsedAttribute(attribute)
     }
     

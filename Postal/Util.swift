@@ -44,38 +44,36 @@ extension Bool {
 }
 
 extension String {
-    static func fromUTF8CString(cstring: UnsafePointer<CChar>) -> String? {
-        if cstring == nil { return nil }
-        return String(CString: cstring, encoding: NSUTF8StringEncoding)
+    static func fromUTF8CString(_ cstring: UnsafePointer<CChar>?) -> String? {
+        if let cstring = cstring {
+            return String(validatingUTF8: cstring)
+        }
+        return nil
     }
     
     var unreleasedUTF8CString: UnsafeMutablePointer<CChar> {
         return withCString { strdup($0) }
     }
-
-    var UTF8CString: UnsafePointer<CChar> {
-        return UnsafePointer((self as NSString).UTF8String)
-    }
 }
 
 extension String {
-    static func stringFromCStringDetectingEncoding(CString: UnsafePointer<CChar>, length: Int, suggestedEncodings: Set<NSStringEncoding> = [], disallowedEncodings: Set<NSStringEncoding> = []) -> (string: String, encoding: NSStringEncoding, lossy: Bool)? {
+    static func stringFromCStringDetectingEncoding(_ CString: UnsafePointer<CChar>, length: Int, suggestedEncodings: Set<String.Encoding> = [], disallowedEncodings: Set<String.Encoding> = []) -> (string: String, encoding: String.Encoding, lossy: Bool)? {
         
-        let data = NSData(bytesNoCopy: UnsafeMutablePointer<Void>(CString), length: length, freeWhenDone: false)
+        let data = Data(bytesNoCopy: UnsafeMutableRawPointer(mutating: CString), count: length, deallocator: .none)
         
         var outString: NSString? = nil
         var lossyConversion: ObjCBool = false
         
-        var encodingOptions = [String: AnyObject]()
+        var encodingOptions = [StringEncodingDetectionOptionsKey: Any]()
         if !suggestedEncodings.isEmpty {
-            encodingOptions[NSStringEncodingDetectionSuggestedEncodingsKey] = Array(suggestedEncodings)
+            encodingOptions[.suggestedEncodingsKey] = suggestedEncodings
         }
         if !disallowedEncodings.isEmpty {
-            encodingOptions[NSStringEncodingDetectionDisallowedEncodingsKey] = Array(disallowedEncodings)
+            encodingOptions[.disallowedEncodingsKey] = disallowedEncodings
         }
         
-        
-        let encoding = NSString.stringEncodingForData(data, encodingOptions: encodingOptions, convertedString: &outString, usedLossyConversion: &lossyConversion)
+        let rawEncoding = NSString.stringEncoding(for: data, encodingOptions: encodingOptions, convertedString: &outString, usedLossyConversion: &lossyConversion)
+        let encoding = String.Encoding(rawValue: rawEncoding)
         
         guard let foundString = outString else { return nil }
         
@@ -83,48 +81,32 @@ extension String {
     }
 }
 
-extension UnsafePointer {
-    var optional: Memory? { return self == nil ? .None : memory }
-}
-
-extension UnsafeMutablePointer {
-    var optional: Memory? { return self == nil ? .None : memory }
-}
-
-func bridgeUnretained<T : AnyObject>(obj : T) -> UnsafePointer<Void> {
-    return UnsafePointer(Unmanaged.passUnretained(obj).toOpaque())
-}
-
-func bridgeUnretained<T : AnyObject>(obj : T) -> UnsafeMutablePointer<Void> {
-    return UnsafeMutablePointer(Unmanaged.passUnretained(obj).toOpaque())
-}
-
-extension ErrorType {
+extension Error {
     func check() throws { throw self }
 }
 
-extension OptionSetType where Element == Self {
-    func representation(flags: [(Self, String)]) -> String {
+extension OptionSet where Element == Self {
+    func representation(_ flags: [(Self, String)]) -> String {
         var stringFlags: [String] = []
         flags.forEach {
             if self.contains($0) { stringFlags.append($1) }
         }
-        return "\(self.dynamicType).\(stringFlags.joinWithSeparator(" | "))"
+        return "\(type(of: self)).\(stringFlags.joined(separator: " | "))"
     }
 }
 
-extension NSIndexSet {
-    func enumerate(batchSize batchSize: Int) -> AnySequence<NSIndexSet> {
-        var indexGenerator = self.generate()
-        let accumulatorGenerator = AnyGenerator<NSIndexSet> {
+extension IndexSet {
+    func enumerate(batchSize: Int) -> AnySequence<IndexSet> {
+        var indexGenerator = self.makeIterator()
+        let accumulatorGenerator = AnyIterator<IndexSet> {
             let currentBatch = NSMutableIndexSet()
-            while let nextIndex = indexGenerator.next() where currentBatch.count < batchSize {
-                currentBatch.addIndex(nextIndex)
+            while let nextIndex = indexGenerator.next() , currentBatch.count < batchSize {
+                currentBatch.add(nextIndex)
             }
             
             guard currentBatch.count > 0 else { return nil }
             
-            return currentBatch
+            return currentBatch as IndexSet
         }
         
         return AnySequence(accumulatorGenerator)
@@ -140,11 +122,11 @@ extension Dictionary {
         }
     }
     
-    mutating func unionInPlace(dictionary: Dictionary) {
+    mutating func unionInPlace(_ dictionary: Dictionary) {
         dictionary.forEach { self.updateValue($1, forKey: $0) }
     }
     
-    func union(dictionary: Dictionary) -> Dictionary {
+    func union(_ dictionary: Dictionary) -> Dictionary {
         var dictionary = dictionary
         dictionary.unionInPlace(self)
         return dictionary

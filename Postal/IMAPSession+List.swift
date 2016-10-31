@@ -29,7 +29,7 @@ extension IMAPSession {
     
     func listFolders() throws -> [Folder] {
         let prefix = defaultNamespace?.items.first?.prefix ?? MAIL_DIR_SEPARATOR_S
-        var list: UnsafeMutablePointer<clist> = nil;
+        var list: UnsafeMutablePointer<clist>? = nil
         if capabilities.contains(.XList) && !capabilities.contains(.Gmail) {
             // XLIST support is deprecated on Gmail. See https://developers.google.com/gmail/imap_extensions#xlist_is_deprecated
             try mailimap_xlist(imap, prefix, "*", &list).toIMAPError?.check()
@@ -38,14 +38,18 @@ extension IMAPSession {
         }
         defer { mailimap_list_result_free(list) }
         
-        return makeFolders(sequence(list, of: mailimap_mailbox_list.self))
+        if let list = list {
+            return makeFolders(sequence(list, of: mailimap_mailbox_list.self))
+        }
+        return []
     }
     
-    func makeFolders<S: SequenceType where S.Generator.Element == mailimap_mailbox_list>(sequence: S) -> [Folder] {
+    func makeFolders<S: Sequence>(_ sequence: S) -> [Folder] where S.Iterator.Element == mailimap_mailbox_list {
         return sequence.flatMap { (folder: mailimap_mailbox_list) -> Folder? in
-            guard let name = String.fromCString(folder.mb_name) else { return nil }
+            guard let name = String.fromUTF8CString(folder.mb_name) else { return nil }
             var mb_delimiter: [CChar] = [ folder.mb_delimiter, 0 ]
-            guard let delimiter = String.fromCString(&mb_delimiter) else { return nil }
+            let delimiter = String(cString: &mb_delimiter)
+
             return Folder(name: name, flags: FolderFlag(flags: folder.mb_flag), delimiter: delimiter)
         }
     }

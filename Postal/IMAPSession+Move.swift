@@ -26,7 +26,7 @@ import Foundation
 import libetpan
 
 extension IMAPSession {
-    func moveMessages(fromFolder fromFolder: String, toFolder: String, uids: NSIndexSet) throws -> [Int: Int] {
+    func moveMessages(fromFolder: String, toFolder: String, uids: IndexSet) throws -> [Int: Int] {
         guard uids.count > 0 else { return [:] }
         
         try select(fromFolder)
@@ -37,12 +37,12 @@ extension IMAPSession {
         var uidValidity: UInt32 = 0
         
         return try uids.enumerate(batchSize: 10).reduce([Int: Int]()) { combined, indexSet in
-            var srcUid: UnsafeMutablePointer<mailimap_set> = nil
-            var destUid: UnsafeMutablePointer<mailimap_set> = nil
+            var srcUid: UnsafeMutablePointer<mailimap_set>? = nil
+            var destUid: UnsafeMutablePointer<mailimap_set>? = nil
             try mailimap_uidplus_uid_move(imap, imapSet, toFolder, &uidValidity, &srcUid, &destUid).toIMAPError?.check()
             
             let result: [Int: Int]
-            if let srcUids = srcUid.optional?.array, destUids = destUid.optional?.array where !srcUids.isEmpty && !destUids.isEmpty {
+            if let srcUids = srcUid?.pointee.array, let destUids = destUid?.pointee.array, !srcUids.isEmpty && !destUids.isEmpty {
                 result = Dictionary(keys: srcUids, values: destUids)
             } else {
                 result = [:]

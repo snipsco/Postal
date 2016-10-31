@@ -60,6 +60,8 @@
 		98C9D4FA1D58A4F800635F9F /* Result.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		98DB04371CEC7337003CAABB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04361CEC7337003CAABB /* libz.tbd */; };
 		98DB04391CEC7342003CAABB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04381CEC7342003CAABB /* libiconv.tbd */; };
+		F7039DAB1D92B23200132867 /* LibetpanConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */; };
+		F7039DAC1D92B23200132867 /* LibetpanConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */; };
 		F71325661D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F71325671D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F72497431D6228850065D07E /* IMAPSession+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */; };
@@ -174,32 +176,33 @@
 		98DB009F1CEC6983003CAABB /* PostalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98DB04361CEC7337003CAABB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		98DB04381CEC7342003CAABB /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibetpanConversionTests.swift; sourceTree = "<group>"; };
 		F71325651D50CA84005DFC15 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		F75DD4741D4BAC1500D40E9C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Move.swift"; sourceTree = "<group>"; };
+		F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "IMAPSession+Move.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7E884A51D59C7F500D02CC2 /* PostalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalError.swift; sourceTree = "<group>"; };
-		F7F039F51D4BA5A70083397F /* Address+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+Parsing.swift"; sourceTree = "<group>"; };
+		F7F039F51D4BA5A70083397F /* Address+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Address+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F039F71D4BA5A70083397F /* CertificateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateUtils.swift; sourceTree = "<group>"; };
-		F7F039F81D4BA5A70083397F /* ContentDisposition+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentDisposition+Parsing.swift"; sourceTree = "<group>"; };
+		F7F039F81D4BA5A70083397F /* ContentDisposition+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "ContentDisposition+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F039F91D4BA5A70083397F /* ContentEncoding+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentEncoding+Parsing.swift"; sourceTree = "<group>"; };
-		F7F039FB1D4BA5A70083397F /* Extension+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Parsing.swift"; sourceTree = "<group>"; };
+		F7F039FB1D4BA5A70083397F /* Extension+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Extension+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F039FC1D4BA5A70083397F /* FetchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchResult.swift; sourceTree = "<group>"; };
 		F7F039FF1D4BA5A70083397F /* IMAPCapability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPCapability.swift; sourceTree = "<group>"; };
 		F7F03A001D4BA5A70083397F /* IMAPError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPError.swift; sourceTree = "<group>"; };
-		F7F03A011D4BA5A70083397F /* IMAPFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPFolder.swift; sourceTree = "<group>"; };
+		F7F03A011D4BA5A70083397F /* IMAPFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IMAPFolder.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03A021D4BA5A70083397F /* IMAPIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPIdentity.swift; sourceTree = "<group>"; };
 		F7F03A031D4BA5A70083397F /* IMAPNamespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPNamespace.swift; sourceTree = "<group>"; };
-		F7F03A041D4BA5A70083397F /* IMAPSession+Fetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Fetch.swift"; sourceTree = "<group>"; };
+		F7F03A041D4BA5A70083397F /* IMAPSession+Fetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "IMAPSession+Fetch.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03A051D4BA5A70083397F /* IMAPSession+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Search.swift"; sourceTree = "<group>"; };
-		F7F03A061D4BA5A70083397F /* IMAPSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAPSession.swift; sourceTree = "<group>"; };
+		F7F03A061D4BA5A70083397F /* IMAPSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IMAPSession.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03A071D4BA5A70083397F /* IMFError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMFError.swift; sourceTree = "<group>"; };
 		F7F03A081D4BA5A70083397F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Postal-iOS/Info.plist"; sourceTree = "<group>"; };
-		F7F03C661D4BA5A80083397F /* Libetpan+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Libetpan+Util.swift"; sourceTree = "<group>"; };
+		F7F03C661D4BA5A80083397F /* Libetpan+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Libetpan+Util.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03C671D4BA5A80083397F /* Logger+IMAP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+IMAP.swift"; sourceTree = "<group>"; };
 		F7F03C681D4BA5A80083397F /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		F7F03C691D4BA5A80083397F /* MailData+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MailData+Decode.swift"; sourceTree = "<group>"; };
+		F7F03C691D4BA5A80083397F /* MailData+Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "MailData+Decode.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03C6A1D4BA5A80083397F /* MailPart+Enumeration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MailPart+Enumeration.swift"; sourceTree = "<group>"; };
-		F7F03C6B1D4BA5A80083397F /* MailPart+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MailPart+Parsing.swift"; sourceTree = "<group>"; };
+		F7F03C6B1D4BA5A80083397F /* MailPart+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "MailPart+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F03C6C1D4BA5A80083397F /* Message+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+Parsing.swift"; sourceTree = "<group>"; };
 		F7F03C6D1D4BA5A80083397F /* MessageAttribute+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageAttribute+Parsing.swift"; sourceTree = "<group>"; };
 		F7F03C6E1D4BA5A80083397F /* MessageFlags+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageFlags+Parsing.swift"; sourceTree = "<group>"; };
@@ -449,6 +452,7 @@
 				981EAE691D58DA85004DB7EC /* Resources */,
 				98C9D4DC1D58A20500635F9F /* Libraries */,
 				F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */,
+				F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */,
 				F7F03EF41D4BA5DB0083397F /* PostalTests.swift */,
 				F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */,
 				F7F03EFB1D4BA61E0083397F /* Supporting Files */,
@@ -574,9 +578,11 @@
 				TargetAttributes = {
 					9812C31B1D50959500630D46 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					9852BA601D58ACE900EE46E5 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					98DB00941CEC6983003CAABB = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -689,6 +695,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7039DAC1D92B23200132867 /* LibetpanConversionTests.swift in Sources */,
 				9852BA751D58ADD600EE46E5 /* PostalTests.swift in Sources */,
 				9852BA741D58ADD400EE46E5 /* IMAPSessionTests.swift in Sources */,
 				9852BA761D58ADD900EE46E5 /* XCTest+Utils.swift in Sources */,
@@ -739,6 +746,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7039DAB1D92B23200132867 /* LibetpanConversionTests.swift in Sources */,
 				F7F03EF81D4BA5DB0083397F /* PostalTests.swift in Sources */,
 				F7F03EF61D4BA5DB0083397F /* IMAPSessionTests.swift in Sources */,
 				F7F03EF91D4BA5DB0083397F /* XCTest+Utils.swift in Sources */,
@@ -786,7 +794,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -812,8 +821,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -831,6 +841,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.snips.PostalTests-macOS";
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -844,6 +856,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.snips.PostalTests-macOS";
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -889,6 +903,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Postal;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -936,6 +951,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = Postal;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -970,9 +986,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/ios/include";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -999,9 +1015,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ai.snips.Postal;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies $(SRCROOT)/dependencies/build/ios/include";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1015,7 +1031,8 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				SWIFT_VERSION = 2.3;
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1029,8 +1046,9 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

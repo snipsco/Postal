@@ -25,9 +25,9 @@
 import Swift
 import libetpan
 
-private typealias Progress = @convention(c) (Int, Int, UnsafeMutablePointer<Void>) -> Void
+private typealias Progress = @convention(c) (Int, Int, UnsafeMutableRawPointer?) -> Void
 
-public typealias ProgressHandler = (current: Int, maximum: Int) -> ()
+public typealias ProgressHandler = (_ current: Int, _ maximum: Int) -> ()
 
 final class IMAPSession {
     let configuration: Configuration
@@ -42,20 +42,26 @@ final class IMAPSession {
     var logger: Logger? {
         didSet {
             if logger != nil {
-                mailimap_set_logger(imap, _logger, UnsafeMutablePointer(Unmanaged.passRetained(self).toOpaque()))
+                mailimap_set_logger(imap, _logger, Unmanaged.passRetained(self).toOpaque())
             } else {
                 mailimap_set_logger(imap, nil, nil)
             }
         }
     }
     
-    private let _logger: IMAPLogger = { (_: UnsafeMutablePointer<mailimap>, logType: Int32, buffer: UnsafePointer<Int8>, size: Int, context: UnsafeMutablePointer<Void>) in
-        guard let logType = ConnectionLogType(rawType: logType) else { return }
-        guard size > 0 else { return }
+    fileprivate let _logger: IMAPLogger = { (_: UnsafeMutablePointer<mailimap>?, logType: Int32, buffer: UnsafePointer<CChar>?, size: Int, context: UnsafeMutableRawPointer?) in
+        guard
+            size > 0,
+            let context = context,
+            let logType = ConnectionLogType(rawType: logType),
+            let buffer = buffer
+        else { return }
 
-        let session = Unmanaged<IMAPSession>.fromOpaque(COpaquePointer(context)).takeUnretainedValue()//.takeRetainedValue()
+        let session = Unmanaged<IMAPSession>.fromOpaque(context).takeUnretainedValue()
+        
+        let data = Data(bytesNoCopy: UnsafeMutableRawPointer(mutating: buffer), count: size, deallocator: .none)
 
-        if let str = String(data: NSData(bytes: buffer, length: size - 1), encoding: NSUTF8StringEncoding) where !str.isEmpty {
+        if let str = String(data: data, encoding: .utf8), !str.isEmpty {
             session.logger?("\(logType): \(str)")
         } else {
             session.logger?("\(logType)")
@@ -73,14 +79,14 @@ final class IMAPSession {
     }
     
     deinit {
-        if let stream = imap.optional?.imap_stream where stream != nil {
+        if let stream = imap.pointee.imap_stream {
             mailstream_close(stream)
-            imap.memory.imap_stream = nil
+            imap.pointee.imap_stream = nil
         }
         mailimap_free(imap)
     }
     
-    func connect(timeout timeout: NSTimeInterval) throws {
+    func connect(timeout: TimeInterval) throws {
         mailimap_set_timeout(imap, Int(timeout))
         
         let voipEnabled = true
@@ -97,22 +103,20 @@ final class IMAPSession {
             try mailimap_socket_connect_voip(imap, configuration.hostname, configuration.port, voipEnabled.int32Value).toIMAPError?.check()
         }
         
-        let low = mailstream_get_low(imap.memory.imap_stream)
+        let low = mailstream_get_low(imap.pointee.imap_stream)
         let identifier = "\(configuration.login)@\(configuration.hostname):\(configuration.port)"
         mailstream_low_set_identifier(low, identifier.unreleasedUTF8CString)
-        
-        if let welcome = String.fromCString(imap.memory.imap_response) {
-            print("Welcome : \(welcome)")
-        }
         
         try checkCapabilities()
     }
     
     func checkCapabilities() throws {
-        let caps = imap.optional?.imap_connection_info.optional?.imap_capability.optional
+        let caps = imap.pointee.imap_connection_info?.pointee.imap_capability?.pointee
+        
         if caps == nil { // if capabilities are not found
             // fetch capabilities on imap
-            var capabilityData = UnsafeMutablePointer<mailimap_capability_data>(nil)
+            var capabilityData: UnsafeMutablePointer<mailimap_capability_data>? = nil
+
             try mailimap_capability(imap, &capabilityData).toIMAPError?.check()
             mailimap_capability_data_free(capabilityData)
         }
@@ -160,7 +164,7 @@ final class IMAPSession {
             result = mailimap_login(imap, configuration.login, password)
         }
         
-        try result.toIMAPError?.enrich { return .login(description: String.fromCString(imap.memory.imap_response) ?? "") }.check()
+        try result.toIMAPError?.enrich { return .login(description: String(cString: imap.pointee.imap_response)) }.check()
         
         try checkCapabilities()
     }
@@ -175,10 +179,11 @@ final class IMAPSession {
         
         if capabilities.contains(.Namespace) {
             // fetch namespace
-            var namespaceData = UnsafeMutablePointer<mailimap_namespace_data>(nil)
+            var namespaceData: UnsafeMutablePointer<mailimap_namespace_data>? = nil
+            
             try mailimap_namespace(imap, &namespaceData).toIMAPError?.check()
             defer { mailimap_namespace_data_free(namespaceData) }
-            if let otherList = namespaceData.optional?.ns_personal.optional?.ns_data_list { // have a personal namespace ?
+            if let otherList = namespaceData?.pointee.ns_personal?.pointee.ns_data_list { // have a personal namespace ?
                 let nsItems = sequence(otherList, of: mailimap_namespace_info.self)
                     .flatMap(IMAPNamespaceItem.init)
                 defaultNamespace = IMAPNamespace(items: nsItems)
@@ -186,12 +191,13 @@ final class IMAPSession {
         }
         
         if defaultNamespace == nil {
-            var list = UnsafeMutablePointer<clist>(nil)
-            
+            var list: UnsafeMutablePointer<clist>? = nil
             try mailimap_list(imap, "", "", &list).toIMAPError?.check()
             defer { mailimap_list_result_free(list) }
             
-            let initialFolders = makeFolders(sequence(list, of: mailimap_mailbox_list.self))
+            guard let actualList = list else { return }
+            
+            let initialFolders = makeFolders(sequence(actualList, of: mailimap_mailbox_list.self))
             
             guard let initialFolder = initialFolders.first else { throw IMAPError.login(description: "").asPostalError }
             
@@ -199,12 +205,12 @@ final class IMAPSession {
         }
     }
     
-    func select(folder: String) throws -> IMAPFolderInfo {
+    @discardableResult func select(_ folder: String) throws -> IMAPFolderInfo {
         if folder != selectedFolder {
             try mailimap_select(imap, folder).toIMAPError?.check()
         }
         
-        guard let info = imap.optional?.imap_selection_info.optional else { throw IMAPError.nonExistantFolder.asPostalError }
+        guard let info = imap.pointee.imap_selection_info?.pointee else { throw IMAPError.nonExistantFolder.asPostalError }
         
         // store last selected folder
         selectedFolder = folder
@@ -214,26 +220,25 @@ final class IMAPSession {
     func configureIdentity() throws {
         guard capabilities.contains(.Id) else { return }
         
-        var serverId: UnsafeMutablePointer<mailimap_id_params_list> = nil
+        var serverId: UnsafeMutablePointer<mailimap_id_params_list>? = nil
         try mailimap_id(imap, nil, &serverId).toIMAPError?.check()
         defer { mailimap_id_params_list_free(serverId) }
         
-        guard let list = serverId.optional?.idpa_list else { return }
+        guard let list = serverId?.pointee.idpa_list else { return }
         
         var dic = [String:String]()
         sequence(list, of: mailimap_id_param.self)
             .flatMap { (param: mailimap_id_param) -> (String, String)? in
-                guard let key = String.fromCString(param.idpa_name) else { return nil }
-                guard let value = String.fromCString(param.idpa_value) else { return nil }
+                guard let key = String.fromUTF8CString(param.idpa_name) else { return nil }
+                guard let value = String.fromUTF8CString(param.idpa_value) else { return nil }
                 return (key, value)
             }.forEach { dic[$0] = $1 }
         
         serverIdentity = IMAPIdentity(dic)
     }
     
-    private func checkCertificateIfNeeded() throws -> Bool {
-        guard configuration.checkCertificateEnabled else { return true }
-        guard checkCertificate(imap.memory.imap_stream, hostname: configuration.hostname) else { throw IMAPError.certificate.asPostalError }
-        return true
+    fileprivate func checkCertificateIfNeeded() throws{
+        guard configuration.checkCertificateEnabled else { return }
+        guard checkCertificate(imap.pointee.imap_stream, hostname: configuration.hostname) else { throw IMAPError.certificate.asPostalError }
     }
 }

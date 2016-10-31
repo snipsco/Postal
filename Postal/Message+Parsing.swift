@@ -33,7 +33,7 @@ struct Message {
 // MARK: IMF message content parsing
 
 extension mailimap_msg_att_body_section {
-    func parse(idPrefix: String) -> Message? {
+    func parse(_ idPrefix: String) -> Message? {
         
         guard sec_body_part != nil else { return nil }
         
@@ -41,14 +41,14 @@ extension mailimap_msg_att_body_section {
         defer { mailmessage_free(message) }
         
         // parse body
-        var mail: UnsafeMutablePointer<mailmime> = nil
+        var mail: UnsafeMutablePointer<mailmime>? = nil
         mailmessage_get_bodystructure(message, &mail)
         
-        guard let mainPart = mail.optional?.parse("") else { return nil }
+        guard let mainPart = mail?.pointee.parse("") else { return nil }
         
         // parse headers
         var curToken: size_t = 0
-        var fields: UnsafeMutablePointer<mailimf_fields> = nil
+        var fields: UnsafeMutablePointer<mailimf_fields>? = nil
         guard nil == mailimf_envelope_and_optional_fields_parse(sec_body_part, sec_length, &curToken, &fields).toIMFError else { return nil }
         defer { mailimf_fields_free(fields) }
             
@@ -62,7 +62,7 @@ extension mailimap_msg_att_body_section {
 }
 
 extension String {
-    func byAppendingPartId(id: Int) -> String {
+    func byAppendingPartId(_ id: Int) -> String {
         return isEmpty ? "\(id)" : "\(self).\(id)"
     }
     
