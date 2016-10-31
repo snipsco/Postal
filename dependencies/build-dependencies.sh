@@ -82,21 +82,21 @@ XCODE_FLAGS="GCC_PREPROCESSOR_DEFINITIONS=NO_MACROS=1"
 cd "$srcdir/$name/build-mac"
 sdk="iphoneos$ios_sdkversion"
 echo building $sdk
-xctool -project "$xcode_project" -sdk $sdk -scheme "$ios_target" -configuration Release SYMROOT="$tmpdir/bin" OBJROOT="$tmpdir/obj" ARCHS="$ios_devicearchs" IPHONEOS_DEPLOYMENT_TARGET="$ios_sdkminversion" OTHER_CFLAGS="$XCTOOL_OTHERFLAGS" $XCODE_FLAGS $XCODE_BITCODE_FLAGS
+set -o pipefail && xcodebuild -project "$xcode_project" -sdk $sdk -scheme "$ios_target" -configuration Release SYMROOT="$tmpdir/bin" OBJROOT="$tmpdir/obj" ARCHS="$ios_devicearchs" IPHONEOS_DEPLOYMENT_TARGET="$ios_sdkminversion" OTHER_CFLAGS="$XCTOOL_OTHERFLAGS" $XCODE_FLAGS $XCODE_BITCODE_FLAGS | xcpretty
 if test x$? != x0 ; then
   echo failed
   exit 1
 fi
 sdk="iphonesimulator$ios_sdkversion"
 echo building $sdk
-xctool -project "$xcode_project" -sdk $sdk -scheme "$ios_target" -configuration Release SYMROOT="$tmpdir/bin" OBJROOT="$tmpdir/obj" ARCHS="$ios_simarchs" IPHONEOS_DEPLOYMENT_TARGET="$ios_sdkminversion" OTHER_CFLAGS='$(inherited)' $XCODE_FLAGS 
+set -o pipefail && xcodebuild -project "$xcode_project" -sdk $sdk -scheme "$ios_target" -configuration Release SYMROOT="$tmpdir/bin" OBJROOT="$tmpdir/obj" ARCHS="$ios_simarchs" IPHONEOS_DEPLOYMENT_TARGET="$ios_sdkminversion" OTHER_CFLAGS='$(inherited)' $XCODE_FLAGS | xcpretty
 if test x$? != x0 ; then
   echo failed
   exit 1
 fi
 
 # build for macos
-xctool -project "$xcode_project" -sdk macosx$macos_sdk -scheme "$macos_target" -configuration Release ARCHS="$macos_archs" SYMROOT="$tmpdir/bin" OBJROOT="$tmpdir/obj" MACOSX_DEPLOYMENT_TARGET="$macos_sdkminversion" $XCODE_FLAGS
+set -o pipefail && xcodebuild -project "$xcode_project" -sdk macosx$macos_sdk -scheme "$macos_target" -configuration Release ARCHS="$macos_archs" SYMROOT="$tmpdir/bin" OBJROOT="$tmpdir/obj" MACOSX_DEPLOYMENT_TARGET="$macos_sdkminversion" $XCODE_FLAGS | xcpretty
 if test x$? != x0 ; then
   echo failed
   exit 1
