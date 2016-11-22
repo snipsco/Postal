@@ -84,6 +84,73 @@ public extension Postal {
             try self.session.listFolders()
         }, completion: completion)
     }
+    
+    /// Delete a folder
+    ///
+    /// - Parameters:
+    ///   - folderName: the folder name.
+    ///   - completion: The completion handler to call when request succeed or failed.
+    func delete(folderNamed folderName: String, completion: @escaping (Result<Void, PostalError>) -> ()) {
+        doAsync({
+            try self.session.delete(folderNamed: folderName)
+        }, completion: completion)
+    }
+    
+    /// Create a folder
+    ///
+    /// - Parameters:
+    ///   - folderName: the folder name.
+    ///   - completion: The completion handler to call when request succeed or failed.
+    func create(folderNamed folderName: String, completion: @escaping (Result<Void, PostalError>) -> ()) {
+        doAsync({
+            try self.session.create(folderNamed: folderName)
+        }, completion: completion)
+    }
+    
+    /// Rename a folder
+    ///
+    /// - Parameters:
+    ///   - folderName: the folder name that will be rename.
+    ///   - to: the new folder name.
+    ///   - completion: The completion handler to call when request succeed or failed.
+    func rename(folderNamed fromFolderName: String, to toFolderName: String, completion: @escaping (Result<Void, PostalError>) -> ()) {
+        doAsync({
+            try self.session.rename(folderNamed: fromFolderName, to: toFolderName)
+        }, completion: completion)
+    }
+    
+    /// Subscribe a folder
+    ///
+    /// - Parameters:
+    ///   - folderName: the folder name to be subcribed.
+    ///   - completion: The completion handler to call when request succeed or failed.
+    func subscribe(folderNamed folderName: String, completion: @escaping (Result<Void, PostalError>) -> ()) {
+        doAsync({
+            try self.session.subscribe(folderNamed: folderName)
+        }, completion: completion)
+    }
+    
+    /// Unsubscribe a folder
+    ///
+    /// - Parameters:
+    ///   - folderName: the folder name to unsubscribe.
+    ///   - completion: The completion handler to call when request succeed or failed.
+    func unsubscribe(folderNamed folderName: String, completion: @escaping (Result<Void, PostalError>) -> ()) {
+        doAsync({
+            try self.session.unsubscribe(folderNamed: folderName)
+        }, completion: completion)
+    }
+    
+    /// Expunge a folder
+    ///
+    /// - Parameters:
+    ///   - folderName: the folder name to expunge
+    ///   - completion: The completion handler to call when request succeed or failed.
+    func expunge(folderNamed folderName: String, completion: @escaping (Result<Void, PostalError>) -> ()) {
+        doAsync({
+            try self.session.expunge(folderNamed: folderName)
+        }, completion: completion)
+    }
 }
 
 // MARK: - Fetchers
