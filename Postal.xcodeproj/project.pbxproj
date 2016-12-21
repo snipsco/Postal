@@ -67,6 +67,8 @@
 		F72497431D6228850065D07E /* IMAPSession+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */; };
 		F75DD4751D4BAC1500D40E9C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75DD4741D4BAC1500D40E9C /* Result.framework */; };
 		F773372A1D60FF610015A1D4 /* IMAPSession+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */; };
+		F7C25FFC1DE4E9E50021A138 /* IMAPSession+Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C25FFB1DE4E9E50021A138 /* IMAPSession+Folder.swift */; };
+		F7C25FFD1DE4E9EC0021A138 /* IMAPSession+Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C25FFB1DE4E9E50021A138 /* IMAPSession+Folder.swift */; };
 		F7E884A61D59C7F500D02CC2 /* PostalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E884A51D59C7F500D02CC2 /* PostalError.swift */; };
 		F7E884A71D59C7F500D02CC2 /* PostalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E884A51D59C7F500D02CC2 /* PostalError.swift */; };
 		F7F03C781D4BA5A90083397F /* Address+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F039F51D4BA5A70083397F /* Address+Parsing.swift */; };
@@ -180,6 +182,7 @@
 		F71325651D50CA84005DFC15 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		F75DD4741D4BAC1500D40E9C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "IMAPSession+Move.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F7C25FFB1DE4E9E50021A138 /* IMAPSession+Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IMAPSession+Folder.swift"; sourceTree = "<group>"; };
 		F7E884A51D59C7F500D02CC2 /* PostalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalError.swift; sourceTree = "<group>"; };
 		F7F039F51D4BA5A70083397F /* Address+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Address+Parsing.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F7F039F71D4BA5A70083397F /* CertificateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateUtils.swift; sourceTree = "<group>"; };
@@ -268,6 +271,7 @@
 				F7F03A051D4BA5A70083397F /* IMAPSession+Search.swift */,
 				F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */,
 				980745401D63311D0021D60F /* IMAPSession+List.swift */,
+				F7C25FFB1DE4E9E50021A138 /* IMAPSession+Folder.swift */,
 				F7F03A061D4BA5A70083397F /* IMAPSession.swift */,
 			);
 			name = Session;
@@ -674,6 +678,7 @@
 				9812C3291D509B6400630D46 /* ContentDisposition+Parsing.swift in Sources */,
 				9812C3351D509B6400630D46 /* IMAPCapability.swift in Sources */,
 				980745421D6331AC0021D60F /* IMAPSession+List.swift in Sources */,
+				F7C25FFD1DE4E9EC0021A138 /* IMAPSession+Folder.swift in Sources */,
 				9812C33E1D509B6400630D46 /* MailPart+Enumeration.swift in Sources */,
 				9812C32C1D509B6400630D46 /* MailPart+Parsing.swift in Sources */,
 				9812C3281D509B6400630D46 /* Address+Parsing.swift in Sources */,
@@ -725,6 +730,7 @@
 				F7F03EA61D4BA5A90083397F /* Libetpan+Util.swift in Sources */,
 				F7F03EB41D4BA5A90083397F /* Postal.swift in Sources */,
 				980745411D63311D0021D60F /* IMAPSession+List.swift in Sources */,
+				F7C25FFC1DE4E9E50021A138 /* IMAPSession+Folder.swift in Sources */,
 				F7F03EB11D4BA5A90083397F /* MimeType+Parsing.swift in Sources */,
 				F7F03C8A1D4BA5A90083397F /* IMFError.swift in Sources */,
 				F7F03C861D4BA5A90083397F /* IMAPNamespace.swift in Sources */,
