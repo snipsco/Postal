@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
   s.subspec 'ReactiveCocoa' do |sp|
     sp.source_files = 'Postal/ReactiveCocoa/*.swift'
     sp.dependency "Postal/Core"
-    sp.dependency 'ReactiveCocoa', '~> 4.2.1'
+    sp.dependency 'ReactiveCocoa', '~> 4.2.2'
   end
 
 end
