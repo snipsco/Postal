@@ -30,10 +30,10 @@ public extension Postal {
             self.connect(timeout: Postal.defaultTimeout) { result in
                 result.analysis(
                     ifSuccess: {
-                        observer.sendNext(())
+                        observer.send(value: ())
                         observer.sendCompleted()
                     },
-                    ifFailure: observer.sendFailed)
+                    ifFailure: observer.send)
                 }
             }
     }
@@ -43,10 +43,10 @@ public extension Postal {
             self.listFolders { result in
                 result.analysis(
                     ifSuccess: { folders in
-                        observer.sendNext(folders)
+                        observer.send(value: folders)
                         observer.sendCompleted()
                     },
-                    ifFailure: observer.sendFailed)
+                    ifFailure: observer.send)
                 }
             }
     }
@@ -65,31 +65,31 @@ public extension Postal {
             }
     }
     
-    func rac_search(folder: String, filter: SearchKind) -> SignalProducer<NSIndexSet, PostalError> {
-        return rac_search(folder, filter: .base(filter))
+    func rac_search(folder: String, filter: SearchKind) -> SignalProducer<IndexSet, PostalError> {
+        return rac_search(folder: folder, filter: .base(filter))
     }
     
-    func rac_search(folder: String, filter: SearchFilter) -> SignalProducer<NSIndexSet, PostalError> {
+    func rac_search(folder: String, filter: SearchFilter) -> SignalProducer<IndexSet, PostalError> {
         return SignalProducer { observer, disposable in
             self.search(folder, filter: filter) { result in
                 result.analysis(
                     ifSuccess: { uids in
-                        observer.sendNext(uids)
+                        observer.send(value: uids)
                         observer.sendCompleted()
                     },
-                    ifFailure: observer.sendFailed)
+                    ifFailure: observer.send)
                 }
             }
     }
     
-    func rac_fetch(folder: String, uids: NSIndexSet, flags: FetchFlag, extraHeaders: Set<String> = []) -> SignalProducer<FetchResult, PostalError> {
+    func rac_fetch(folder: String, uids: IndexSet, flags: FetchFlag, extraHeaders: Set<String> = []) -> SignalProducer<FetchResult, PostalError> {
         return SignalProducer<FetchResult, PostalError> { observer, disposable in
             self.fetchMessages(folder, uids: uids, flags: flags, extraHeaders: extraHeaders,
                 onMessage: { message in
-                    observer.sendNext(message)
+                    observer.send(value: message)
                 }, onComplete: { error in
                     if let error = error {
-                        observer.sendFailed(error)
+                        observer.send(error: error)
                     } else {
                         observer.sendCompleted()
                     }
@@ -101,11 +101,11 @@ public extension Postal {
         return SignalProducer<MailData, PostalError> { observer, disposable in
             self.fetchAttachments(folder, uid: uid, partId: partId,
                 onAttachment: { data in
-                    observer.sendNext(data)
+                    observer.send(value: data)
                 },
                 onComplete: { error in
                     if let error = error {
-                        observer.sendFailed(error)
+                        observer.send(error: error)
                     } else {
                         observer.sendCompleted()
                     }
@@ -113,26 +113,33 @@ public extension Postal {
             }
     }
     
-    func rac_fetchTextualMail(folder: String, uids: NSIndexSet) -> SignalProducer<FetchResult, PostalError> {
-        return rac_fetch(folder, uids: uids, flags: [ .structure, .fullHeaders ])
-            .flatMap(.Concat) { (fetchResult: FetchResult) -> SignalProducer<FetchResult, PostalError> in
+    func rac_fetchTextualMail(folder: String, uids: IndexSet) -> SignalProducer<FetchResult, PostalError> {
+        return rac_fetch(folder: folder, uids: uids, flags: [ .structure, .fullHeaders ])
+            .flatMap(.concat) { (fetchResult: FetchResult) -> SignalProducer<FetchResult, PostalError> in
                 let inlineElements = fetchResult.body?.allParts.filter { singlePart in
-                    if case .Some(.attachment) = singlePart.mimeFields.contentDisposition { return false }
+                    if case .some(.attachment) = singlePart.mimeFields.contentDisposition { return false }
                     return [ "text/html", "text/plain" ].contains("\(singlePart.mimeType)")
                     } ?? []
                 
-                return SignalProducer<SinglePart, PostalError>(values: inlineElements)
-                    .flatMap(.Merge) { (singlePart: SinglePart) -> SignalProducer<(String, MailData), PostalError> in
-                        return self.rac_fetchAttachment(folder, uid: fetchResult.uid, partId: singlePart.id).map { (singlePart.id, $0) }
+                return SignalProducer<SinglePart, PostalError>(inlineElements)
+                    .flatMap(.merge) { (singlePart: SinglePart) -> SignalProducer<(String, MailData), PostalError> in
+                        return self.rac_fetchAttachment(folder: folder, uid: fetchResult.uid, partId: singlePart.id).map { (singlePart.id, $0) }
                     }
                     .collect()
-                    .map { fetchResult.mergeAttachments(Dictionary(elements: $0)) }
+                    .map { fetchResult.mergeAttachments(attachments: Dictionary<String, MailData>($0)) }
             }
     }
 }
 
 private extension Dictionary {
-    init<S: SequenceType where S.Generator.Element == Element>(elements: S) {
+    init<S: Sequence>(_ seq: S) where S.Iterator.Element == (Key, Value) {
+        self.init()
+        for (k, v) in seq {
+            self[k] = v
+        }
+    }
+    
+    init<S: Sequence>(elements: S) where S.Iterator.Element == Element {
         self.init()
         for (k, v) in elements {
             self[k] = v
@@ -145,7 +152,7 @@ private extension FetchResult {
         return FetchResult(uid: uid,
                            header: header,
                            flags: flags,
-                           body: body?.mergeAttachments(attachments),
+                           body: body?.mergeAttachments(attachments: attachments),
                            rfc822Size: rfc822Size,
                            internalDate: internalDate,
                            gmailThreadId: gmailThreadId,
@@ -163,9 +170,9 @@ private extension MailPart {
             }
             return self
         case .multipart(let id, let mimeType, let parts):
-            return .multipart(id: id, mimeType: mimeType, parts: parts.map { $0.mergeAttachments(attachments) })
+            return .multipart(id: id, mimeType: mimeType, parts: parts.map { $0.mergeAttachments(attachments: attachments) })
         case .message(let id, let header, let message):
-            return .message(id: id, header: header, message: message.mergeAttachments(attachments))
+            return .message(id: id, header: header, message: message.mergeAttachments(attachments: attachments))
         }
     }
 }
