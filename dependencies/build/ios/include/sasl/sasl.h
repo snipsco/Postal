@@ -124,7 +124,7 @@
 /* Keep in sync with win32/common.mak */
 #define SASL_VERSION_MAJOR 2
 #define SASL_VERSION_MINOR 1
-#define SASL_VERSION_STEP 25
+#define SASL_VERSION_STEP 26
 
 /* A convenience macro: same as was defined in the OpenLDAP LDAPDB */
 #define SASL_VERSION_FULL ((SASL_VERSION_MAJOR << 16) |\
@@ -225,9 +225,9 @@ extern "C" {
 
 /* memory allocation functions which may optionally be replaced:
  */
-typedef void *sasl_malloc_t(unsigned long);
-typedef void *sasl_calloc_t(unsigned long, unsigned long);
-typedef void *sasl_realloc_t(void *, unsigned long);
+typedef void *sasl_malloc_t(size_t);
+typedef void *sasl_calloc_t(size_t, size_t);
+typedef void *sasl_realloc_t(void *, size_t);
 typedef void sasl_free_t(void *);
 
 LIBSASL_API void sasl_set_alloc(sasl_malloc_t *,
@@ -633,8 +633,10 @@ typedef int sasl_server_userdb_setpass_t(sasl_conn_t *conn,
 /* One of the following two is required */
 #define SASL_CU_AUTHID  0x01
 #define SASL_CU_AUTHZID 0x02
+
 /* Combine the following with SASL_CU_AUTHID, if you don't want
-   to fail if auxprop returned SASL_NOUSER */
+   to fail if auxprop returned SASL_NOUSER/SASL_NOMECH.
+   This flag has no effect on SASL_CU_AUTHZID. */
 #define SASL_CU_EXTERNALLY_VERIFIED 0x04
 
 #define SASL_CU_OVERRIDE	    0x08    /* mapped to SASL_AUXPROP_OVERRIDE */

@@ -3393,6 +3393,7 @@ struct mailimap {
   
   int is_163_workaround_enabled;
   int is_rambler_workaround_enabled;
+  int is_qip_workaround_enabled;
 };
 
 
@@ -3576,6 +3577,7 @@ enum {
 
 struct mailimap_parser_context {
   int is_rambler_workaround_enabled;
+  int is_qip_workaround_enabled;
 
   mailimap_msg_body_handler * msg_body_handler;
   void * msg_body_handler_context;
@@ -3595,6 +3597,10 @@ mailimap_parser_context_free(struct mailimap_parser_context * ctx);
 LIBETPAN_EXPORT
 int
 mailimap_parser_context_is_rambler_workaround_enabled(struct mailimap_parser_context * parser_ctx);
+
+LIBETPAN_EXPORT
+int
+mailimap_parser_context_is_qip_workaround_enabled(struct mailimap_parser_context * parser_ctx);
 
 #ifdef __cplusplus
 }

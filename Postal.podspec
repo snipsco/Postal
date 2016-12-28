@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Postal'
-  s.version = '0.3.1'
+  s.version = '0.4.0'
   s.summary = 'A swift framework for working with emails.'
   s.description = 'A Swift framework for working with emails. Simple and quick to use. Built on top of libetpan.'
   s.homepage = 'https://github.com/snipsco/Postal'
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
 
-  s.source = { :git => 'https://github.com/snipsco/Postal.git', :tag => 'v' + s.version.to_s }
+  s.source = { :git => 'https://github.com/klefevre/Postal.git', :tag => 'v' + s.version.to_s }
   
   s.default_subspec = 'Core'
 
@@ -33,13 +33,17 @@ Pod::Spec.new do |s|
     sp.preserve_paths = 'dependencies'
 
     sp.libraries = 'etpan', 'sasl2', 'z', 'iconv'
-    sp.dependency 'Result', '~> 3.0.0'
+    sp.dependency 'Result', '~> 3.1.0'
   end
 
   s.subspec 'ReactiveCocoa' do |sp|
-    sp.source_files = 'Postal/ReactiveCocoa/*.swift'
-    sp.dependency "Postal/Core"
-    sp.dependency 'ReactiveCocoa', '~> 4.2.1'
+    sp.dependency 'Postal/ReactiveSwift'
+  end
+
+  s.subspec 'ReactiveSwift' do |sp|
+    sp.source_files = 'Postal/ReactiveSwift/*.swift'
+    sp.dependency 'Postal/Core'
+    sp.dependency 'ReactiveSwift', '1.0.0-rc.3'
   end
 
 end

@@ -6,7 +6,7 @@ popd > /dev/null
 
 # configuration
 url="https://github.com/snipsco/libetpan.git"
-rev=97595a27d22b45fe8c22f112235490d6750edd20
+rev=6a08017f1c742f0c5817d6c1c71143a37da967be
 
 ios_target="libetpan ios"
 macos_target="static libetpan"
