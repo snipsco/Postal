@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
     sp.preserve_paths = 'dependencies'
 
     sp.libraries = 'etpan', 'sasl2', 'z', 'iconv'
-    sp.dependency 'Result', '~> 3.0.0'
+    sp.dependency 'Result', '~> 3.1.0'
   end
 
   s.subspec 'ReactiveCocoa' do |sp|
