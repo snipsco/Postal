@@ -22,7 +22,7 @@
 //  SOFTWARE.
 //
 
-import ReactiveCocoa
+import ReactiveSwift
 
 public extension Postal {
     func rac_connect() -> SignalProducer<Void, PostalError> {
