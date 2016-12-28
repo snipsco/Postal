@@ -913,6 +913,27 @@ int mailimap_hack_date_time_parse(const char * str,
                                   size_t progr_rate,
                                   progress_function * progr_fun);
 
+#ifndef LIBETPAN_HAS_MAILIMAP_QIP_WORKAROUND
+#define LIBETPAN_HAS_MAILIMAP_QIP_WORKAROUND	1
+#endif
+
+/*
+    Enable workaround for QIP IMAP server.
+
+    QIP returns invalid (?) response for storeFlags operation:
+      C: A999 UID STORE 123 +FLAGS.SILENT (\Seen)
+      S: * 6 FETCH ()
+      S: A999 OK STORE completed
+
+    Enabling this workaround allows successfully parse such responses.
+*/
+
+LIBETPAN_EXPORT
+int mailimap_is_qip_workaround_enabled(mailimap * session);
+
+LIBETPAN_EXPORT
+void mailimap_set_qip_workaround_enabled(mailimap * session, int enabled);
+
 #ifdef __cplusplus
 }
 #endif

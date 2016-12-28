@@ -34,24 +34,23 @@
  * as extern.  (Technically, we don't even have to do that.) */
 #ifdef WIN32
 # ifdef LIBSASL_EXPORTS
-#  define LIBSASL_API  __declspec(dllexport)
+#  define LIBSASL_API  extern __declspec(dllexport)
 # else /* LIBSASL_EXPORTS */
-#  define LIBSASL_API  __declspec(dllimport)
+#  define LIBSASL_API  extern __declspec(dllimport)
 # endif /* LIBSASL_EXPORTS */
 #else /* WIN32 */
 # define LIBSASL_API extern
 #endif /* WIN32 */
 
-/* Same as above, but used during a variable declaration. Only Unix definition
- * is different, as we can't assign an initial value to an extern variable */ 
+/* Same as above, but used during a variable declaration. */
 #ifdef WIN32
 # ifdef LIBSASL_EXPORTS
-#  define LIBSASL_VAR  __declspec(dllexport)
+#  define LIBSASL_VAR  extern __declspec(dllexport)
 # else /* LIBSASL_EXPORTS */
-#  define LIBSASL_VAR  __declspec(dllimport)
+#  define LIBSASL_VAR  extern __declspec(dllimport)
 # endif /* LIBSASL_EXPORTS */
 #else /* WIN32 */
-# define LIBSASL_VAR
+# define LIBSASL_VAR extern
 #endif /* WIN32 */
 
 /* the resulting structure for property values
