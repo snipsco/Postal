@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
 
-  s.source = { :git => 'https://github.com/klefevre/Postal.git', :tag => 'v' + s.version.to_s }
+  s.source = { :git => 'https://github.com/snipsco/Postal.git', :tag => 'v' + s.version.to_s }
   
   s.default_subspec = 'Core'
 
