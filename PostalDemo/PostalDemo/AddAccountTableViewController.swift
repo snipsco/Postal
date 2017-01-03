@@ -3,7 +3,7 @@
 //  PostalDemo
 //
 //  Created by Kevin Lefevre on 23/05/2016.
-//  Copyright © 2016 snips. All rights reserved.
+//  Copyright © 2017 snips. All rights reserved.
 //
 
 import UIKit

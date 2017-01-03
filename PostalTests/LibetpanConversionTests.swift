@@ -3,7 +3,7 @@
 //  Postal
 //
 //  Created by Kevin Lefevre on 21/09/2016.
-//  Copyright © 2016 snips. All rights reserved.
+//  Copyright © 2017 snips. All rights reserved.
 //
 
 import XCTest

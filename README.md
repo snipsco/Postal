@@ -101,7 +101,7 @@ Postal also can be used by [CocoaPods](https://cocoapods.org/).
 
     ```ruby
     use_frameworks!
-    pod "Postal"
+    pod 'Postal'
     ```
 
     - For ReactiveSwift extensions, this project will include them as dependencies. You can do this via CocoaPods subspecs.
