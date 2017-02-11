@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Postal'
-  s.version = '0.4.0'
+  s.version = '0.4.1'
   s.summary = 'A swift framework for working with emails.'
   s.description = 'A Swift framework for working with emails. Simple and quick to use. Built on top of libetpan.'
   s.homepage = 'https://github.com/snipsco/Postal'
@@ -43,7 +43,7 @@ Pod::Spec.new do |s|
   s.subspec 'ReactiveSwift' do |sp|
     sp.source_files = 'Postal/ReactiveSwift/*.swift'
     sp.dependency 'Postal/Core'
-    sp.dependency 'ReactiveSwift', '1.0.0-rc.3'
+    sp.dependency 'ReactiveSwift', '1.0.0'
   end
 
 end
