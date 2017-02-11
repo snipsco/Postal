@@ -74,9 +74,21 @@ extension IMAPSessionTests {
 // TODO: We should test retrieved ids as well as the number of messages count
 
 extension IMAPSessionTests {
+    
+    func test_fetch_one_message_from_uid() throws {
+        let indexSet = IndexSet(integer: 50)
+        
+        var results = [FetchResult]()
+        try imapSession.fetchMessages("INBOX", set: .uid(indexSet), flags: []) { results.append($0) }
+        
+        print("1 messages:");
+        results.forEach { print("\t\($0)") }
+        
+        XCTAssertEqual(results.count, 1, "should have retrieved the 1 first messages")
+    }
 
     func test_fetch_ten_first_messages() throws {
-        let indexSet = IndexSet(1..<10)
+        let indexSet = IndexSet(1...10)
         
         var results = [FetchResult]()
         try imapSession.fetchMessages("INBOX", set: .indexes(indexSet), flags: []) { results.append($0) }

@@ -125,10 +125,10 @@ extension IndexSet {
         let result: UnsafeMutablePointer<mailimap_set> = mailimap_set_new_empty()
         
         rangeView.forEach { (range) in
-            let safeLocation = UInt32(truncatingBitPattern: range.startIndex)
-            let safeLength = UInt32(truncatingBitPattern: range.upperBound)
+            let safeFirst = UInt32(truncatingBitPattern: range.startIndex)
+            let safeLast = UInt32(truncatingBitPattern: range.upperBound - 1)
 
-            mailimap_set_add_interval(result, safeLocation, safeLength)
+            mailimap_set_add_interval(result, safeFirst, safeLast)
         }
         return result
     }

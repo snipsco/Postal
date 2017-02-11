@@ -12,7 +12,21 @@ import libetpan
 
 class LibetpanConversionTests: XCTestCase {
 
-    func test_indexset_to_imapset() {
+    func test_indexset_to_imapset_with_one_value() {
+        let givenIndexSet = IndexSet(integer: 50)
+        
+        let retrievedImapSet = givenIndexSet.unreleasedMailimapSet
+        defer { mailimap_set_free(retrievedImapSet) }
+        
+        let retrievedImapSetSequence = sequence(retrievedImapSet.pointee.set_list, of: mailimap_set_item.self)
+        retrievedImapSetSequence.enumerated().forEach { (offset: Int, element: mailimap_set_item) in
+            let givenRange = givenIndexSet.rangeView[offset]
+            XCTAssertEqual(Int(element.set_first), givenRange.lowerBound)
+            XCTAssertEqual(Int(element.set_last), givenRange.upperBound - 1)
+        }
+    }
+    
+    func test_indexset_to_imapset_with_multiple_values() {
         var givenIndexSet = IndexSet(1...5)
         givenIndexSet.remove(3)
         
@@ -23,7 +37,7 @@ class LibetpanConversionTests: XCTestCase {
         retrievedImapSetSequence.enumerated().forEach { (offset: Int, element: mailimap_set_item) in
             let givenRange = givenIndexSet.rangeView[offset]
             XCTAssertEqual(Int(element.set_first), givenRange.lowerBound)
-            XCTAssertEqual(Int(element.set_last), givenRange.upperBound)
+            XCTAssertEqual(Int(element.set_last), givenRange.upperBound - 1)
         }
     }
     
@@ -44,8 +58,19 @@ class LibetpanConversionTests: XCTestCase {
             XCTAssertEqual(element.set_last, expectedUpperBound)
         }
     }
+
+    func test_imapset_to_indexset_with_one_value() {
+        let expectedIndexSet = IndexSet(integer: 42)
+        
+        let imapSet = expectedIndexSet.unreleasedMailimapSet
+        defer { mailimap_set_free(imapSet) }
+        
+        let retrievedIndexSet = imapSet.pointee.indexSet
+        
+        XCTAssertEqual(expectedIndexSet, retrievedIndexSet)
+    }
     
-    func test_imapset_to_indexset() {
+    func test_imapset_to_indexset_with_multiple_values() {
         var expectedIndexSet = IndexSet(1...5)
         expectedIndexSet.remove(3)
 
@@ -57,7 +82,19 @@ class LibetpanConversionTests: XCTestCase {
         XCTAssertEqual(expectedIndexSet, retrievedIndexSet)
     }
     
-    func test_imapset_to_array() {
+    func test_imapset_to_array_with_one_value() {
+        let expectedIndexSet = IndexSet(integer: 42)
+        
+        let imapSet = expectedIndexSet.unreleasedMailimapSet
+        defer { mailimap_set_free(imapSet) }
+        
+        let expectedArray = [42]
+        let retrievedArray = imapSet.pointee.array
+        
+        XCTAssertEqual(expectedArray, retrievedArray)
+    }
+    
+    func test_imapset_to_array_with_multiple_values() {
         var expectedIndexSet = IndexSet(1...5)
         expectedIndexSet.remove(3)
         

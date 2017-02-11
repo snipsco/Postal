@@ -200,10 +200,10 @@ extension mailimap_set {
         var result: IndexSet = IndexSet()
         
         sequence(set_list, of: mailimap_set_item.self)
-            .map { (item: mailimap_set_item) -> CountableRange<Int> in
-                return Int(item.set_first)..<Int(item.set_last)
+            .map { (item: mailimap_set_item) -> CountableClosedRange<Int> in
+                return Int(item.set_first)...Int(item.set_last)
             }
-            .forEach { (range: CountableRange<Int>) in
+            .forEach { (range: CountableClosedRange<Int>) in
                 result.insert(integersIn: range)
             }
         return result
@@ -213,10 +213,10 @@ extension mailimap_set {
         var result: [Int] = []
         
         sequence(set_list, of: mailimap_set_item.self)
-            .map { (item: mailimap_set_item) -> CountableRange<Int> in
-                return Int(item.set_first)..<Int(item.set_last)
+            .map { (item: mailimap_set_item) -> CountableClosedRange<Int> in
+                return Int(item.set_first)...Int(item.set_last)
             }
-            .forEach { (range: CountableRange<Int>) in
+            .forEach { (range: CountableClosedRange<Int>) in
                 result.append(contentsOf: range)
             }
         return result
