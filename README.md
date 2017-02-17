@@ -52,6 +52,14 @@ postal.fetchMessages("INBOX", uids: indexset, flags: [ .headers ], onMessage: { 
 }
 ```
 
+### Want to debug your IMAP session ?
+
+```swift
+postal.logger = { log in
+    print(log)
+}
+```
+
 ### What about Mailcore ?
 
 Postal does not address the same goal as MailCore. You can take a look at our thoughts in the [TechnicalNotes][] document.
