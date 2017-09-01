@@ -44,9 +44,9 @@ public struct MailData {
 extension MailPart: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .single(let id, let mimeType, _, let mimeFields): return ".single(id: \(id), mimeType: \(mimeType), mimeFields: \(mimeFields))"
+        case .single(let id, let mimeType, _, let mimeFields): return ".single(id: \(id), mimeType: \(mimeType), mimeFields: \(String(describing: mimeFields)))"
         case .multipart(let id, let mimeType, let parts): return ".multipart(id: \(id), mimeType: \(mimeType), parts: \(parts))"
-        case .message(let id, let headers, let message): return ".message(id: \(id), headers: \(headers), message: \(message))"
+        case .message(let id, let headers, let message): return ".message(id: \(id), headers: \(String(describing: headers)), message: \(message))"
         }
     }
 }
