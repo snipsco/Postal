@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Postal'
-  s.version = '0.4.1'
+  s.version = '0.4.2'
   s.summary = 'A swift framework for working with emails.'
   s.description = 'A Swift framework for working with emails. Simple and quick to use. Built on top of libetpan.'
   s.homepage = 'https://github.com/snipsco/Postal'
