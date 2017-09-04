@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   s.source = { :git => 'https://github.com/snipsco/Postal.git', :tag => 'v' + s.version.to_s }
-  
+
   s.default_subspec = 'Core'
 
   s.subspec 'Core' do |sp|
@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
     sp.preserve_paths = 'dependencies'
 
     sp.libraries = 'etpan', 'sasl2', 'z', 'iconv'
-    sp.dependency 'Result', '~> 3.1.0'
+    sp.dependency 'Result', '~> 3.2'
   end
 
   s.subspec 'ReactiveCocoa' do |sp|
@@ -43,7 +43,7 @@ Pod::Spec.new do |s|
   s.subspec 'ReactiveSwift' do |sp|
     sp.source_files = 'Postal/ReactiveSwift/*.swift'
     sp.dependency 'Postal/Core'
-    sp.dependency 'ReactiveSwift', '1.0.0'
+    sp.dependency 'ReactiveSwift', '~> 2.0'
   end
 
 end
