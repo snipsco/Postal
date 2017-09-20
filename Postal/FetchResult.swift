@@ -82,7 +82,7 @@ struct FetchResultBuilder {
             case .ext(let ext):
                 switch ext {
                 case .gmailLabels(let labels): builtResult.gmailLabels = labels
-                case .gmailMessageId(let mid): builtResult.gmailThreadId = mid
+                case .gmailMessageId(let mid): builtResult.gmailMessageId = mid
                 case .gmailThreadId(let tid): builtResult.gmailThreadId = tid
                 case .modSeq:
                     break
