@@ -88,7 +88,7 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 ## Requirements
 
-- Xcode 8
+- Xcode 9
 - OS X 10.10 or later
 - iOS 8.0 or later
 
