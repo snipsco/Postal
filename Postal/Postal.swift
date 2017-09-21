@@ -268,7 +268,7 @@ public extension Postal {
 
 private extension Postal {
     
-    func doAsync<T, E: Error>(_ f: @escaping () throws -> T, completion: @escaping (Result<T, E>) -> Void) {
+    func doAsync<T, E>(_ f: @escaping () throws -> T, completion: @escaping (Result<T, E>) -> Void) {
         queue.addOperation {
             let result = Result<T, E>(attempt: f)
             DispatchQueue.main.async {

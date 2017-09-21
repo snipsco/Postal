@@ -3,8 +3,8 @@
 
 [![Build Status](https://travis-ci.org/snipsco/Postal.svg?branch=master)](https://travis-ci.org/snipsco/Postal)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Pods](https://img.shields.io/badge/Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org/) 
-[![Swift 3.0.x](https://img.shields.io/badge/Swift-3.0.x-orange.svg?style=flat)](https://swift.org/)
+[![Pods](https://img.shields.io/badge/Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org/)
+[![Swift 4.0.x](https://img.shields.io/badge/Swift-4.0.x-orange.svg?style=flat)](https://swift.org/)
 ![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS-lightgrey.svg?style=flat)
 
 Postal is a swift framework providing simple access to common email providers.
@@ -16,12 +16,12 @@ Postal is a swift framework providing simple access to common email providers.
 ```swift
 let postal = Postal(configuration: .icloud(login: "myemail@icloud.com", password: "mypassword"))
 postal.connect { result in
-	switch result {
-	case .success:
-	    print("success")
-	case .failure(let error):
-	    print("error: \(error)")
-	}
+    switch result {
+    case .success:
+        print("success")
+    case .failure(let error):
+        print("error: \(error)")
+    }
 }
 ```
 
@@ -30,12 +30,12 @@ postal.connect { result in
 ```swift
 let filter = .subject(value: "Foobar") && .from(value: "foo@bar.com")
 postal.search("INBOX", filter: filter) { result in
-	switch result {
-	case .success(let indexes):
-	    print("success: \(indexes)")
-	case .failure(let error):
-	    print("error: \(error)")
-	}
+    switch result {
+    case .success(let indexes):
+        print("success: \(indexes)")
+    case .failure(let error):
+        print("error: \(error)")
+    }
 }
 ```
 
@@ -44,11 +44,11 @@ postal.search("INBOX", filter: filter) { result in
 ```swift
 let indexset = NSIndexSet(index: 42)
 postal.fetchMessages("INBOX", uids: indexset, flags: [ .headers ], onMessage: { email in
-	print("new email received: \(email)")
+    print("new email received: \(email)")
 }, onComplete: error in
-	if error = error {
-	    print("an error occured: \(error)")
-	}
+    if error = error {
+        print("an error occured: \(error)")
+    }
 }
 ```
 
