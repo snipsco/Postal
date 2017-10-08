@@ -44,7 +44,7 @@ public enum ConnectionType {
 public struct Configuration {
     /// The hostname of the IMAP server
     public let hostname: String
-    /// The post of the IMAP server
+    /// The port of the IMAP server
     public let port: UInt16
     /// The login name
     public let login: String
@@ -54,7 +54,7 @@ public struct Configuration {
     public let connectionType: ConnectionType
     /// Check if the certificate is enabled
     public let checkCertificateEnabled: Bool
-    /// The bathsize of heavy requests
+    /// The batch size of heavy requests
     public let batchSize: Int
     /// The spam folder name
     public let spamFolderName: String
