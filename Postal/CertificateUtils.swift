@@ -38,7 +38,7 @@ func checkCertificate(_ stream: UnsafeMutablePointer<mailstream>, hostname: Stri
         .map { mmapString in
             mmapString.str.withMemoryRebound(to: UInt8.self, capacity: 1, { CFDataCreate(nil, $0, mmapString.len) })
         }
-        .flatMap { SecCertificateCreateWithData(nil, $0) }
+        .compactMap { SecCertificateCreateWithData(nil, $0) }
     
     let policy = SecPolicyCreateSSL(true, hostname as CFString)
     var trustCallback: SecTrust?

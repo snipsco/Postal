@@ -111,7 +111,7 @@ extension mailmime_single_fields {
         let content: [MimeType]
         if let parameters = fld_content?.pointee.ct_parameters {
             content = sequence(parameters, of: mailmime_parameter.self)
-                .flatMap { parameter in
+                .compactMap { parameter in
                     parameter.parse.map { type, subtype in
                         MimeType(type: type, subtype: subtype)
                     }

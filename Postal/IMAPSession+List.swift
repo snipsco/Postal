@@ -45,7 +45,7 @@ extension IMAPSession {
     }
     
     func makeFolders<S: Sequence>(_ sequence: S) -> [Folder] where S.Iterator.Element == mailimap_mailbox_list {
-        return sequence.flatMap { (folder: mailimap_mailbox_list) -> Folder? in
+        return sequence.compactMap { (folder: mailimap_mailbox_list) -> Folder? in
             guard let name = String.fromUTF8CString(folder.mb_name) else { return nil }
             var mb_delimiter: [CChar] = [ folder.mb_delimiter, 0 ]
             let delimiter = String(cString: &mb_delimiter)

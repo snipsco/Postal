@@ -185,7 +185,7 @@ final class IMAPSession {
             defer { mailimap_namespace_data_free(namespaceData) }
             if let otherList = namespaceData?.pointee.ns_personal?.pointee.ns_data_list { // have a personal namespace ?
                 let nsItems = sequence(otherList, of: mailimap_namespace_info.self)
-                    .flatMap(IMAPNamespaceItem.init)
+                    .compactMap(IMAPNamespaceItem.init)
                 defaultNamespace = IMAPNamespace(items: nsItems)
             }
         }
@@ -228,7 +228,7 @@ final class IMAPSession {
         
         var dic = [String:String]()
         sequence(list, of: mailimap_id_param.self)
-            .flatMap { (param: mailimap_id_param) -> (String, String)? in
+            .compactMap { (param: mailimap_id_param) -> (String, String)? in
                 guard let key = String.fromUTF8CString(param.idpa_name) else { return nil }
                 guard let value = String.fromUTF8CString(param.idpa_value) else { return nil }
                 return (key, value)

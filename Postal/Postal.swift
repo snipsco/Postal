@@ -54,7 +54,7 @@ open class Postal {
 // MARK: - Connection
 
 public extension Postal {
-    public static let defaultTimeout: TimeInterval = 30
+    static let defaultTimeout: TimeInterval = 30
     
     /// Attemps a connection to the server
     ///

@@ -42,7 +42,7 @@ extension MailPart {
     public var allParts: AnyIterator<SinglePart> {
         switch self {
         case .single(let id, let mimeType, let mimeFields, let data):
-            return AnyIterator(IteratorOverOne(_elements: SinglePart(id: id, mimeType: mimeType, mimeFields: mimeFields, data: data)))
+            return AnyIterator(CollectionOfOne.Iterator(_elements: SinglePart(id: id, mimeType: mimeType, mimeFields: mimeFields, data: data)))
         case .multipart(_, _, let parts):
             return AnyIterator(parts.flatMap { $0.allParts }.makeIterator())
         case .message(_, _, let message):

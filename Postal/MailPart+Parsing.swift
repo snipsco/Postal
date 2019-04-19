@@ -66,7 +66,7 @@ extension mailimap_body {
 // multiPart
 extension mailimap_body_type_mpart {
     func parse(_ idPrefix: String) -> MailPart? {
-        let parts = sequence(bd_list, of: mailimap_body.self).enumerated().flatMap { index, subPart in
+        let parts = sequence(bd_list, of: mailimap_body.self).enumerated().compactMap { index, subPart in
             subPart.parse(idPrefix.byAppendingPartId(index + 1))
         }
         
@@ -164,7 +164,7 @@ extension mailmime {
             
         case MAILMIME_MULTIPLE:
             guard let mimeType = mm_content_type?.pointee.parse else { return nil }
-            let parts = sequence(mm_data.mm_multipart.mm_mp_list, of: mailmime.self).enumerated().flatMap { index, subPart in
+            let parts = sequence(mm_data.mm_multipart.mm_mp_list, of: mailmime.self).enumerated().compactMap { index, subPart in
                 subPart.parse(idPrefix.byAppendingPartId(index + 1))
             }
             
@@ -202,7 +202,7 @@ extension mailmime_parameter {
 
 extension mailimf_fields {
     var parseOptionalFields: [CustomHeader] {
-        return sequence(fld_list, of: mailimf_field.self).flatMap { (field: mailimf_field) -> CustomHeader? in
+        return sequence(fld_list, of: mailimf_field.self).compactMap { (field: mailimf_field) -> CustomHeader? in
             if Int(field.fld_type) != MAILIMF_FIELD_OPTIONAL_FIELD { return nil }
             return field.fld_data.fld_optional_field?.pointee.parse
         }

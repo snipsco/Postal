@@ -38,7 +38,7 @@ extension mailimap_body_fld_dsp {
     var parse: ContentDisposition? {
         guard let list = dsp_attributes?.pointee.pa_list else { return nil }
 
-        let attributes = sequence(list, of: mailimap_single_body_fld_param.self).flatMap { $0.parse }
+        let attributes = sequence(list, of: mailimap_single_body_fld_param.self).compactMap { $0.parse }
         
         switch String.fromUTF8CString(dsp_type)?.lowercased() {
         case .some("inline"): return .inline(attributes)
