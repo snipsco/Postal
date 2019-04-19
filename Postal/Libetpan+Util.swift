@@ -27,7 +27,7 @@ import libetpan
 
 extension String {
     static func fromZeroSizedCStringMimeHeader(_ bytes: UnsafeMutablePointer<Int8>?) -> String? {
-        guard bytes != nil else { return nil }
+        guard let bytes = bytes else { return nil }
         
         let length = Int(strlen(bytes))
         return fromCStringMimeHeader(bytes, length: length)

@@ -7,7 +7,4 @@
    <FileRef
       location = "group:PostalDemo/PostalDemo.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Result/Result.xcodeproj">
-   </FileRef>
 </Workspace>

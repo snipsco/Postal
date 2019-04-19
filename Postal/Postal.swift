@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import Result
 
 /// This class is the class where every request will be performed.
 open class Postal {
@@ -268,9 +267,17 @@ public extension Postal {
 
 private extension Postal {
     
-    func doAsync<T, E>(_ f: @escaping () throws -> T, completion: @escaping (Result<T, E>) -> Void) {
+    func doAsync<T>(_ f: @escaping () throws -> T, completion: @escaping (Result<T, PostalError>) -> Void) {
         queue.addOperation {
-            let result = Result<T, E>(attempt: f)
+            let result: Result<T, PostalError>
+            do {
+                let success = try f()
+                result = .success(success)
+            } catch let error as PostalError {
+                result = .failure(error)
+            } catch {
+                result = .failure(.undefined)
+            }
             DispatchQueue.main.async {
                 completion(result)
             }
