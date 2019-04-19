@@ -36,8 +36,9 @@ public struct MimeType {
 }
 
 extension MimeType: Hashable {
-    public var hashValue: Int {
-        return 31 &* type.hash &+ subtype.hash
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(31 &* type.hash &+ subtype.hash)
     }
 }
 

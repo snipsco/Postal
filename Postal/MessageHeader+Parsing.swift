@@ -160,7 +160,7 @@ private extension Date {
     static func fromEnvelopeDate(_ envelopeDate: String) -> Date? {
         var currentToken: size_t = 0
         var imfDateTime: UnsafeMutablePointer<mailimf_date_time>? = nil
-        if mailimf_date_time_parse(envelopeDate, envelopeDate.characters.count, &currentToken, &imfDateTime).toIMFError == nil {
+        if mailimf_date_time_parse(envelopeDate, envelopeDate.count, &currentToken, &imfDateTime).toIMFError == nil {
             defer { mailimf_date_time_free(imfDateTime) }
             return imfDateTime?.pointee.date
         }
