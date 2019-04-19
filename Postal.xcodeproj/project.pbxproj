@@ -42,21 +42,15 @@
 		9812C34D1D509DEB00630D46 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C34C1D509DEB00630D46 /* libiconv.tbd */; };
 		9812C34F1D509DF700630D46 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C34E1D509DF700630D46 /* libz.tbd */; };
 		9812C3511D509DFE00630D46 /* libsasl2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C3501D509DFE00630D46 /* libsasl2.tbd */; };
-		981EAE6B1D58DA85004DB7EC /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
-		981EAE6C1D58DA85004DB7EC /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
 		981EAE6E1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6D1D58DAE1004DB7EC /* provider_credentials_sample.json */; };
 		981EAE6F1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6D1D58DAE1004DB7EC /* provider_credentials_sample.json */; };
 		9852BA141D58A5D000EE46E5 /* Postal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; };
-		9852BA151D58A5D000EE46E5 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; };
 		9852BA661D58ACEA00EE46E5 /* Postal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C31C1D50959500630D46 /* Postal.framework */; };
-		9852BA6E1D58ADAF00EE46E5 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; };
 		9852BA721D58ADC800EE46E5 /* Postal.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9852BA731D58ADC800EE46E5 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9852BA741D58ADD400EE46E5 /* IMAPSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */; };
 		9852BA751D58ADD600EE46E5 /* PostalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF41D4BA5DB0083397F /* PostalTests.swift */; };
 		9852BA761D58ADD900EE46E5 /* XCTest+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */; };
 		98C9D4F91D58A4F800635F9F /* Postal.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		98C9D4FA1D58A4F800635F9F /* Result.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		98DB04371CEC7337003CAABB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04361CEC7337003CAABB /* libz.tbd */; };
 		98DB04391CEC7342003CAABB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04381CEC7342003CAABB /* libiconv.tbd */; };
 		F7039DAB1D92B23200132867 /* LibetpanConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */; };
@@ -102,6 +96,8 @@
 		F7F03EF61D4BA5DB0083397F /* IMAPSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */; };
 		F7F03EF81D4BA5DB0083397F /* PostalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF41D4BA5DB0083397F /* PostalTests.swift */; };
 		F7F03EF91D4BA5DB0083397F /* XCTest+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */; };
+		FF2421EF226A294D006D8C64 /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
+		FF2421F0226A2953006D8C64 /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,7 +125,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9852BA721D58ADC800EE46E5 /* Postal.framework in CopyFiles */,
-				9852BA731D58ADC800EE46E5 /* Result.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,7 +135,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				98C9D4F91D58A4F800635F9F /* Postal.framework in Copy Frameworks */,
-				98C9D4FA1D58A4F800635F9F /* Result.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,7 +229,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9852BA661D58ACEA00EE46E5 /* Postal.framework in Frameworks */,
-				9852BA6E1D58ADAF00EE46E5 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +245,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9852BA151D58A5D000EE46E5 /* Result.framework in Frameworks */,
 				9852BA141D58A5D000EE46E5 /* Postal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,7 +620,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				981EAE6C1D58DA85004DB7EC /* provider_credentials.json in Resources */,
+				FF2421F0226A2953006D8C64 /* provider_credentials.json in Resources */,
 				981EAE6F1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -644,7 +636,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				981EAE6B1D58DA85004DB7EC /* provider_credentials.json in Resources */,
+				FF2421EF226A294D006D8C64 /* provider_credentials.json in Resources */,
 				981EAE6E1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -843,7 +835,6 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -858,7 +849,6 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1054,7 +1044,6 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1070,7 +1059,6 @@
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
