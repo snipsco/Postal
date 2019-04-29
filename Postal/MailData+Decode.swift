@@ -50,7 +50,7 @@ extension Data {
         var decodedBytes: UnsafeMutablePointer<Int8>? = nil
         var decodedLength: Int = 0
         let decodeFunc = partial ? mailmime_part_parse_partial : mailmime_part_parse
-        
+
         let _ = withUnsafeBytes { (bytes: UnsafePointer<Int8>) in
             decodeFunc(bytes, count, &curToken, Int32(mechanism), &decodedBytes, &decodedLength)
         }

@@ -54,7 +54,7 @@ extension mailimap_extension_data {
             return .modSeq(modSeq)
         case &mailimap_extension_xgmlabels:
             guard let labelList = ext_data.assumingMemoryBound(to: mailimap_msg_att_xgmlabels.self).pointee.att_labels else { return nil }
-            let labels = pointerSequence(labelList, of: CChar.self).flatMap(String.fromUTF8CString)
+            let labels = pointerSequence(labelList, of: CChar.self).compactMap(String.fromUTF8CString)
 
             return labels.count > 0 ? .gmailLabels(labels) : nil
         case &mailimap_extension_xgmthrid:

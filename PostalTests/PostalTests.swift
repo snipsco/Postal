@@ -23,7 +23,6 @@
 //
 
 import XCTest
-import Result
 @testable import Postal
 
 class PostalTests: XCTestCase {
@@ -65,7 +64,10 @@ private extension PostalTests {
         
         let postal = Postal(configuration: configuration)
         postal.connect {
-            XCTAssertNil($0.error, "an error occured while connecting to provider")
+            switch $0 {
+            case .failure: XCTFail("an error occured while connecting to provider")
+            default: break
+            }
             expectation.fulfill()
         }
         

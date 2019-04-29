@@ -65,8 +65,8 @@ extension mailimap_address {
 extension mailimf_address {
     var parse: [Address] {
         switch Int(ad_type) {
-        case MAILIMF_ADDRESS_MAILBOX: return [ ad_data.ad_mailbox?.pointee.parse ].flatMap { $0 }
-        case MAILIMF_ADDRESS_GROUP: return ad_data.ad_group?.pointee.grp_mb_list?.pointee.parse.flatMap { $0 } ?? []
+        case MAILIMF_ADDRESS_MAILBOX: return [ ad_data.ad_mailbox?.pointee.parse ].compactMap { $0 }
+        case MAILIMF_ADDRESS_GROUP: return ad_data.ad_group?.pointee.grp_mb_list?.pointee.parse.compactMap { $0 } ?? []
         default: return []
         }
     }
@@ -74,7 +74,7 @@ extension mailimf_address {
 
 extension mailimf_mailbox_list {
     var parse: [Address] {
-        return sequence(mb_list, of: mailimf_mailbox.self).flatMap { $0.parse }
+        return sequence(mb_list, of: mailimf_mailbox.self).compactMap { $0.parse }
     }
 }
 

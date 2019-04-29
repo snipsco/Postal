@@ -8,7 +8,6 @@
 
 import UIKit
 import Postal
-import Result
 
 class MailsTableViewController: UITableViewController {
     var configuration: Configuration!

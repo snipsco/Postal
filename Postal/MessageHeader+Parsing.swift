@@ -86,7 +86,7 @@ extension mailimap_envelope {
         }
         
         return pointerSequence(actualMsgIdList, of: CChar.self)
-            .flatMap(String.init(cString:))
+            .compactMap(String.init(cString:))
     }
     
     fileprivate func extractMessageId() -> String? {
@@ -102,13 +102,13 @@ extension mailimap_envelope {
     }
     
     fileprivate func convertAddress(_ clist: UnsafeMutablePointer<clist_s>) -> [Address] {
-        return sequence(clist, of: mailimap_address.self).flatMap { $0.parse }
+        return sequence(clist, of: mailimap_address.self).compactMap { $0.parse }
     }
 }
 
 extension mailimap_env_from {
     var parse: [Address] {
-        return sequence(frm_list, of: mailimap_address.self).flatMap { $0.parse }
+        return sequence(frm_list, of: mailimap_address.self).compactMap { $0.parse }
     }
 }
 
@@ -123,7 +123,7 @@ extension mailimf_single_fields {
         
         header.receivedDate = fld_orig_date?.pointee.dt_date_time?.pointee.date
         header.subject = (fld_subject?.pointee.sbj_value).flatMap(String.fromZeroSizedCStringMimeHeader) ?? header.subject
-        header.senders = [ fld_sender?.pointee.snd_mb?.pointee ].flatMap { $0?.parse }
+        header.senders = [ fld_sender?.pointee.snd_mb?.pointee ].compactMap { $0?.parse }
         header.from = fld_from?.pointee.frm_mb_list?.pointee.parse ?? []
         header.replyTo = fld_reply_to?.pointee.rt_addr_list?.pointee.parse ?? header.replyTo
         header.to = fld_to?.pointee.to_addr_list?.pointee.parse ?? header.to
@@ -138,13 +138,13 @@ extension mailimf_single_fields {
 
 extension mailimf_in_reply_to {
     var parse: [String] {
-        return pointerSequence(mid_list, of: CChar.self).flatMap { String.fromUTF8CString($0) }
+        return pointerSequence(mid_list, of: CChar.self).compactMap { String.fromUTF8CString($0) }
     }
 }
 
 extension mailimf_references {
     var parse: [String] {
-        return pointerSequence(mid_list, of: CChar.self).flatMap { String.fromUTF8CString($0) }
+        return pointerSequence(mid_list, of: CChar.self).compactMap { String.fromUTF8CString($0) }
     }
 }
 
@@ -160,7 +160,7 @@ private extension Date {
     static func fromEnvelopeDate(_ envelopeDate: String) -> Date? {
         var currentToken: size_t = 0
         var imfDateTime: UnsafeMutablePointer<mailimf_date_time>? = nil
-        if mailimf_date_time_parse(envelopeDate, envelopeDate.characters.count, &currentToken, &imfDateTime).toIMFError == nil {
+        if mailimf_date_time_parse(envelopeDate, envelopeDate.count, &currentToken, &imfDateTime).toIMFError == nil {
             defer { mailimf_date_time_free(imfDateTime) }
             return imfDateTime?.pointee.date
         }

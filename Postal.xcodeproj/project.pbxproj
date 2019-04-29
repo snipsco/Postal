@@ -39,25 +39,18 @@
 		9812C33F1D509B6900630D46 /* Libetpan+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03C661D4BA5A80083397F /* Libetpan+Util.swift */; };
 		9812C3401D509B6900630D46 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03C761D4BA5A90083397F /* Util.swift */; };
 		9812C3411D509B6C00630D46 /* Postal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03C741D4BA5A90083397F /* Postal.swift */; };
-		9812C34A1D509B9100630D46 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C3491D509B9100630D46 /* Result.framework */; };
 		9812C34D1D509DEB00630D46 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C34C1D509DEB00630D46 /* libiconv.tbd */; };
 		9812C34F1D509DF700630D46 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C34E1D509DF700630D46 /* libz.tbd */; };
 		9812C3511D509DFE00630D46 /* libsasl2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C3501D509DFE00630D46 /* libsasl2.tbd */; };
-		981EAE6B1D58DA85004DB7EC /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
-		981EAE6C1D58DA85004DB7EC /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
 		981EAE6E1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6D1D58DAE1004DB7EC /* provider_credentials_sample.json */; };
 		981EAE6F1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6D1D58DAE1004DB7EC /* provider_credentials_sample.json */; };
 		9852BA141D58A5D000EE46E5 /* Postal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; };
-		9852BA151D58A5D000EE46E5 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; };
 		9852BA661D58ACEA00EE46E5 /* Postal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9812C31C1D50959500630D46 /* Postal.framework */; };
-		9852BA6E1D58ADAF00EE46E5 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; };
 		9852BA721D58ADC800EE46E5 /* Postal.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9852BA731D58ADC800EE46E5 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9852BA741D58ADD400EE46E5 /* IMAPSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */; };
 		9852BA751D58ADD600EE46E5 /* PostalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF41D4BA5DB0083397F /* PostalTests.swift */; };
 		9852BA761D58ADD900EE46E5 /* XCTest+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */; };
 		98C9D4F91D58A4F800635F9F /* Postal.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4F71D58A4A000635F9F /* Postal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		98C9D4FA1D58A4F800635F9F /* Result.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 98C9D4EF1D58A3C900635F9F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		98DB04371CEC7337003CAABB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04361CEC7337003CAABB /* libz.tbd */; };
 		98DB04391CEC7342003CAABB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DB04381CEC7342003CAABB /* libiconv.tbd */; };
 		F7039DAB1D92B23200132867 /* LibetpanConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7039DAA1D92B23200132867 /* LibetpanConversionTests.swift */; };
@@ -65,7 +58,6 @@
 		F71325661D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F71325671D50CA84005DFC15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71325651D50CA84005DFC15 /* Configuration.swift */; };
 		F72497431D6228850065D07E /* IMAPSession+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */; };
-		F75DD4751D4BAC1500D40E9C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75DD4741D4BAC1500D40E9C /* Result.framework */; };
 		F773372A1D60FF610015A1D4 /* IMAPSession+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77337291D60FF610015A1D4 /* IMAPSession+Move.swift */; };
 		F7C25FFC1DE4E9E50021A138 /* IMAPSession+Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C25FFB1DE4E9E50021A138 /* IMAPSession+Folder.swift */; };
 		F7C25FFD1DE4E9EC0021A138 /* IMAPSession+Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C25FFB1DE4E9E50021A138 /* IMAPSession+Folder.swift */; };
@@ -104,6 +96,8 @@
 		F7F03EF61D4BA5DB0083397F /* IMAPSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */; };
 		F7F03EF81D4BA5DB0083397F /* PostalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF41D4BA5DB0083397F /* PostalTests.swift */; };
 		F7F03EF91D4BA5DB0083397F /* XCTest+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */; };
+		FF2421EF226A294D006D8C64 /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
+		FF2421F0226A2953006D8C64 /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,7 +125,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9852BA721D58ADC800EE46E5 /* Postal.framework in CopyFiles */,
-				9852BA731D58ADC800EE46E5 /* Result.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +135,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				98C9D4F91D58A4F800635F9F /* Postal.framework in Copy Frameworks */,
-				98C9D4FA1D58A4F800635F9F /* Result.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,7 +221,6 @@
 				9812C3511D509DFE00630D46 /* libsasl2.tbd in Frameworks */,
 				9812C34F1D509DF700630D46 /* libz.tbd in Frameworks */,
 				9812C34D1D509DEB00630D46 /* libiconv.tbd in Frameworks */,
-				9812C34A1D509B9100630D46 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +229,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9852BA661D58ACEA00EE46E5 /* Postal.framework in Frameworks */,
-				9852BA6E1D58ADAF00EE46E5 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +236,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F75DD4751D4BAC1500D40E9C /* Result.framework in Frameworks */,
 				98DB04391CEC7342003CAABB /* libiconv.tbd in Frameworks */,
 				98DB04371CEC7337003CAABB /* libz.tbd in Frameworks */,
 			);
@@ -256,7 +245,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9852BA151D58A5D000EE46E5 /* Result.framework in Frameworks */,
 				9852BA141D58A5D000EE46E5 /* Postal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,7 +565,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = snips;
 				TargetAttributes = {
 					9812C31B1D50959500630D46 = {
@@ -590,7 +578,7 @@
 					};
 					98DB00941CEC6983003CAABB = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 					};
 					98DB009E1CEC6983003CAABB = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -603,6 +591,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -631,7 +620,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				981EAE6C1D58DA85004DB7EC /* provider_credentials.json in Resources */,
+				FF2421F0226A2953006D8C64 /* provider_credentials.json in Resources */,
 				981EAE6F1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -647,7 +636,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				981EAE6B1D58DA85004DB7EC /* provider_credentials.json in Resources */,
+				FF2421EF226A294D006D8C64 /* provider_credentials.json in Resources */,
 				981EAE6E1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -801,7 +790,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -829,7 +817,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -848,7 +835,6 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -863,7 +849,6 @@
 				PRODUCT_NAME = PostalTests;
 				SDKROOT = macosx;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/macos/include";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -871,6 +856,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -880,12 +866,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -917,7 +905,7 @@
 				PRODUCT_NAME = Postal;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -928,6 +916,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -937,12 +926,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -971,7 +962,7 @@
 				PRODUCT_NAME = Postal;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/dependencies";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1008,7 +999,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1038,7 +1029,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1053,7 +1044,6 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1069,7 +1059,6 @@
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(SRCROOT)/dependencies/build/ios/include";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
