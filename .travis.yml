@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode9
+osx_image: xcode10.2
 script:
   - xcodebuild -workspace Postal.xcworkspace -scheme Postal-iOS -sdk iphonesimulator build
   - xcodebuild -workspace Postal.xcworkspace -scheme Postal-macOS -sdk macosx build
