@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/snipsco/Postal.svg?branch=master)](https://travis-ci.org/snipsco/Postal)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Pods](https://img.shields.io/badge/Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org/)
-[![Swift 4.0.x](https://img.shields.io/badge/Swift-4.0.x-orange.svg?style=flat)](https://swift.org/)
+[![Swift 5.0](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat)](https://swift.org/)
 ![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS-lightgrey.svg?style=flat)
 
 Postal is a swift framework providing simple access to common email providers.
@@ -88,7 +88,7 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 ## Requirements
 
-- Xcode 9
+- Xcode 10
 - OS X 10.10 or later
 - iOS 8.0 or later
 
@@ -107,16 +107,10 @@ Postal also can be used by [CocoaPods](https://cocoapods.org/).
 
 - Add the followings to your Podfile:
 
-    ```ruby
-    use_frameworks!
-    pod 'Postal'
-    ```
-
-    - For ReactiveSwift extensions, this project will include them as dependencies. You can do this via CocoaPods subspecs.
-
-	```ruby
-	pod 'Postal/ReactiveSwift'
-	```
+```ruby
+use_frameworks!
+pod 'Postal'
+```
 
 - Run `pod install`. 
 
@@ -124,10 +118,11 @@ Postal also can be used by [CocoaPods](https://cocoapods.org/).
 
 1. Add the Postal repository as a [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) of your application’s repository.
 	
-	```bash
-	git submodule add https://github.com/snipsco/Postal.git
-	git submodule update --init --recursive
-	```
+```bash
+git submodule add https://github.com/snipsco/Postal.git
+git submodule update --init --recursive
+```
+
 1. Drag and drop `Postal.xcodeproj` and `Carthage/Checkouts/Result/Result.xcodeproj` into your application’s Xcode project or workspace.
 1. On the “General” tab of your application target’s settings, add `Postal.framework` and `Result.framework` to the “Embedded Binaries” section.
 1. If your application target does not contain Swift code at all, you should also set the `EMBEDDED_CONTENT_CONTAINS_SWIFT` build setting to “Yes”.
