@@ -28,7 +28,4 @@ Pod::Spec.new do |s|
     'LIBRARY_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/macos/lib"',
     'HEADER_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/macos/include"'
   }
-
-  s.libraries = 'etpan', 'sasl2', 'z', 'iconv'
-
 end

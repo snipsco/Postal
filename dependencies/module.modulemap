@@ -3,4 +3,9 @@ module libetpan {
     header "build/ios/include/libetpan/clist.h"
 
     export *
+
+    link "etpan"
+    link "sasl2"
+    link "z"
+    link "iconv"
 }
