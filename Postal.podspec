@@ -6,6 +6,7 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/snipsco/Postal'
   s.license = 'MIT'
   s.author = { 'Kevin Lefevre' => 'kevin.lefevre@snips.ai', 'Jeremie Girault' => 'jeremie.girault@gmail.com' }
+  s.swift_version = '5.0'
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
