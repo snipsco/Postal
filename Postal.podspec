@@ -12,39 +12,24 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   s.source = { :git => 'https://github.com/snipsco/Postal.git', :tag => 'v' + s.version.to_s }
+  s.source_files  = 'Postal/*.{swift,h}'
+  s.preserve_paths = 'dependencies'
 
-  s.default_subspec = 'Core'
+  s.pod_target_xcconfig = {
+    'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) NO_MACROS=1'
+  }
+  s.ios.pod_target_xcconfig = {
+    'SWIFT_INCLUDE_PATHS' => '"$(SRCROOT)/Postal/dependencies" "$(SRCROOT)/Postal/dependencies/build/ios/include"',
+    'LIBRARY_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/ios/lib"',
+    'HEADER_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/ios/include"'
+  }
+  s.osx.pod_target_xcconfig = {
+    'SWIFT_INCLUDE_PATHS' => '"$(SRCROOT)/Postal/dependencies" "$(SRCROOT)/Postal/dependencies/build/macos/include"',
+    'LIBRARY_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/macos/lib"',
+    'HEADER_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/macos/include"'
+  }
 
-  s.subspec 'Core' do |sp|
-    sp.source_files  = 'Postal/*.{swift,h}'
-
-    sp.pod_target_xcconfig = {
-      'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) NO_MACROS=1'
-    }
-    sp.ios.pod_target_xcconfig = {
-      'SWIFT_INCLUDE_PATHS' => '"$(SRCROOT)/Postal/dependencies" "$(SRCROOT)/Postal/dependencies/build/ios/include"',
-      'LIBRARY_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/ios/lib"',
-      'HEADER_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/ios/include"'
-    }
-    s.osx.pod_target_xcconfig = {
-      'SWIFT_INCLUDE_PATHS' => '"$(SRCROOT)/Postal/dependencies" "$(SRCROOT)/Postal/dependencies/build/macos/include"',
-      'LIBRARY_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/macos/lib"',
-      'HEADER_SEARCH_PATHS' => '"$(SRCROOT)/Postal/dependencies/build/macos/include"'
-    }
-    sp.preserve_paths = 'dependencies'
-
-    sp.libraries = 'etpan', 'sasl2', 'z', 'iconv'
-    sp.dependency 'Result', '~> 3.2'
-  end
-
-  s.subspec 'ReactiveCocoa' do |sp|
-    sp.dependency 'Postal/ReactiveSwift'
-  end
-
-  s.subspec 'ReactiveSwift' do |sp|
-    sp.source_files = 'Postal/ReactiveSwift/*.swift'
-    sp.dependency 'Postal/Core'
-    sp.dependency 'ReactiveSwift', '~> 2.0'
-  end
+  s.libraries = 'etpan', 'sasl2', 'z', 'iconv'
+  s.dependency 'Result', '~> 3.2'
 
 end
