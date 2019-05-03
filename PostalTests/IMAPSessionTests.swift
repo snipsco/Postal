@@ -52,6 +52,13 @@ class IMAPSessionTests: XCTestCase {
         // Connect to server only once
         _ = self.__once
     }
+    
+    override func invokeTest() {
+        if Int(ProcessInfo().environment["POSTAL_RUN_ALL_TESTS"] ?? "0") == 0 {
+            return
+        }
+        super.invokeTest()
+    }
 }
 
 // MARK: - Folders

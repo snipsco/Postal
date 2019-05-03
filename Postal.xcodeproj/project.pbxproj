@@ -96,8 +96,6 @@
 		F7F03EF61D4BA5DB0083397F /* IMAPSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF21D4BA5DB0083397F /* IMAPSessionTests.swift */; };
 		F7F03EF81D4BA5DB0083397F /* PostalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF41D4BA5DB0083397F /* PostalTests.swift */; };
 		F7F03EF91D4BA5DB0083397F /* XCTest+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F03EF51D4BA5DB0083397F /* XCTest+Utils.swift */; };
-		FF2421EF226A294D006D8C64 /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
-		FF2421F0226A2953006D8C64 /* provider_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 981EAE6A1D58DA85004DB7EC /* provider_credentials.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,7 +158,6 @@
 		9812C34C1D509DEB00630D46 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
 		9812C34E1D509DF700630D46 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		9812C3501D509DFE00630D46 /* libsasl2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsasl2.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/lib/libsasl2.tbd; sourceTree = DEVELOPER_DIR; };
-		981EAE6A1D58DA85004DB7EC /* provider_credentials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = provider_credentials.json; sourceTree = "<group>"; };
 		981EAE6D1D58DAE1004DB7EC /* provider_credentials_sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = provider_credentials_sample.json; sourceTree = "<group>"; };
 		9852BA611D58ACE900EE46E5 /* PostalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9852BA6C1D58AD0E00EE46E5 /* PostalTests-macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PostalTests-macOS.plist"; sourceTree = "<group>"; };
@@ -300,7 +297,6 @@
 			isa = PBXGroup;
 			children = (
 				981EAE6D1D58DAE1004DB7EC /* provider_credentials_sample.json */,
-				981EAE6A1D58DA85004DB7EC /* provider_credentials.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -620,7 +616,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF2421F0226A2953006D8C64 /* provider_credentials.json in Resources */,
 				981EAE6F1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,7 +631,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF2421EF226A294D006D8C64 /* provider_credentials.json in Resources */,
 				981EAE6E1D58DAE1004DB7EC /* provider_credentials_sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

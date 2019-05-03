@@ -253,7 +253,7 @@ extension IMAPSession {
         // fetch
         var results: UnsafeMutablePointer<clist>? = nil
         try mailimap_uid_fetch(imap, imapSet, attList, &results).toIMAPError?.check()
-        defer { mailimap_fetch_list_free(results) }
+        do { mailimap_fetch_list_free(results) }
     }
 }
 
