@@ -26,6 +26,12 @@ import XCTest
 @testable import Postal
 
 class PostalTests: XCTestCase {
+    override func invokeTest() {
+        if Int(ProcessInfo().environment["POSTAL_RUN_ALL_TESTS"] ?? "0") == 0 {
+            return
+        }
+        super.invokeTest()
+    }
     
     func test_icloud_connection() {
         let credential = PostalTests.credentialsFor("icloud")
