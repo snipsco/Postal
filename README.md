@@ -123,8 +123,8 @@ git submodule add https://github.com/snipsco/Postal.git
 git submodule update --init --recursive
 ```
 
-1. Drag and drop `Postal.xcodeproj` and `Carthage/Checkouts/Result/Result.xcodeproj` into your application’s Xcode project or workspace.
-1. On the “General” tab of your application target’s settings, add `Postal.framework` and `Result.framework` to the “Embedded Binaries” section.
+1. Drag and drop `Postal.xcodeproj` into your application’s Xcode project or workspace.
+1. On the “General” tab of your application target’s settings, add `Postal.framework` to the “Embedded Binaries” section.
 1. If your application target does not contain Swift code at all, you should also set the `EMBEDDED_CONTENT_CONTAINS_SWIFT` build setting to “Yes”.
 
 ## License
